@@ -1,0 +1,20 @@
+To create virtual environment, use the following commands:
+    python -m venv [name]
+    python -m venv fm_venv
+
+
+To activate the virtual env:
+    <your_virtual_env_directory>\Scripts\activate 
+    .\fm_venv\Scripts\activate
+
+To update pip:
+    python -m pip install --upgrade pip
+
+To install all modules from the requirements.txt file:
+    pip install -r requirements.txt
+
+
+PostreSQL access:
+    password: password123
+    port: 5432
+
