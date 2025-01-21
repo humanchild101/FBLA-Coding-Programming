@@ -7,9 +7,15 @@
 import customtkinter as ctk
 import tkinter as tk  # for StringVar + messagebox + lines
 from tkinter import messagebox
+import login
+from login import *
 import root_window
 from root_window import *
 
-root_window.root_init()
+def main():
+    login.show_login_page()
+    root.mainloop()
 
-root.mainloop()
+
+if __name__ == "__main__":
+    main()

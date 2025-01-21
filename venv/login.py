@@ -4,7 +4,7 @@ from tkinter import messagebox
 import root_window
 from root_window import *
 
-root_window.root_init()
+root = root_window.root_init()
 
 # bg = #1B4965
 # border = #BEE9E8
@@ -15,6 +15,7 @@ root_window.root_init()
 #------------------------
 user_var = tk.StringVar(value="Username Here")  # 1B4965 and then BEE9E8
 password_var = tk.StringVar(value="Password Here")  # 1B4965 and then BEE9E8
+login_page = ctk.CTkFrame(root, fg_color="#1B4965")
 
 
 def on_login():
@@ -37,9 +38,9 @@ def forgot_password():
 def create_new_account():
     messagebox.showinfo("Message", "Will create a seperate page for input details to make a new account. somehow have to add this into the database")
 
-
+def hide_login_page():
+    login_page.forget()
 def show_login_page():
-    login_page = ctk.CTkFrame(root, fg_color="#1B4965")
     login_page.pack(fill="both", expand=True)  # #62B6CB
 
     # center frame w/ border
@@ -49,7 +50,7 @@ def show_login_page():
     center_frame.place(relx = 0.5, rely = 0.5, anchor="center")
 
     # login label 1B4965
-    loginL = ctk.CTkLabel(center_frame, text = "Login To Your Account: ",text_color="black", font = ("Arial", 20), fg_color = "#3095AE", padx = 10, pady = 10, corner_radius=15, width = 600)
+    loginL = ctk.CTkLabel(center_frame, text = "Login To Your Account: ",text_color="white", font = ("Arial", 20), fg_color = "#1B4965", padx = 10, pady = 10, corner_radius=15, width = 600)
     loginL.grid(row = 0, column = 0, columnspan = 2, padx = 5, pady = 5)
 
     # username entry
@@ -75,9 +76,11 @@ def show_login_page():
     canvas = ctk.CTkCanvas(center_frame, width = 500, height = 3, bg = "#1B4965", highlightthickness= 0)
     canvas.grid(row = 5, column = 0, columnspan = 2, pady = 20)
 
-    signup_button = ctk.CTkButton(center_frame, text="Create an account", font=("Arial", 20), fg_color="#3095AE", hover_color="#246690", text_color="black", width=600, corner_radius=15, command=create_new_account)
+    signup_button = ctk.CTkButton(center_frame, text="Create an account", font=("Arial", 20), fg_color="#1B4965", hover_color="#246690", text_color="white", width=600, corner_radius=15, command=create_new_account)
     signup_button.grid(row=6, column=0, columnspan=2, pady=5, padx=5, ipady = 6)
 
-show_login_page()
+if __name__ == "__main__":
+    show_login_page()
+    hide_login_page()
 
-root.mainloop()
+
