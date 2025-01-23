@@ -3,6 +3,8 @@ import tkinter as tk  # for StringVar + messagebox + lines
 from tkinter import messagebox
 import root_window
 from root_window import *
+import create_account
+from create_account import *
 
 root = root_window.root_init()
 
@@ -23,12 +25,14 @@ def on_login():
     password_in = password_var.get()
     if not username_in and not password_in:
         messagebox.showwarning("No input", "Please enter a username and password")
+        return
     else:
         if not username_in:
             messagebox.showwarning("No input", "Please enter a username")
-
+            return
         if not password_in:
             messagebox.showwarning("No input", "Please enter a password")
+            return
     if username_in and password_in:
         messagebox.showinfo("Message", "This will take you to the next page.. well depending on what the user account is")
 
@@ -36,11 +40,11 @@ def forgot_password():
     messagebox.showinfo("Message", "I will create a new password changing window thing for this")
 
 def create_new_account():
-    messagebox.showinfo("Message", "Will create a seperate page for input details to make a new account. somehow have to add this into the database")
-
+    create_account.show_create_account()
 def hide_login_page():
     login_page.forget()
 def show_login_page():
+    create_account.hide_create_account()
     login_page.pack(fill="both", expand=True)  # #62B6CB
 
     # center frame w/ border
