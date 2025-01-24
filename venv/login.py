@@ -15,9 +15,9 @@ root = root_window.root_init()
 # entries = #BEE9E8
 
 #------------------------
+login_page = ctk.CTkFrame(root, fg_color="#1B4965")
 user_var = tk.StringVar(value="Username Here")  # 1B4965 and then BEE9E8
 password_var = tk.StringVar(value="Password Here")  # 1B4965 and then BEE9E8
-login_page = ctk.CTkFrame(root, fg_color="#1B4965")
 
 
 def on_login():
@@ -40,11 +40,11 @@ def forgot_password():
     messagebox.showinfo("Message", "I will create a new password changing window thing for this")
 
 def create_new_account():
-    create_account.show_create_account()
-def hide_login_page():
+    create_account.show()
+def hide():
     login_page.forget()
-def show_login_page():
-    create_account.hide_create_account()
+def show():
+    create_account.hide()
     login_page.pack(fill="both", expand=True)  # #62B6CB
 
     # center frame w/ border
@@ -84,7 +84,5 @@ def show_login_page():
     signup_button.grid(row=6, column=0, columnspan=2, pady=5, padx=5, ipady = 6)
 
 if __name__ == "__main__":
-    show_login_page()
-    hide_login_page()
-
-
+    show()
+    hide()

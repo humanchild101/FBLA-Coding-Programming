@@ -13,7 +13,7 @@ import root_window
 from root_window import *
 
 def main():
-    login.show_login_page()
+    login.show()
     root.mainloop()
 
 
