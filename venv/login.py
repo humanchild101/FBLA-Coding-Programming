@@ -3,8 +3,7 @@ import tkinter as tk  # for StringVar + messagebox + lines
 from tkinter import messagebox
 import root_window
 from root_window import *
-import create_account
-from create_account import *
+
 
 root = root_window.root_init()
 
@@ -40,10 +39,14 @@ def forgot_password():
     messagebox.showinfo("Message", "I will create a new password changing window thing for this")
 
 def create_new_account():
+    import create_account
     create_account.show()
+
 def hide():
     login_page.forget()
+
 def show():
+    import create_account
     create_account.hide()
     login_page.pack(fill="both", expand=True)  # #62B6CB
 

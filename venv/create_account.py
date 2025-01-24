@@ -1,8 +1,6 @@
 import customtkinter as ctk
 import tkinter as tk  # for StringVar + messagebox + lines
 from tkinter import messagebox
-import login
-from login import *
 import root_window
 from root_window import *
 import re #for regex
@@ -63,6 +61,7 @@ def hide():
     account_create.forget()
 
 def show():
+    import login
     login.hide()
     account_create.pack(fill="both", expand=True)  # #62B6CB
     center_border = ctk.CTkFrame(account_create, fg_color = "#BEE9E8", corner_radius=20, width = 620, height= 640)
@@ -151,6 +150,4 @@ def show():
 if __name__ == "__main__":
     show()
     hide()
-show()
 
-root.mainloop()
