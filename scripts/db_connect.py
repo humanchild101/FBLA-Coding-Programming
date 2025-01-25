@@ -53,3 +53,4 @@ def execute_query(query):
             cursor.close()
         if conn:
             conn.close()
+
