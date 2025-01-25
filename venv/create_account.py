@@ -28,8 +28,6 @@ entry_fields.append(new_pass_var)
 entry_fields.append(pass_ver_var)
 entry_fields.append(email_var)
 
-#regex
-password_verify = pattern = r'^(?=(.*[A-Z]){3,})(?=(.*[!@#$%^&*(),.?":{}|<>]){3,})(?=(.*[0-9]){3,}).*$' #from ChatGPT
 email_verify = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b' #code from GeeksForGeeks
 
 
@@ -41,10 +39,6 @@ def on_account_creation():
 
         #SHARVIKAAAAAA this is your domain (pls educate the poor TvT
         #if database already contains new_user_var.get() then dont add the account and display username already exists
-
-        if not re.fullmatch(password_verify, pass_ver_var.get()):
-            messagebox.showwarning("Submission not permitted", "Password must have at least 3 special chars, 3 uppercase letters, and 3 numbers")
-            return
 
         if not re.fullmatch(email_verify, email_var.get()):
             messagebox.showwarning("Submission not permitted", "Please enter a valid email, ex: abc@gmail.com")
@@ -107,7 +101,7 @@ def show():
 
     password_label = ctk.CTkLabel(pass_frame, text="Enter a password:", font=("Arial", 18), fg_color="#3095AE",text_color="black", padx=5, pady=6, corner_radius=5)
     password_input = ctk.CTkEntry(pass_frame, textvariable=new_pass_var, font=("Arial", 15), fg_color="#BEE9E8",text_color="black", width=390, corner_radius=5,show="*")
-    pas_reqs = ctk.CTkLabel(pass_frame, text = "Password must include at least 3 numbers, 3 special chars, and 3 uppercase letters.", font=("Arial", 14), fg_color="#3095AE", text_color="black")
+    pas_reqs = ctk.CTkLabel(pass_frame, text = "Suggestion: Include at least 3 numbers, 3 special chars, and 3 uppercase letters.", font=("Arial", 14), fg_color="#3095AE", text_color="black")
 
     password_label.grid(row=1, column=0, sticky="e", padx=5, pady=10, ipady=4)
     password_input.grid(row=1, column=1, sticky="w", padx=15, pady=10, ipady=5)

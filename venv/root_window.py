@@ -7,5 +7,7 @@ def root_init():
         root = ctk.CTk()
         root.title("FBLA Coding and Programming Sharvika & Nikhila")
         root.geometry('1000x1000')
-        root.resizable(True, True)
+        root.minsize(1200, 1000)
+        root.maxsize(1200, 1000)
+
     return root
