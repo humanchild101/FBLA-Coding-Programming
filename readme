@@ -5,7 +5,7 @@ To create virtual environment, use the following commands:
 
 To activate the virtual env:
     <your_virtual_env_directory>\Scripts\activate 
-    .\fm_venv\Scripts\activate
+    .\venv\Scripts\activate
 
 To update pip:
     python -m pip install --upgrade pip

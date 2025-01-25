@@ -3,6 +3,7 @@ import tkinter as tk  # for StringVar + messagebox + lines
 from tkinter import messagebox
 import root_window
 from root_window import *
+import db_connect as db
 
 
 root = root_window.root_init()
@@ -33,7 +34,19 @@ def on_login():
             messagebox.showwarning("No input", "Please enter a password")
             return
     if username_in and password_in:
-        messagebox.showinfo("Message", "This will take you to the next page.. well depending on what the user account is")
+        query = "SELECT username,user_password FROM users WHERE username = '%s'" %username_in
+        print(query)
+        res = db.execute_query(query)
+        print(res)
+        
+        if res:
+            if res[1] == password_in:
+                messagebox.showinfo("Success", "Login Successful")
+            else:
+                messagebox.showwarning("Error", "Incorrect password")
+
+        else:
+            messagebox.showwarning("Error", "User does not exist. Please go ahead with creating new account!")
 
 def forgot_password():
     messagebox.showinfo("Message", "I will create a new password changing window thing for this")
@@ -41,6 +54,7 @@ def forgot_password():
 def create_new_account():
     import create_account
     create_account.show()
+
 
 def hide():
     login_page.forget()
