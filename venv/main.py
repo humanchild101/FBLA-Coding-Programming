@@ -1,13 +1,20 @@
+# this is a financial management app programmed by Nikhila and Sharvika.
+
+# importing all the necessary libraries
+# importing matplotlib --- This would be used for graphing data (to review b/c error)
+# import matplotlib.pyplot as plt
+
 import customtkinter as ctk
+import tkinter as tk  # for StringVar + messagebox + lines
+from tkinter import messagebox
+import login
+from login import *
+import root_window
 
-root = None
-def root_init():
-    global root
-    if root == None:
-        root = ctk.CTk()
-        root.title("FBLA Coding and Programming Sharvika & Nikhila")
-        root.geometry('1000x1000')
-        root.minsize(1200, 1000)
-        root.maxsize(1200, 1000)
+def main():
+    login.show()
+    root.mainloop()
 
-    return root
+
+if __name__ == "__main__":
+    main()
