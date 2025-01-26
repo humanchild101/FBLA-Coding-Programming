@@ -1,9 +1,9 @@
 #logging is a module that is used to log the messages to the console or file.
 import logging
-import psycopg2 # type: ignore
-
+import psycopg2
 
 # Connection parameters to the database
+
 db_params = {
     "host": "localhost",
     "database": "postgres",
@@ -12,30 +12,45 @@ db_params = {
     "port": 5432  
 }
 
-try:
-    # Connect to the database
-    conn = psycopg2.connect(**db_params)
 
-    # Create a cursor object
-    #Cursor is an object used to interact with the database by executing SQL queries
-    cursor = conn.cursor()
+def get_connection():
+    try:
+        # Connect to the database
+        conn = psycopg2.connect(**db_params)
+        return conn
+    except (Exception, psycopg2.Error) as error:
+        print("Error connecting to database:", error)
+        return None
 
-    # Execute a query
-    cursor.execute("SELECT version();")
+        
+def execute_query(query):
+    try:
+        # Connect to the database
+        conn = get_connection()
 
-    # Fetch the result
-    result = cursor.fetchone()
+        # Create a cursor object
+        cursor = conn.cursor()
 
-    # Print the result
-    print(result)
+        # Execute a query
+        cursor.execute(query)
 
-except (Exception, psycopg2.Error) as error:
-    print("Error connecting to database:", error)
+        # Fetch the result
+        result = cursor.fetchone()
 
-finally:
-    # Close the cursor and connection
-    if cursor:
-        cursor.close()
-    if conn:
-        conn.close()
+        # return the result
+        return result
+
+    except (Exception, psycopg2.Error) as error:
+        print("Error connecting to database:", error)
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
+    finally:
+        # Close the cursor and connection
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
 
