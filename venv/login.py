@@ -6,6 +6,8 @@ from root_window import *
 
 
 root = root_window.root_init()
+root.configure(fg_color="#1B4965")
+
 
 # bg = #1B4965
 # border = #BEE9E8
@@ -20,6 +22,7 @@ password_var = tk.StringVar(value="Password Here")  # 1B4965 and then BEE9E8
 
 
 def on_login():
+    import home_page
     username_in = user_var.get()
     password_in = password_var.get()
     if not username_in and not password_in:
@@ -33,8 +36,7 @@ def on_login():
             messagebox.showwarning("No input", "Please enter a password")
             return
     if username_in and password_in:
-        messagebox.showinfo("Message", "This will take you to the next page.. well depending on what the user account is")
-
+        home_page.show()
 def forgot_password():
     messagebox.showinfo("Message", "I will create a new password changing window thing for this")
 
@@ -46,8 +48,11 @@ def hide():
     login_page.forget()
 
 def show():
+    root.configure(fg_color="#1B4965")
     import create_account
+    import home_page
     create_account.hide()
+    home_page.hide()
     login_page.pack(fill="both", expand=True)  # #62B6CB
 
     # center frame w/ border
