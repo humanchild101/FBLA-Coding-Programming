@@ -11,6 +11,7 @@ import re #for regex
 
 
 root = root_window.root_init()
+root.configure(fg_color="#1B4965")
 account_create = ctk.CTkFrame(root, fg_color="#1B4965")
 entry_fields = []
 #ALL Entry Fields
@@ -55,8 +56,11 @@ def hide():
     account_create.forget()
 
 def show():
+    root.configure(fg_color="#1B4965")
     import login
+    import home_page
     login.hide()
+    home_page.hide()
     account_create.pack(fill="both", expand=True)  # #62B6CB
     center_border = ctk.CTkFrame(account_create, fg_color = "#BEE9E8", corner_radius=20, width = 620, height= 640)
     center_border.place(relx= 0.5, rely = 0.5, anchor = "center")
@@ -144,4 +148,3 @@ def show():
 if __name__ == "__main__":
     show()
     hide()
-
