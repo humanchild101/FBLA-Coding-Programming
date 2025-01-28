@@ -5,12 +5,20 @@ from tkinter import messagebox
 import root_window
 from root_window import *
 import datetime
+import PIL
 from PIL import Image
 
 
 root = root_window.root_init()
 home_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
 notes_var = tk.StringVar()
+
+# I WILL CHANGE THE FILE PATHS LATER ONCE WE GET RID OF VENV
+face1 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_happy.png"), size=(100, 100))
+face2 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/happy.png"), size=(100, 100))
+face3 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/neutral.png"), size=(100, 100))
+face4 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/sad.png"), size=(100, 100))
+face5 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_sad.png"), size=(100, 100))
 
 
 #SHARVIKAAAAAAA you have to put the txt they enter in the database and then save it every time it updates.. i put the notes_var variable for now, but idk you might have to replace that w/ something in the database
@@ -229,12 +237,6 @@ def show():
     status_text = ctk.CTkLabel(status_frame, width=20, height=15, corner_radius=10, text_color="#0C2B3E", font=("Arial", 30, "bold"), text="Choose\nYour Status!")
     status_text.place(relx=0.5, rely=0.048, anchor="center")
 
-    #I WILL CHANGE THE FILE PATHS LATER ONCE WE GET RID OF VENV
-    face1 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_happy.png"), size=(100,100))
-    face2 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/happy.png"), size=(100, 100))
-    face3 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/neutral.png"),size=(100, 100))
-    face4 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/sad.png"), size=(100, 100))
-    face5 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_sad.png"), size=(100, 100))
 
 
     very_happy = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face1, text = "", hover_color="#FFFFFF", width=10, height=10, corner_radius=5)
@@ -249,13 +251,11 @@ def show():
     sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face4, hover_color="#FFFFFF",width=10, height=10, corner_radius=5)
     sad.place(relx=0.5, rely=0.72, anchor="center")
 
-    very_sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face5, hover_color="#FFFFFF", width=10, height=10, corner_radius=5)
+    very_sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face5, hover_color="#FFFFFF", width=10, height=10, corner_radius=5, )
     very_sad.place(relx=0.5, rely=0.90, anchor="center")
 
 
 
-show()
-root.mainloop()
 
 
 if __name__ == "__main__":
