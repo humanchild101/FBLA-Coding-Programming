@@ -11,16 +11,32 @@ from PIL import Image
 
 root = root_window.root_init()
 home_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
+
+top_nav = ctk.CTkFrame(home_page, fg_color="#33739A", height=70, corner_radius=0)
+welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=500, text="")
+user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70)
+
 notes_var = tk.StringVar()
 
 # I WILL CHANGE THE FILE PATHS LATER ONCE WE GET RID OF VENV
-face1 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_happy.png"), size=(100, 100))
-face2 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/happy.png"), size=(100, 100))
-face3 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/neutral.png"), size=(100, 100))
-face4 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/sad.png"), size=(100, 100))
-face5 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_sad.png"), size=(100, 100))
+face1 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_happy.png"), size=(70,70))
+face2 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/happy.png"), size=(70,70))
+face3 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/neutral.png"), size=(70,70))
+face4 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/sad.png"), size=(70,70))
+face5 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_sad.png"), size=(70,70))
 
+status_area = ctk.CTkLabel(user_label, text="", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70, width = 80)
 
+def on_v_happy():
+    status_area.configure(image = face1)
+def on_happy():
+    status_area.configure(image = face2)
+def on_neu():
+    status_area.configure(image = face3)
+def on_sad():
+    status_area.configure(image = face4)
+def on_v_sad():
+    status_area.configure(image = face5)
 #SHARVIKAAAAAAA you have to put the txt they enter in the database and then save it every time it updates.. i put the notes_var variable for now, but idk you might have to replace that w/ something in the database
 def update_notes_var(text_box):
     notes_var.set(text_box.get("0.0", "end-1c"))
@@ -44,16 +60,15 @@ def show():
     login.hide()
     create_account.hide()
     home_page.pack(fill="both", expand=True)  # #62B6CB
-    top_nav = ctk.CTkFrame(home_page, fg_color="#33739A", height=70, corner_radius=0)
     top_nav.grid(row = 0, column = 0, columnspan =4, sticky ="nw")
 
 
     # welcome and user sign
-    welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx = 20, height = 80, width =500, text = "")
     welcome_label.grid(row = 0, column = 0)
     #SHARVIKAAAAA USER NAME HEREEEE (ignore my uppercase im just hoping you see the comments among the rest)
-    user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color= "#1B4965",font=("Arial", 30, "bold"), text_color="#BEE9E8", padx = 20, height = 70)
     user_label.grid(row = 0, column = 0, sticky ="w", padx = 2)
+
+    status_area.grid(row = 0, column = 1, sticky = "w", padx = 2)
 
     #ADD SMILY FACE HERE ^
 
@@ -239,23 +254,23 @@ def show():
 
 
 
-    very_happy = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face1, text = "", hover_color="#FFFFFF", width=10, height=10, corner_radius=5)
+    very_happy = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face1, text = "", hover_color="#FFFFFF", width=10, height=10, corner_radius=5, command = on_v_happy)
     very_happy.place(relx=0.5, rely=0.18, anchor="center")
 
-    happy = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face2,text = "", hover_color="#FFFFFF", width=10, height=10, corner_radius=5)
+    happy = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face2,text = "", hover_color="#FFFFFF", width=10, height=10, corner_radius=5, command = on_happy)
     happy.place(relx=0.5, rely=0.36, anchor="center")
 
-    neutral = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face3,text = "",hover_color="#FFFFFF", width=10, height=10, corner_radius=5)
+    neutral = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face3,text = "",hover_color="#FFFFFF", width=10, height=10, corner_radius=5, command = on_neu)
     neutral.place(relx=0.5, rely=0.54, anchor="center")
 
-    sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face4, hover_color="#FFFFFF",width=10, height=10, corner_radius=5)
+    sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face4, hover_color="#FFFFFF",width=10, height=10, corner_radius=5, command = on_sad)
     sad.place(relx=0.5, rely=0.72, anchor="center")
 
-    very_sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face5, hover_color="#FFFFFF", width=10, height=10, corner_radius=5, )
+    very_sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face5, hover_color="#FFFFFF", width=10, height=10, corner_radius=5, command = on_v_sad)
     very_sad.place(relx=0.5, rely=0.90, anchor="center")
 
-
-
+show()
+root.mainloop()
 
 
 if __name__ == "__main__":
