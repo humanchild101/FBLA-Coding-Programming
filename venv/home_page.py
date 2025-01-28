@@ -25,7 +25,7 @@ face3 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programm
 face4 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/sad.png"), size=(70,70))
 face5 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_sad.png"), size=(70,70))
 
-status_area = ctk.CTkLabel(user_label, text="", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70, width = 80)
+status_area = ctk.CTkLabel(user_label, text="", image=face1, fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70, width = 80)
 
 def on_v_happy():
     status_area.configure(image = face1)
