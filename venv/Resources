@@ -28,4 +28,16 @@ Tools
 6. datetime
 7. re
 8. psycopg2
->>>>>>> dadbdd71fd3b7bb51ef506e1a6df6a261c0ad0da
+9. Pillow
+
+
+
+
+Colors:
+
+
+# bg = #1B4965
+# border = #BEE9E8
+# frame = #62B6CB
+# labels = #3095AE    (hover color = #246690)
+# entries = #BEE9E8

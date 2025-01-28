@@ -5,6 +5,8 @@ from tkinter import messagebox
 import root_window
 from root_window import *
 import datetime
+from PIL import Image
+
 
 root = root_window.root_init()
 home_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
@@ -56,18 +58,18 @@ def show():
     #Add Home icon here ^
 
     #this is for other icons like settings and menu bar to open side navigation menu (nav menu will also include home, tab 1, tab 2, log out, and settings)
-    icon_label = ctk.CTkFrame(top_nav, fg_color="#1B4965", height=70, width=500, corner_radius=0)
+    icon_label = ctk.CTkFrame(top_nav, fg_color="#1B4965", height=70, width=550, corner_radius=0)
     icon_label.grid(row=0, column=2, ipadx=28, ipady = 5)
     #button for nav menu
-    sidenav_button = ctk.CTkButton(icon_label, text="Menu", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=130, height = 50, corner_radius=5)
+    sidenav_button = ctk.CTkButton(icon_label, text="Menu", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=190, height = 50, corner_radius=5)
     sidenav_button.grid(row = 0, column = 0, padx = 15,pady = 10, sticky = "w")
-    #button for settings
-    settings_button = ctk.CTkButton(icon_label, text="Settings", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=130, height = 50, corner_radius=5)
-    settings_button.grid(row = 0, column = 1, padx =15, pady = 10, sticky = "e")
     # button for logout
-    settings_button = ctk.CTkButton(icon_label, text="Log Out", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=130, height=50, corner_radius=5, command = login.show)
-    settings_button.grid(row=0, column=3, padx=15, pady=10, sticky="e")
+    logoutbutton = ctk.CTkButton(icon_label, text="Log Out", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=190, height=50, corner_radius=5, command = login.show)
+    logoutbutton.grid(row=0, column=2, padx=15, pady=10, sticky="e")
 
+    '''    #button for settings
+    settings_button = ctk.CTkButton(icon_label, text="Settings", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=130, height = 50, corner_radius=5)
+    settings_button.grid(row = 0, column = 1, padx =15, pady = 10, sticky = "e")'''
 
     #frame for putting recent spending info
     rec_spen_frame = ctk.CTkFrame(home_page, fg_color = "#62B6CB", corner_radius=20, width = 400, height= 270)
@@ -163,15 +165,91 @@ def show():
     your_budget = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 20, "bold"), text="Your Budget in " + current_month, corner_radius=100, width=200, height=30)
     your_budget.grid(row = 0, column = 0, padx = 10, pady = 10, sticky = "w") #relx=0.04, rely=0.03
 
-
-
     canvas = ctk.CTkCanvas(monthly_budget_frame, width=430, height=3, bg="#1B4965", highlightthickness=0)
     canvas.grid(row=1, column=0, columnspan=2, pady=10, padx = 20, sticky = "w")
+
+    # frame for wants progress bar
+    wants_frame = ctk.CTkFrame(monthly_budget_frame, fg_color="#539CCA", corner_radius=10, width=450, height=50)
+    wants_frame.grid(row = 2, column = 0, columnspan = 2, pady = 30, padx = 10, sticky = "w")
+
+    wants_label = ctk.CTkLabel(wants_frame,text="Wants",font=("Arial", 16, "bold"),text_color="#0C2B3E")
+    wants_label.place(relx=0.05, rely=0.5, anchor="w")  # Position the label on the left side of the frame
+
+    # Add a progress bar for wants SHARVIKAAAAA --> progress is set based on budget which is set in inputs by the user
+    wants_progress = ctk.CTkProgressBar(wants_frame, width=280, height=20, corner_radius=10, fg_color="#BEE9E8", border_color= "#1B4965", border_width= 1)
+    wants_progress.place(relx=0.2, rely=0.5, anchor="w")  # Position the progress bar next to the label
+    wants_progress.set(0.1)
+
+    #X and Y are the amount used and total budget for wants respectilvely SHAVRIKAAAaAAAAAAA
+    wants_left = ctk.CTkLabel(wants_frame, width = 20, height = 15, corner_radius= 10, fg_color="#539CCA", text_color="#0C2B3E", font = ("Arial", 16, "bold"), text = "$X/$Y")
+    wants_left.place(relx = 0.9, rely =0.5, anchor = "center")
+
+    # frame for total progress bar
+    needs_frame = ctk.CTkFrame(monthly_budget_frame, fg_color="#539CCA", corner_radius=10, width=450, height=50)
+    needs_frame.grid(row=3, column=0, columnspan=2, pady=30, padx=10, sticky="w")
+
+    needs_label = ctk.CTkLabel(needs_frame, text="Needs", font=("Arial", 16, "bold"), text_color="#0C2B3E")
+    needs_label.place(relx=0.05, rely=0.5, anchor="w")  # Position the label on the left side of the frame
+
+    # Add a progress bar for wants SHARVIKAAAAA --> progress is set based on budget which is set in inputs by the user
+    needs_progress = ctk.CTkProgressBar(needs_frame, width=280, height=20, corner_radius=10, fg_color="#BEE9E8",
+                                        border_color="#1B4965", border_width=1)
+    needs_progress.place(relx=0.2, rely=0.5, anchor="w")  # Position the progress bar next to the label
+    needs_progress.set(0.1)
+
+    # X and Y are the amount used and total budget for needs respectilvely SHAVRIKAAAaAAAAAAA
+    needs_left = ctk.CTkLabel(needs_frame, width=20, height=15, corner_radius=10, fg_color="#539CCA",text_color="#0C2B3E", font=("Arial", 16, "bold"), text="$X/$Y")
+    needs_left.place(relx=0.9, rely=0.5, anchor="center")
+
+    # frame for total progress bar
+    total_frame = ctk.CTkFrame(monthly_budget_frame, fg_color="#539CCA", corner_radius=10, width=450, height=50)
+    total_frame.grid(row=4, column=0, columnspan=2, pady=30, padx=10, sticky="w")
+
+    total_label = ctk.CTkLabel(total_frame, text="Total", font=("Arial", 16, "bold"), text_color="#0C2B3E")
+    total_label.place(relx=0.05, rely=0.5, anchor="w")  # Position the label on the left side of the frame
+
+    # Add a progress bar for wants SHARVIKAAAAA --> progress is set based on budget which is set in inputs by the user
+    total_progress = ctk.CTkProgressBar(total_frame, width=280, height=20, corner_radius=10, fg_color="#BEE9E8",border_color="#1B4965", border_width=1)
+    total_progress.place(relx=0.2, rely=0.5, anchor="w")  # Position the progress bar next to the label
+    total_progress.set(0.1)
+
+    # X and Y are the amount used and total budget for total respectilvely SHAVRIKAAAaAAAAAAA
+    total_left = ctk.CTkLabel(total_frame, width=20, height=15, corner_radius=10, fg_color="#539CCA",text_color="#0C2B3E", font=("Arial", 16, "bold"), text="$X/$Y")
+    total_left.place(relx=0.9, rely=0.5, anchor="center")
+
+    #displays percent of total budget used SHARVIKAAAAAAAAAA TOTAL BUDGET MUST BE UPDATED HERE> THIS IS BASICALLY THE WANTS + NEEDS USED / TOTALL BUDGET
+    percent_budget = ctk.CTkLabel(monthly_budget_frame, fg_color = "#62B6CB", corner_radius=20, text_color = "black", text = "XYZ% of Budget Used", font = ("Arial", 30, "bold"))
+    percent_budget.grid(row=5, column=0, columnspan=2, pady=25, ipady = 10, padx=10, sticky="ew")
 
     # status frame
     status_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", corner_radius=20, width=238, height=850)
     status_frame.place_configure(relx = 0.785, rely = 0.1)
 
+    # choose your status
+    status_text = ctk.CTkLabel(status_frame, width=20, height=15, corner_radius=10, text_color="#0C2B3E", font=("Arial", 30, "bold"), text="Choose\nYour Status!")
+    status_text.place(relx=0.5, rely=0.048, anchor="center")
+
+    face1 = ctk.CTkImage(light_image=Image.open("from_path"), size=(90, 90))
+
+    very_happy = ctk.CTkButton(status_frame, fg_color="#E4FFFF", image = face1, text = "", hover_color="#FFFFFF", width=50, height=50, corner_radius=40)
+    very_happy.place(relx=0.5, rely=0.18, anchor="center")
+
+    happy = ctk.CTkButton(status_frame, fg_color="#E4FFFF", text = "", hover_color="#FFFFFF", width=130, height=130, corner_radius=40)
+    happy.place(relx=0.5, rely=0.36, anchor="center")
+
+    neutral = ctk.CTkButton(status_frame, fg_color="#E4FFFF", text = "",hover_color="#FFFFFF", width=130, height=130, corner_radius=40)
+    neutral.place(relx=0.5, rely=0.54, anchor="center")
+
+    sad = ctk.CTkButton(status_frame, fg_color="#E4FFFF",text = "", hover_color="#FFFFFF", width=130, height=130, corner_radius=40)
+    sad.place(relx=0.5, rely=0.72, anchor="center")
+
+    very_sad = ctk.CTkButton(status_frame, fg_color="#E4FFFF",text = "", hover_color="#FFFFFF", width=130, height=130, corner_radius=40)
+    very_sad.place(relx=0.5, rely=0.90, anchor="center")
+
+
+
+show()
+root.mainloop()
 
 
 if __name__ == "__main__":
