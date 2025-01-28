@@ -229,21 +229,27 @@ def show():
     status_text = ctk.CTkLabel(status_frame, width=20, height=15, corner_radius=10, text_color="#0C2B3E", font=("Arial", 30, "bold"), text="Choose\nYour Status!")
     status_text.place(relx=0.5, rely=0.048, anchor="center")
 
-    face1 = ctk.CTkImage(light_image=Image.open("from_path"), size=(90, 90))
+    #I WILL CHANGE THE FILE PATHS LATER ONCE WE GET RID OF VENV
+    face1 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_happy.png"), size=(100,100))
+    face2 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/happy.png"), size=(100, 100))
+    face3 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/neutral.png"),size=(100, 100))
+    face4 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/sad.png"), size=(100, 100))
+    face5 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_sad.png"), size=(100, 100))
 
-    very_happy = ctk.CTkButton(status_frame, fg_color="#E4FFFF", image = face1, text = "", hover_color="#FFFFFF", width=50, height=50, corner_radius=40)
+
+    very_happy = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face1, text = "", hover_color="#FFFFFF", width=10, height=10, corner_radius=5)
     very_happy.place(relx=0.5, rely=0.18, anchor="center")
 
-    happy = ctk.CTkButton(status_frame, fg_color="#E4FFFF", text = "", hover_color="#FFFFFF", width=130, height=130, corner_radius=40)
+    happy = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face2,text = "", hover_color="#FFFFFF", width=10, height=10, corner_radius=5)
     happy.place(relx=0.5, rely=0.36, anchor="center")
 
-    neutral = ctk.CTkButton(status_frame, fg_color="#E4FFFF", text = "",hover_color="#FFFFFF", width=130, height=130, corner_radius=40)
+    neutral = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face3,text = "",hover_color="#FFFFFF", width=10, height=10, corner_radius=5)
     neutral.place(relx=0.5, rely=0.54, anchor="center")
 
-    sad = ctk.CTkButton(status_frame, fg_color="#E4FFFF",text = "", hover_color="#FFFFFF", width=130, height=130, corner_radius=40)
+    sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face4, hover_color="#FFFFFF",width=10, height=10, corner_radius=5)
     sad.place(relx=0.5, rely=0.72, anchor="center")
 
-    very_sad = ctk.CTkButton(status_frame, fg_color="#E4FFFF",text = "", hover_color="#FFFFFF", width=130, height=130, corner_radius=40)
+    very_sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face5, hover_color="#FFFFFF", width=10, height=10, corner_radius=5)
     very_sad.place(relx=0.5, rely=0.90, anchor="center")
 
 
