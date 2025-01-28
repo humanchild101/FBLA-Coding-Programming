@@ -4,6 +4,8 @@ from tkinter import messagebox
 import root_window
 from root_window import *
 import db_connect as db
+from session_manager import SessionManager
+import time
 
 
 root = root_window.root_init()
@@ -15,6 +17,8 @@ root = root_window.root_init()
 # entries = #BEE9E8
 
 #------------------------
+session = SessionManager()
+session.clear_session()
 login_page = ctk.CTkFrame(root, fg_color="#1B4965")
 user_var = tk.StringVar(value="Username Here")  # 1B4965 and then BEE9E8
 password_var = tk.StringVar(value="Password Here")  # 1B4965 and then BEE9E8
@@ -34,14 +38,19 @@ def on_login():
             messagebox.showwarning("No input", "Please enter a password")
             return
     if username_in and password_in:
-        query = "SELECT username,user_password FROM users WHERE username = '%s'" %username_in
-        print(query)
+        session = SessionManager()
+        session.clear_session()
+        query = "SELECT username,user_password,user_id,first_name,last_name FROM users WHERE username = '%s'" %username_in
         res = db.execute_query(query)
-        print(res)
         
         if res:
             if res[1] == password_in:
-                messagebox.showinfo("Success", "Login Successful")
+                session.set("username", res[0])
+                session.set("user_id", res[2])
+                session.set("first_name", res[3])
+                session.set("last_name", res[4])
+                import home_page
+                home_page.show()
             else:
                 messagebox.showwarning("Error", "Incorrect password")
 
