@@ -59,8 +59,10 @@ def show():
     root.configure(fg_color="#1B4965")
     import login
     import home_page
+    import inputs
     login.hide()
     home_page.hide()
+    inputs.hide()
     account_create.pack(fill="both", expand=True)  # #62B6CB
     center_border = ctk.CTkFrame(account_create, fg_color = "#BEE9E8", corner_radius=20, width = 620, height= 640)
     center_border.place(relx= 0.5, rely = 0.5, anchor = "center")

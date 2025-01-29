@@ -7,6 +7,7 @@ from root_window import *
 import datetime
 import PIL
 from PIL import Image
+import SlidePanel
 
 
 root = root_window.root_init()
@@ -57,8 +58,10 @@ def show():
 
     import login
     import create_account
+    import inputs
     login.hide()
     create_account.hide()
+    inputs.hide()
     home_page.pack(fill="both", expand=True)  # #62B6CB
     top_nav.grid(row = 0, column = 0, columnspan =4, sticky ="nw")
 
@@ -83,16 +86,7 @@ def show():
     #this is for other icons like settings and menu bar to open side navigation menu (nav menu will also include home, tab 1, tab 2, log out, and settings)
     icon_label = ctk.CTkFrame(top_nav, fg_color="#1B4965", height=70, width=550, corner_radius=0)
     icon_label.grid(row=0, column=2, ipadx=28, ipady = 5)
-    #button for nav menu
-    sidenav_button = ctk.CTkButton(icon_label, text="Menu", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=190, height = 50, corner_radius=5)
-    sidenav_button.grid(row = 0, column = 0, padx = 15,pady = 10, sticky = "w")
-    # button for logout
-    logoutbutton = ctk.CTkButton(icon_label, text="Log Out", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=190, height=50, corner_radius=5, command = login.show)
-    logoutbutton.grid(row=0, column=2, padx=15, pady=10, sticky="e")
 
-    '''    #button for settings
-    settings_button = ctk.CTkButton(icon_label, text="Settings", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=130, height = 50, corner_radius=5)
-    settings_button.grid(row = 0, column = 1, padx =15, pady = 10, sticky = "e")'''
 
     #frame for putting recent spending info
     rec_spen_frame = ctk.CTkFrame(home_page, fg_color = "#62B6CB", corner_radius=20, width = 400, height= 270)
@@ -269,8 +263,31 @@ def show():
     very_sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face5, hover_color="#FFFFFF", width=10, height=10, corner_radius=5, command = on_v_sad)
     very_sad.place(relx=0.5, rely=0.90, anchor="center")
 
-show()
-root.mainloop()
+    side_menu = SlidePanel.SlidePanel(home_page, 1.05, 0.8)
+
+    menu = ctk.CTkLabel(side_menu, text="Menu", font=("Arial", 24, "bold"), fg_color="#33739A",text_color="white", width=240, height=70, corner_radius=0)
+    menu.place(relx=0.01, rely=0)
+
+    home = ctk.CTkButton(side_menu, text="Home", font=("Arial", 24, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=240, height = 50, corner_radius=0,border_color="#1B4965", border_width=2)
+    home.place(relx = 0.01, rely = 0.08)
+
+    input = ctk.CTkButton(side_menu, text="Update Finances", font=("Arial", 24, "bold"), fg_color="#BEE9E8", hover_color="#9ACCD9", text_color="black", width=240, height=50, corner_radius=0, border_color="#1B4965", border_width=2, command = inputs.show)
+    input.place(relx=0.01, rely=0.125)
+
+    view = ctk.CTkButton(side_menu, text="View Finances", font=("Arial", 24, "bold"), fg_color="#BEE9E8", hover_color="#9ACCD9", text_color="black", width=240, height=50, corner_radius=0, border_color="#1B4965", border_width=2)
+    view.place(relx=0.01, rely=0.17)
+
+    #button for nav menu
+    sidenav_button = ctk.CTkButton(icon_label, text="Menu", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=190, height = 50, corner_radius=5, command = side_menu.animate)
+    sidenav_button.grid(row = 0, column = 0, padx = 15,pady = 10, sticky = "w")
+    # button for logout
+    logoutbutton = ctk.CTkButton(icon_label, text="Log Out", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=190, height=50, corner_radius=5, command = login.show)
+    logoutbutton.grid(row=0, column=2, padx=15, pady=10, sticky="e")
+
+    '''    #button for settings
+    settings_button = ctk.CTkButton(icon_label, text="Settings", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=130, height = 50, corner_radius=5)
+    settings_button.grid(row = 0, column = 1, padx =15, pady = 10, sticky = "e")'''
+
 
 
 if __name__ == "__main__":
