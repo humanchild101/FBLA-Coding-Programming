@@ -20,8 +20,8 @@ root = root_window.root_init()
 session = SessionManager()
 session.clear_session()
 login_page = ctk.CTkFrame(root, fg_color="#1B4965")
-user_var = tk.StringVar(value="Username Here")  # 1B4965 and then BEE9E8
-password_var = tk.StringVar(value="Password Here")  # 1B4965 and then BEE9E8
+user_var = tk.StringVar()  # 1B4965 and then BEE9E8
+password_var = tk.StringVar()  # 1B4965 and then BEE9E8
 
 
 def on_login():
