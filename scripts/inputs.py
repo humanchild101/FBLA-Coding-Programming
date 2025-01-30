@@ -7,6 +7,12 @@ import datetime
 import PIL
 from PIL import Image
 import menu_bar
+from session_manager import SessionManager
+
+session = SessionManager()
+
+first_name = session.get("first_name")
+last_name = session.get("last_name")
 
 root = root_window.root_init()
 inputs_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
@@ -14,7 +20,7 @@ inputs_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
 top_nav = ctk.CTkFrame(inputs_page, fg_color="#33739A", height=70, corner_radius=0)
 top_nav.configure(fg_color="#33739A")
 welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=500, text="")
-user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70)
+user_label = ctk.CTkLabel(welcome_label, text=f"Welcome, {first_name} {last_name}!", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70)
 
 notes_var = tk.StringVar()
 
