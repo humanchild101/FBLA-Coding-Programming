@@ -10,3 +10,40 @@ CREATE TABLE IF NOT EXISTS users (
 
 SELECT * FROM users;
 
+
+CREATE TABLE IF NOT EXISTS transactions
+(
+    id SERIAL PRIMARY KEY,
+    income_or_expense VARCHAR(45) NOT NULL,
+    source VARCHAR(45) NOT NULL,
+    date_of_transaction date NOT NULL,
+    need_or_want VARCHAR(5) NOT NULL,
+    note VARCHAR(150) NOT NULL,
+	  amount decimal(10,2),
+    user_id integer,
+    CONSTRAINT fk_user_id FOREIGN KEY (user_id)
+        REFERENCES users (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+insert into transactions (income_or_expense,source,date_of_transaction,need_or_want,note,amount,user_id) 
+values ('income','Salary',TO_DATE('2024-02-20', 'YYYY-MM-dd'),'need','salary',3000.00,32)
+
+DROP TABLE IF EXISTS miscellaneous;
+
+CREATE TABLE IF NOT EXISTS miscellaneous
+(
+    id SERIAL PRIMARY KEY,
+    notes VARCHAR(500),
+    mood VARCHAR(20),
+    user_id integer,
+    CONSTRAINT miscellaneous_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_user_id FOREIGN KEY (user_id)
+        REFERENCES users(user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+
+ALTER TABLE miscellaneous ADD CONSTRAINT user_id_unique UNIQUE (user_id);
