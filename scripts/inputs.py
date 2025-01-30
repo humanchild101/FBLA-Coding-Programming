@@ -13,6 +13,7 @@ session = SessionManager()
 
 first_name = session.get("first_name")
 last_name = session.get("last_name")
+user_id = session.get("user_id")
 
 root = root_window.root_init()
 inputs_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
