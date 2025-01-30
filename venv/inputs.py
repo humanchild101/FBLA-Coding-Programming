@@ -1,8 +1,8 @@
 import customtkinter as ctk
 import tkinter as tk  # for StringVar + messagebox + lines
 from tkinter import messagebox
-#import tkcalendar
-#from tkcalendar import Calendar
+import tkcalendar
+from tkcalendar import Calendar
 import root_window
 from root_window import *
 import datetime
@@ -107,28 +107,30 @@ def show():
     purpose_label.place(relx = 0.001, rely = 0.13)
     purpose_var = tk.StringVar(value="Choose")  # Default value set to 'Need'
     purpose_options = ["Bills/Rent", "Necessities", "Transportation", "Healthcare", "Education", "Donations", "Entertainment", "Other"]
-    purpose_dropdown = ctk.CTkOptionMenu(transactions, variable=purpose_var, values=purpose_options, font=("Arial", 15), height = 40)
+    purpose_dropdown = ctk.CTkOptionMenu(transactions, variable=purpose_var, values=purpose_options, font=("Arial", 15), height = 40, text_color= "black",fg_color= "#BEE9E8", button_color= "#BEE9E8", button_hover_color="#A0D8D3")
     purpose_dropdown.place(relx=0.25, rely=0.13)
 
     # date label + calendar dropdown
     date_label = ctk.CTkLabel(transactions, text="Date: ", font=("Arial", 20, "bold"), fg_color="#62B6CB", corner_radius=5, height = 40, width = 30, text_color="black")
     date_label.place(relx=0.001, rely=0.28, anchor="w")
 
-    '''
+
     calendar = Calendar(transactions, selectmode="day", date_pattern="yyyy-mm-dd", font=("Arial", 12), width=20, background="lightblue", foreground="black", borderwidth=1)
     calendar.place(relx=0.25, rely=0.25, anchor="w")
-    '''
+
 
     # need/want radio buttons
     need_want = ctk.CTkLabel(transactions, text="", fg_color="#62B6CB", corner_radius=5, height = 80, width = 500)
     need_want.place(relx=0.47, rely=0.09, anchor="w")
 
     need_var = tk.StringVar(value="Need")  # Default value set to 'Need'
-    need_radio = ctk.CTkRadioButton(need_want, text="Need", variable=need_var, value="Need", font=("Arial", 20, "bold"), width=70, text_color="black")
+    need_radio = ctk.CTkRadioButton(need_want, text="Need", variable=need_var, value="Need", font=("Arial", 20, "bold"), width=60, text_color="black", fg_color="#BEE9E8",hover_color="#1B4965")
     need_radio.place(relx=0.1, rely=0.5, anchor="w")
-    want_radio = ctk.CTkRadioButton(need_want, text="Want", variable=need_var, value="Want", font=("Arial", 20, "bold"), width=70, text_color="black")
+    want_radio = ctk.CTkRadioButton(need_want, text="Want", variable=need_var, value="Want", font=("Arial", 20, "bold"), width=60, text_color="black", fg_color="#BEE9E8",hover_color="#1B4965")
     want_radio.place(relx=0.5, rely=0.5, anchor="w")
 
+show()
+root.mainloop()
 
 if __name__ == "__main__":
     show()
