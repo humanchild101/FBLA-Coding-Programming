@@ -7,29 +7,38 @@ from root_window import *
 import datetime
 import PIL
 from PIL import Image
-from session_manager import SessionManager
-
+import menu_bar
 
 root = root_window.root_init()
 home_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
+
+top_nav = ctk.CTkFrame(home_page, fg_color="#33739A", height=70, corner_radius=0)
+top_nav.configure(fg_color="#33739A")
+welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=500, text="")
+user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70)
+
 notes_var = tk.StringVar()
 
-session = SessionManager()
-
-username = session.get("username")
-user_id = session.get("user_id")
-first_name = session.get("first_name")
-last_name = session.get("last_name")
-
 # I WILL CHANGE THE FILE PATHS LATER ONCE WE GET RID OF VENV
-face1 = ctk.CTkImage(light_image=Image.open("faces/very_happy.png"), size=(100, 100))
-face2 = ctk.CTkImage(light_image=Image.open("faces/happy.png"), size=(100, 100))
-face3 = ctk.CTkImage(light_image=Image.open("faces/neutral.png"), size=(100, 100))
-face4 = ctk.CTkImage(light_image=Image.open("faces/sad.png"), size=(100, 100))
-face5 = ctk.CTkImage(light_image=Image.open("faces/very_sad.png"), size=(100, 100))
+face1 = ctk.CTkImage(light_image=Image.open("faces/very_happy.png"), size=(70,70))
+face2 = ctk.CTkImage(light_image=Image.open("faces/happy.png"), size=(70,70))
+face3 = ctk.CTkImage(light_image=Image.open("faces/neutral.png"), size=(70,70))
+face4 = ctk.CTkImage(light_image=Image.open("faces/sad.png"), size=(70,70))
+face5 = ctk.CTkImage(light_image=Image.open("faces/very_sad.png"), size=(70,70))
 
+status_area = ctk.CTkLabel(user_label, text="", image=face1, fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70, width = 80)
 
-#SHARVIKAAAAAAA you have to put the txt they enter in the database and then save it every time it updates.. i put the notes_var variable for now, but idk you might have to replace that w/ something in the database
+def on_v_happy():
+    status_area.configure(image = face1)
+def on_happy():
+    status_area.configure(image = face2)
+def on_neu():
+    status_area.configure(image = face3)
+def on_sad():
+    status_area.configure(image = face4)
+def on_v_sad():
+    status_area.configure(image = face5)
+
 def update_notes_var(text_box):
     notes_var.set(text_box.get("0.0", "end-1c"))
 
@@ -47,21 +56,29 @@ def hide():
 def show():
     root.configure(fg_color="#BEE9E8")
 
+
     import login
     import create_account
+    import inputs
     login.hide()
     create_account.hide()
+    inputs.hide()
+
+    side_menu = menu_bar.menu_init(home_page)
+
+    side_menu.forget()
+    menu_bar.animate_backward()
+
     home_page.pack(fill="both", expand=True)  # #62B6CB
-    top_nav = ctk.CTkFrame(home_page, fg_color="#33739A", height=70, corner_radius=0)
     top_nav.grid(row = 0, column = 0, columnspan =4, sticky ="nw")
 
 
     # welcome and user sign
-    welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx = 20, height = 80, width =500, text = "")
     welcome_label.grid(row = 0, column = 0)
     #SHARVIKAAAAA USER NAME HEREEEE (ignore my uppercase im just hoping you see the comments among the rest)
-    user_label = ctk.CTkLabel(welcome_label, text=f"Welcome, {first_name} {last_name}!  ", fg_color= "#1B4965",font=("Arial", 30, "bold"), text_color="#BEE9E8", padx = 20, height = 70)
     user_label.grid(row = 0, column = 0, sticky ="w", padx = 2)
+
+    status_area.grid(row = 0, column = 1, sticky = "w", padx = 2)
 
     #ADD SMILY FACE HERE ^
 
@@ -71,21 +88,22 @@ def show():
     tab_label = ctk.CTkLabel(home_label, text="HOME", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx = 20, height = 70, width = 100)
     tab_label.grid(row = 0, column = 0, padx = 2, sticky = "w")
 
+
     #Add Home icon here ^
+
 
     #this is for other icons like settings and menu bar to open side navigation menu (nav menu will also include home, tab 1, tab 2, log out, and settings)
     icon_label = ctk.CTkFrame(top_nav, fg_color="#1B4965", height=70, width=550, corner_radius=0)
     icon_label.grid(row=0, column=2, ipadx=28, ipady = 5)
+
     #button for nav menu
-    sidenav_button = ctk.CTkButton(icon_label, text="Menu", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=190, height = 50, corner_radius=5)
+    sidenav_button = ctk.CTkButton(icon_label, text="Menu", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=190, height = 50, corner_radius=5, command = menu_bar.animate)
     sidenav_button.grid(row = 0, column = 0, padx = 15,pady = 10, sticky = "w")
     # button for logout
     logoutbutton = ctk.CTkButton(icon_label, text="Log Out", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=190, height=50, corner_radius=5, command = login.show)
     logoutbutton.grid(row=0, column=2, padx=15, pady=10, sticky="e")
 
-    '''    #button for settings
-    settings_button = ctk.CTkButton(icon_label, text="Settings", font=("Arial", 20, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=130, height = 50, corner_radius=5)
-    settings_button.grid(row = 0, column = 1, padx =15, pady = 10, sticky = "e")'''
+
 
     #frame for putting recent spending info
     rec_spen_frame = ctk.CTkFrame(home_page, fg_color = "#62B6CB", corner_radius=20, width = 400, height= 270)
@@ -120,6 +138,7 @@ def show():
     d3.place_configure(relx=0.15, rely=0.75)
 
 
+
     #Recent transactions + deposit for x purpose and from x source
     trandeps_frame = ctk.CTkFrame(home_page, fg_color = "#62B6CB", corner_radius=20, width = 400, height= 220)
     trandeps_frame.grid(row = 2, column = 0, padx = 20, sticky = "nw")
@@ -146,6 +165,9 @@ def show():
     hp2 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text="Highest Deposits #2   -   Total $$", corner_radius=100, width=200)
     hp2.place_configure(relx=0.07, rely=0.72)
 
+
+
+
     #total balance frame SHARVIKAAAAAA total balance needed
     total_balance_frame = ctk.CTkFrame(home_page, fg_color = "#62B6CB", corner_radius=20, width =400, height= 320)
     total_balance_frame.grid(row = 3, column = 0, padx = 20, pady = 20, sticky = "nw")
@@ -155,6 +177,9 @@ def show():
 
     balance = ctk.CTkLabel(total_balance_frame, fg_color="#62B6CB", corner_radius=20, text_color="black", text="$0.00", font=("Arial", 70, "bold"))
     balance.place(relx=0.02, rely=0.45)
+
+
+
 
     #notes SHARVIKAAAA here you need to save this stuff in the database. i will create a new function for saving and editing and stuff
     notes_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", width = 470, height = 250, corner_radius=20)
@@ -172,6 +197,10 @@ def show():
 
     save_button = ctk.CTkButton(notes_frame, text="Save", font=("Arial", 15, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=130, height = 30, corner_radius=15, command = lambda: save_notes(notes_box))
     save_button.place(relx = 0.6, rely = 0.872)
+
+
+
+
 
     # monthly budget frame
     monthly_budget_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", corner_radius=20, width=475, height=510)
@@ -237,6 +266,8 @@ def show():
     percent_budget = ctk.CTkLabel(monthly_budget_frame, fg_color = "#62B6CB", corner_radius=20, text_color = "black", text = "XYZ% of Budget Used", font = ("Arial", 30, "bold"))
     percent_budget.grid(row=5, column=0, columnspan=2, pady=25, ipady = 10, padx=10, sticky="ew")
 
+
+
     # status frame
     status_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", corner_radius=20, width=238, height=850)
     status_frame.place_configure(relx = 0.785, rely = 0.1)
@@ -245,24 +276,20 @@ def show():
     status_text = ctk.CTkLabel(status_frame, width=20, height=15, corner_radius=10, text_color="#0C2B3E", font=("Arial", 30, "bold"), text="Choose\nYour Status!")
     status_text.place(relx=0.5, rely=0.048, anchor="center")
 
-
-
-    very_happy = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face1, text = "", hover_color="#FFFFFF", width=10, height=10, corner_radius=5)
+    very_happy = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face1, text = "", hover_color="#FFFFFF", width=10, height=10, corner_radius=5, command = on_v_happy)
     very_happy.place(relx=0.5, rely=0.18, anchor="center")
 
-    happy = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face2,text = "", hover_color="#FFFFFF", width=10, height=10, corner_radius=5)
+    happy = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face2,text = "", hover_color="#FFFFFF", width=10, height=10, corner_radius=5, command = on_happy)
     happy.place(relx=0.5, rely=0.36, anchor="center")
 
-    neutral = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face3,text = "",hover_color="#FFFFFF", width=10, height=10, corner_radius=5)
+    neutral = ctk.CTkButton(status_frame, fg_color="#CEFFFF", image = face3,text = "",hover_color="#FFFFFF", width=10, height=10, corner_radius=5, command = on_neu)
     neutral.place(relx=0.5, rely=0.54, anchor="center")
 
-    sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face4, hover_color="#FFFFFF",width=10, height=10, corner_radius=5)
+    sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face4, hover_color="#FFFFFF",width=10, height=10, corner_radius=5, command = on_sad)
     sad.place(relx=0.5, rely=0.72, anchor="center")
 
-    very_sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face5, hover_color="#FFFFFF", width=10, height=10, corner_radius=5, )
+    very_sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face5, hover_color="#FFFFFF", width=10, height=10, corner_radius=5, command = on_v_sad)
     very_sad.place(relx=0.5, rely=0.90, anchor="center")
-
-
 
 
 
