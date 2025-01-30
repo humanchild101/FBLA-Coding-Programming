@@ -61,7 +61,7 @@ def show():
     # view tab name
     inputs_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx = 20, height = 80, width =200, text = "")
     inputs_label.grid(row=0, column = 1, padx = 12)
-    tab_label = ctk.CTkLabel(inputs_label, text="VIEW FINANCES", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx = 20, height = 70, width = 100)
+    tab_label = ctk.CTkLabel(inputs_label, text="VIEW FINANCES", font=("Arial", 25, "bold"), text_color="#BEE9E8", padx = 20, height = 70, width = 100)
     tab_label.grid(row = 0, column = 0, padx = 2, sticky = "w")
 
     #Add inputs icon here ^

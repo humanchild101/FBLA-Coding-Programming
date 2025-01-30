@@ -52,9 +52,11 @@ def show():
     import create_account
     import home_page
     import inputs
+    import view
     create_account.hide()
     home_page.hide()
     inputs.hide()
+    view.hide()
     login_page.pack(fill="both", expand=True)  # #62B6CB
 
     # center frame w/ border

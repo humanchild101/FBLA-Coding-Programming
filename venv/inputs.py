@@ -38,10 +38,12 @@ def show():
     import login
     import create_account
     import home_page
+    import view
 
     login.hide()
     create_account.hide()
     home_page.hide()
+    view.hide()
     inputs_page.pack(fill="both", expand=True)  # #62B6CB
     top_nav.grid(row = 0, column = 0, columnspan =4, sticky ="nw")
 
@@ -127,8 +129,6 @@ def show():
     want_radio = ctk.CTkRadioButton(need_want, text="Want", variable=need_var, value="Want", font=("Arial", 20, "bold"), width=70, text_color="black")
     want_radio.place(relx=0.5, rely=0.5, anchor="w")
 
-show()
-root.mainloop()
 
 if __name__ == "__main__":
     show()

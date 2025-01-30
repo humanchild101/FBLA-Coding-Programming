@@ -60,9 +60,12 @@ def show():
     import login
     import create_account
     import inputs
+    import view
+
     login.hide()
     create_account.hide()
     inputs.hide()
+    view.hide()
 
     side_menu = menu_bar.menu_init(home_page)
 
