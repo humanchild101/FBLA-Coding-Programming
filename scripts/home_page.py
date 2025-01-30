@@ -27,6 +27,10 @@ highest_expense = db.get_highest_details(user_id,"expense")
 
 total =db.get_total_balance(user_id)
 
+query_for_notes = f"select notes from miscellaneous where user_id={user_id}"
+note_res = db.execute_query(query_for_notes)
+print(note_res[0])
+    
 
 top_nav = ctk.CTkFrame(home_page, fg_color="#33739A", height=70, corner_radius=0)
 top_nav.configure(fg_color="#33739A")
@@ -34,6 +38,9 @@ welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, wi
 user_label = ctk.CTkLabel(welcome_label, text=f"Welcome, {first_name} {last_name}!", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70)
 
 notes_var = tk.StringVar()
+notes_var.set(note_res[0])
+
+print(f"notes_var.get() :: {notes_var.get()}")
 
 # I WILL CHANGE THE FILE PATHS LATER ONCE WE GET RID OF VENV
 face1 = ctk.CTkImage(light_image=Image.open("faces/very_happy.png"), size=(70,70))
@@ -56,14 +63,19 @@ def on_v_sad():
     status_area.configure(image = face5)
 
 def update_notes_var(text_box):
+    print("step 1")
     notes_var.set(text_box.get("0.0", "end-1c"))
-
+   
 def edit_notes(text_box):
-    text_box.insert("0.0", notes_var.get())  # Insert sample text
+    print("step 2")
+    text_box.insert("0.0", note_res[0])  # Insert sample text
     text_box.configure(state = "normal")
-
+    
 def save_notes(text_box):
+    print("step 3")
     update_notes_var(text_box)
+    update_note_Value = text_box.get("0.0", "end-1c")
+    db.execute_upsert(update_note_Value,"mood",user_id)
     text_box.configure(state="disabled")
 
 def hide():
@@ -159,7 +171,7 @@ def show():
     trandeps_frame = ctk.CTkFrame(home_page, fg_color = "#62B6CB", corner_radius=20, width = 400, height= 220)
     trandeps_frame.grid(row = 2, column = 0, padx = 20, sticky = "nw")
 
-    #most sought out purpose for transactions SHARVIKAAAAAA
+    #most sought out purpose for transactions 
     most_trans = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 18, "bold"), text="Most Transactions For These Purpose:", corner_radius=100, width=170, height=40)
     most_trans.place_configure(relx = 0.04, rely = 0.05)
 
@@ -170,7 +182,7 @@ def show():
     hp2 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text=highest_expense[1], corner_radius=100, width=200)
     hp2.place_configure(relx=0.07, rely=0.32)
 
-    # most sought out source for deposits SHARVIKAAAAAA
+    # most sought out source for deposits 
     most_deps = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 18, "bold"), text="Most Deposits From These Sources:", corner_radius=100, width=170, height=40)
     most_deps.place_configure(relx=0.04, rely=0.45)
 
@@ -184,7 +196,7 @@ def show():
 
 
 
-    #total balance frame SHARVIKAAAAAA total balance needed
+    #total balance frame 
     total_balance_frame = ctk.CTkFrame(home_page, fg_color = "#62B6CB", corner_radius=20, width =400, height= 320)
     total_balance_frame.grid(row = 3, column = 0, padx = 20, pady = 20, sticky = "nw")
 
@@ -201,7 +213,7 @@ def show():
     notes_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", width = 470, height = 250, corner_radius=20)
     notes_frame.place(relx = 0.37, rely = 0.63)
 
-    notes = ctk.CTkLabel(notes_frame, fg_color="#BEE9E8", text = "Notes ~ ", text_color = "black", font = ("Arial", 25, "bold"), corner_radius= 20, padx = 20, pady = 10, width = 450)
+    notes = ctk.CTkLabel(notes_frame, fg_color="#BEE9E8", text = "note_res[0]", text_color = "black", font = ("Arial", 25, "bold"), corner_radius= 20, padx = 20, pady = 10, width = 450)
     notes.grid(row = 0, column = 0, sticky ="w", padx = 10, pady = 10)
 
     notes_box = ctk.CTkTextbox(notes_frame, width=430, height=140, state = "disabled", corner_radius=5, fg_color="#1B4965")

@@ -131,3 +131,14 @@ def get_total_balance(user_id):
     res = execute_query(query)
     return res
 
+def execute_upsert(note,mood,user_id):
+    
+    query = """ INSERT INTO miscellaneous (notes, mood,user_id) 
+                VALUES ('{}','{}',{})
+                ON CONFLICT (user_id) DO UPDATE 
+                SET notes = '{}', 
+                    mood = '{}';""".format(note,mood,user_id,note,mood)
+
+    insert_values(query)
+    
+    
