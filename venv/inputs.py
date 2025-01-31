@@ -10,6 +10,7 @@ import datetime
 import PIL
 from PIL import Image
 import menu_bar
+import re
 
 root = root_window.root_init()
 inputs_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
@@ -38,19 +39,62 @@ monthly_budget_frame.grid(row=1, column=0, padx=15, pady=15, sticky="e")
 manual_balance_update_frame = ctk.CTkFrame(inputs_page, fg_color="#62B6CB", corner_radius=20, width=480, height=100)
 manual_balance_update_frame.grid(row=1, column=1, padx=15, pady=15, sticky="w")
 
-tab_view = ctk.CTkTabview(inputs_page, fg_color="#1B4965", corner_radius=20, width=1100, height=600)
+tab_view = ctk.CTkTabview(inputs_page, fg_color="#1B4965", corner_radius=20, width=1100, height=700)
 tab_view.place(relx=0.026, rely=0.2)
 
 transactions = tab_view.add("Transactions")
 deposits = tab_view.add("Deposits")
 income_sources = tab_view.add("Income Sources")
 
-#STRING VARS
+pattern = r'^\d+(\.\d+)?$'
+
+#STRING VARS for transactions
 amount_var = tk.StringVar(value="0.00")
 purpose_var = tk.StringVar(value="Choose")  # Default value set to 'Need'
 date_options = [(datetime.date.today() - datetime.timedelta(days=i)).strftime("%m-%d-%Y") for i in range(500)]
 date_var = ctk.StringVar(value=date_options[0])  # Default to today's date
 need_var = tk.StringVar(value="Need")  # Default value set to 'Need'
+
+#STRING VARS for deposits
+amountd_var = tk.StringVar(value="0.00")
+sourced_var = tk.StringVar(value="None")  # Default value set to 'None'
+date_options = [(datetime.date.today() - datetime.timedelta(days=i)).strftime("%m-%d-%Y") for i in range(500)]
+dated_var = ctk.StringVar(value=date_options[0])  # Default to today's date
+
+#data table
+#t_frame = ctk.CTkCanvas(transactions, width=620, height=400)
+#scroll = ttk.Scrollbar(t_frame, orient="vertical")
+#t_frame.configure(yscrollcommand=scroll.set)
+
+transactions_table = ttk.Treeview(transactions, columns=("No.", "Transaction", "N/W", "Amount", "Date", "Del"), show="headings", height=200)
+deposits_table = ttk.Treeview(deposits, columns=("No.", "Deposit", "Amount", "Date", "Del"), show="headings", height=200)
+
+
+# function to add a new transaction
+def on_t_input():
+    no = len(transactions_table.get_children()) + 1  # automatically adds 1 to the tree length
+    transaction = purpose_var.get()
+    nw = need_var.get()
+    amount = amount_var.get()
+    date = date_var.get()
+
+    if (transaction and nw and amount and date) and (re.fullmatch(pattern, amount) and transaction != "Choose") :
+        transactions_table.insert("", "end", values=(no, transaction, nw, amount, date))
+    else:
+        messagebox.showwarning("Transaction not created", "Please enter all correct fields. Amount must have only numbers with no other characters except a decimal point '.' ")
+
+
+def on_d_input():
+    no = len(deposits_table.get_children()) + 1  # automatically adds 1 to the tree length
+    deposit = sourced_var.get()
+    amount = amountd_var.get()
+    date = dated_var.get()
+
+    if (deposit and nw and amount and date) and (re.fullmatch(pattern, amount) and deposit != "None"):
+        deposits_table.insert("", "end", values=(no, deposit, amount, date))
+    else:
+        messagebox.showwarning("Deposit not created",
+                               "Please enter all correct fields. Amount must have only numbers with no other characters except a decimal point '.' ")
 
 
 def hide():
@@ -132,10 +176,9 @@ def show():
     want_radio.place(relx=0.5, rely=0.5, anchor="w")
 
     #SHARVIKAAAAAAAAAAAA
-    input_button = ctk.CTkButton(transactions, text="Input Transaction", font=("Arial", 20, "bold"), fg_color="#9AC0BF", hover_color="#467F8D", height = 40, text_color="black", width=300, corner_radius=10, command=None)
+    input_button = ctk.CTkButton(transactions, text="Input Transaction", font=("Arial", 20, "bold"), fg_color="#9AC0BF", hover_color="#467F8D", height = 40, text_color="black", width=300, corner_radius=10, command=on_t_input)
     input_button.place(relx = 0.5, rely = 0.24)
 
-    transactions_table = ttk.Treeview(transactions, columns = ("No.", "Transaction", "N/W", "Amount", "Date", "Del"), show = "headings")
 
     transactions_table.heading("No.", text="No.")
     transactions_table.heading("Transaction", text="Transaction")
@@ -145,14 +188,80 @@ def show():
     transactions_table.heading("Del", text="Del")
 
     transactions_table.column("No.", width=50)
-    transactions_table.column("Transaction", width=150)
+    transactions_table.column("Transaction", width=200)
     transactions_table.column("N/W", width=80)
     transactions_table.column("Amount", width=100)
     transactions_table.column("Date", width=100)
     transactions_table.column("Del", width=80)
 
+    #t_frame.place(relx = 0.2, rely = 0.4)
+    #scroll.place(relx=1, rely=0, relheight=1, width=20)
+
+    transactions_table.place(relx = 0.2, rely = 0.4)
 
 
+
+
+
+
+
+
+
+
+
+
+
+    amountd_label = ctk.CTkLabel(deposits, fg_color="#62B6CB", corner_radius=5, width=60, height=40,
+                                text_color="black", font=("Arial", 20, "bold"), text="Amount: ")
+    amountd_label.place(relx=0.001, rely=0.01)
+    amountd_entry = ctk.CTkEntry(deposits, width=100, height=40, textvariable=amountd_var, font=("Arial", 12))
+    amountd_entry.place(relx=0.1, rely=0.01)
+
+    sourced_label = ctk.CTkLabel(deposits, fg_color="#62B6CB", corner_radius=5, width=60, height=40,
+                                 text_color="black", font=("Arial", 20, "bold"), text="Source of Money: ")
+    sourced_label.place(relx=0.001, rely=0.13)
+    sourced_entry = ctk.CTkEntry(deposits, width=100, height=40, textvariable = sourced_var, font=("Arial", 12))
+
+    sourced_entry.place(relx=0.25, rely=0.13)
+
+    # date label + calendar dropdown
+    dated_label = ctk.CTkLabel(deposits, text="Date: ", font=("Arial", 20, "bold"), fg_color="#62B6CB",
+                              corner_radius=5, height=40, width=30, text_color="black")
+    dated_label.place(relx=0.001, rely=0.28, anchor="w")
+
+    dated_dropdown = ctk.CTkOptionMenu(deposits, variable=dated_var, values=date_options, font=("Arial", 15),
+                                      height=40, text_color="black", fg_color="#BEE9E8", button_color="#BEE9E8",
+                                      button_hover_color="#A0D8D3")
+    dated_dropdown.place(relx=0.083, rely=0.24)
+
+    # need/want radio buttons
+
+    # SHARVIKAAAAAAAAAAAA
+    inputd_button = ctk.CTkButton(deposits, text="Input Deposit", font=("Arial", 20, "bold"), fg_color="#9AC0BF",
+                                 hover_color="#467F8D", height=40, text_color="black", width=300, corner_radius=10,
+                                 command=on_d_input)
+    inputd_button.place(relx=0.5, rely=0.24)
+
+    deposits_table.heading("No.", text="No.")
+    deposits_table.heading("Deposit", text="Deposit")
+    deposits_table.heading("Amount", text="Amount")
+    deposits_table.heading("Date", text="Date")
+    deposits_table.heading("Del", text="Del")
+
+    deposits_table.column("No.", width=50)
+    deposits_table.column("Deposit", width=200)
+    deposits_table.column("Amount", width=100)
+    deposits_table.column("Date", width=100)
+    deposits_table.column("Del", width=80)
+
+    # t_frame.place(relx = 0.2, rely = 0.4)
+    # scroll.place(relx=1, rely=0, relheight=1, width=20)
+
+    deposits_table.place(relx=0.2, rely=0.4)
+
+
+show()
+root.mainloop()
 if __name__ == "__main__":
     show()
     hide()
