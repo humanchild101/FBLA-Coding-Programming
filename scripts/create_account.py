@@ -69,6 +69,8 @@ def on_account_creation():
 
         try:
             db.insert_values(insertQuery)
+            import home_page
+            home_page.show()
 
         except(Exception) as error:
             if "violates unique constraint" in str(error): 
