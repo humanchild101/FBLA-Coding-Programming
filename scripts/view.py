@@ -8,11 +8,13 @@ import PIL
 from PIL import Image
 import menu_bar
 from session_manager import SessionManager
+import db_connect as db
 
 session = SessionManager()
 
 first_name = session.get("first_name")
 last_name = session.get("last_name")
+user_id = session.get("user_id")
 
 root = root_window.root_init()
 view_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
@@ -92,6 +94,24 @@ def show():
     logoutbutton.grid(row=0, column=2, padx=15, pady=10, sticky="e")
 
     # START HERE
+
+    frame = ctk.CTkScrollableFrame(root, width=550, height=300)
+    frame.pack(pady=20)
+
+    # Fetch Data
+    data = db.fetch_all_query("select income_or_expense,source,need_or_Want,amount from transactions")
+    columns = ["income_or_expense", "source", "need_or_Want", "amount"]  # Change according to your DB
+
+    # Add Column Headers
+    for col_index, col_name in enumerate(columns):
+        label = ctk.CTkLabel(frame, text=col_name, font=("Arial", 14, "bold"))
+        label.grid(row=0, column=col_index, padx=10, pady=5)
+
+    # Populate Table with Data
+    for row_index, row in enumerate(data):
+        for col_index, value in enumerate(row):
+            label = ctk.CTkLabel(frame, text=str(value), font=("Arial", 12))
+            label.grid(row=row_index + 1, column=col_index, padx=10, pady=5)
 
 
 # KEEP THESE 2 LINES IF YOU WANT TO SEE YOUR PROGRESS, OTHERWISE YOU CAN COMMENT THEM OUT OR REMOVE
