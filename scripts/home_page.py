@@ -11,6 +11,7 @@ import menu_bar
 from session_manager import SessionManager
 import db_connect as db
 
+
 root = root_window.root_init()
 home_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
 session = SessionManager()
@@ -31,7 +32,6 @@ query_for_notes = f"select notes from miscellaneous where user_id={user_id}"
 note_res = db.execute_query(query_for_notes)
 print(note_res[0])
     
-
 top_nav = ctk.CTkFrame(home_page, fg_color="#33739A", height=70, corner_radius=0)
 top_nav.configure(fg_color="#33739A")
 welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=500, text="")
@@ -39,8 +39,6 @@ user_label = ctk.CTkLabel(welcome_label, text=f"Welcome, {first_name} {last_name
 
 notes_var = tk.StringVar()
 notes_var.set(note_res[0])
-
-print(f"notes_var.get() :: {notes_var.get()}")
 
 # I WILL CHANGE THE FILE PATHS LATER ONCE WE GET RID OF VENV
 face1 = ctk.CTkImage(light_image=Image.open("faces/very_happy.png"), size=(70,70))
@@ -62,10 +60,11 @@ def on_sad():
 def on_v_sad():
     status_area.configure(image = face5)
 
+
 def update_notes_var(text_box):
     print("step 1")
     notes_var.set(text_box.get("0.0", "end-1c"))
-   
+
 def edit_notes(text_box):
     print("step 2")
     text_box.insert("0.0", note_res[0])  # Insert sample text
@@ -84,13 +83,15 @@ def hide():
 def show():
     root.configure(fg_color="#BEE9E8")
 
-
     import login
     import create_account
     import inputs
+    import view
+
     login.hide()
     create_account.hide()
     inputs.hide()
+    view.hide()
 
     side_menu = menu_bar.menu_init(home_page)
 
@@ -107,8 +108,6 @@ def show():
     user_label.grid(row = 0, column = 0, sticky ="w", padx = 2)
 
     status_area.grid(row = 0, column = 1, sticky = "w", padx = 2)
-
-    #ADD SMILY FACE HERE ^
 
     # home tab name
     home_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx = 20, height = 80, width =200, text = "")
@@ -141,28 +140,28 @@ def show():
     rec_spen = ctk.CTkLabel(rec_spen_frame, fg_color = "#62B6CB", text_color = "black", font = ("Arial", 20, "bold"),text = "Your Three Most Recent Expenses", corner_radius=100, width = 200, height= 40)
     rec_spen.place_configure(relx = 0.04, rely = 0.01)
 
-    
-    p1 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text=expense_list[0], corner_radius=100, width=200)
+    #SHARVIKAAAAAA HEREEEEEE
+    p1 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text="Purpose1   -   $$   -   XX/XX/XXXX", corner_radius=100, width=200)
     p1.place_configure(relx = 0.15, rely = 0.15)
 
-    p2 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text=expense_list[1], corner_radius=100, width=200)
+    p2 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text="Purpose2   -   $$   -   XX/XX/XXXX", corner_radius=100, width=200)
     p2.place_configure(relx = 0.15, rely = 0.23)
 
-    p3 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text=expense_list[2], corner_radius=100, width=200)
+    p3 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text="Purpose3   -   $$   -   XX/XX/XXXX", corner_radius=100, width=200)
     p3.place_configure(relx = 0.15, rely = 0.31)
 
     #recent deposits
     rec_dep = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 20, "bold"), text="Your Three Most Recent Deposits", corner_radius=100, width=200, height=40)
     rec_dep.place_configure(relx=0.04, rely=0.45)
 
-    
-    d1 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text=income_list[0], corner_radius=100, width=200)
+    # SHARVIKAAAAAA HEREEEEEE
+    d1 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text="Source1   -   $$   -   XX/XX/XXXX", corner_radius=100, width=200)
     d1.place_configure(relx=0.15, rely=0.59)
 
-    d2 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text=income_list[1], corner_radius=100, width=200)
+    d2 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text="Source2   -   $$   -   XX/XX/XXXX", corner_radius=100, width=200)
     d2.place_configure(relx=0.15, rely=0.67)
 
-    d3 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text=income_list[2], corner_radius=100, width=200)
+    d3 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text="Source3   -   $$   -   XX/XX/XXXX", corner_radius=100, width=200)
     d3.place_configure(relx=0.15, rely=0.75)
 
 
@@ -171,39 +170,39 @@ def show():
     trandeps_frame = ctk.CTkFrame(home_page, fg_color = "#62B6CB", corner_radius=20, width = 400, height= 220)
     trandeps_frame.grid(row = 2, column = 0, padx = 20, sticky = "nw")
 
-    #most sought out purpose for transactions 
+    #most sought out purpose for transactions SHARVIKAAAAAA
     most_trans = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 18, "bold"), text="Most Transactions For These Purpose:", corner_radius=100, width=170, height=40)
     most_trans.place_configure(relx = 0.04, rely = 0.05)
 
-    
-    hp1 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text=highest_expense[0], corner_radius=100, width=200)
+    # SHARVIKAAAAAA HEREEEEEE
+    hp1 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text="Highest Transactions #1   -  Total $$", corner_radius=100, width=200)
     hp1.place_configure(relx=0.07, rely=0.20)
 
-    hp2 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text=highest_expense[1], corner_radius=100, width=200)
+    hp2 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text="Highest Transactions #2   -  Total $$", corner_radius=100, width=200)
     hp2.place_configure(relx=0.07, rely=0.32)
 
-    # most sought out source for deposits 
+    # most sought out source for deposits SHARVIKAAAAAA
     most_deps = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 18, "bold"), text="Most Deposits From These Sources:", corner_radius=100, width=170, height=40)
     most_deps.place_configure(relx=0.04, rely=0.45)
 
-    
-    hp1 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text=highest_income[0], corner_radius=100, width=200)
+    # SHARVIKAAAAAA HEREEEEEE
+    hp1 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text="Highest Deposits #1   -   Total $$", corner_radius=100, width=200)
     hp1.place_configure(relx=0.07, rely=0.6)
 
-    hp2 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text=highest_income[1], corner_radius=100, width=200)
+    hp2 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15), text="Highest Deposits #2   -   Total $$", corner_radius=100, width=200)
     hp2.place_configure(relx=0.07, rely=0.72)
 
 
 
 
-    #total balance frame 
+    #total balance frame SHARVIKAAAAAA total balance needed
     total_balance_frame = ctk.CTkFrame(home_page, fg_color = "#62B6CB", corner_radius=20, width =400, height= 320)
     total_balance_frame.grid(row = 3, column = 0, padx = 20, pady = 20, sticky = "nw")
 
-    balance_text = ctk.CTkLabel(total_balance_frame, fg_color = "#62B6CB", corner_radius=20, text_color = "black", text = "Total Balance ~", font = ("Arial", 45, "bold"))
+    balance_text = ctk.CTkLabel(total_balance_frame, fg_color = "#62B6CB", corner_radius=20, text_color = "black", text = "Total Balance ~ ", font = ("Arial", 45, "bold"))
     balance_text.place(relx = 0.02, rely = 0.1)
 
-    balance = ctk.CTkLabel(total_balance_frame, fg_color="#62B6CB", corner_radius=20, text_color="black", text=f"$ {total[0]}" , font=("Arial", 70, "bold"))
+    balance = ctk.CTkLabel(total_balance_frame, fg_color="#62B6CB", corner_radius=20, text_color="black", text="$0.00", font=("Arial", 70, "bold"))
     balance.place(relx=0.02, rely=0.45)
 
 
@@ -213,7 +212,7 @@ def show():
     notes_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", width = 470, height = 250, corner_radius=20)
     notes_frame.place(relx = 0.37, rely = 0.63)
 
-    notes = ctk.CTkLabel(notes_frame, fg_color="#BEE9E8", text = "note_res[0]", text_color = "black", font = ("Arial", 25, "bold"), corner_radius= 20, padx = 20, pady = 10, width = 450)
+    notes = ctk.CTkLabel(notes_frame, fg_color="#BEE9E8", text = "Notes ~ ", text_color = "black", font = ("Arial", 25, "bold"), corner_radius= 20, padx = 20, pady = 10, width = 450)
     notes.grid(row = 0, column = 0, sticky ="w", padx = 10, pady = 10)
 
     notes_box = ctk.CTkTextbox(notes_frame, width=430, height=140, state = "disabled", corner_radius=5, fg_color="#1B4965")
@@ -281,7 +280,7 @@ def show():
     total_label = ctk.CTkLabel(total_frame, text="Total", font=("Arial", 16, "bold"), text_color="#0C2B3E")
     total_label.place(relx=0.05, rely=0.5, anchor="w")  # Position the label on the left side of the frame
 
-    # Add a progress bar for wants SHARVIKAAAAA --> progress is set based on budget which is set in inputs by the user
+    # Add a progress bar for total SHARVIKAAAAA --> progress is set based on budget which is set in inputs by the user
     total_progress = ctk.CTkProgressBar(total_frame, width=280, height=20, corner_radius=10, fg_color="#BEE9E8",border_color="#1B4965", border_width=1)
     total_progress.place(relx=0.2, rely=0.5, anchor="w")  # Position the progress bar next to the label
     total_progress.set(0.1)
@@ -319,7 +318,8 @@ def show():
     very_sad = ctk.CTkButton(status_frame, fg_color="#CEFFFF",text = "",image = face5, hover_color="#FFFFFF", width=10, height=10, corner_radius=5, command = on_v_sad)
     very_sad.place(relx=0.5, rely=0.90, anchor="center")
 
-
+show()
+root.mainloop()
 
 if __name__ == "__main__":
     show()

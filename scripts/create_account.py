@@ -12,6 +12,7 @@ import db_connect as db
 
 
 root = root_window.root_init()
+root.configure(fg_color="#1B4965")
 account_create = ctk.CTkFrame(root, fg_color="#1B4965")
 entry_fields = []
 #ALL Entry Fields
@@ -28,9 +29,12 @@ entry_fields.append(new_user_var)
 entry_fields.append(new_pass_var)
 entry_fields.append(pass_ver_var)
 entry_fields.append(email_var)
+
 #regex
-password_verify = pattern = r'^(?=(.*[A-Z]){3,})(?=(.*[!@#$%^&*(),.?":{}|<>]){3,})(?=(.*[0-9]){3,}).*$' #from ChatGPT
+#password_verify = pattern = r'^(?=(.*[A-Z]){3,})(?=(.*[!@#$%^&*(),.?":{}|<>]){3,})(?=(.*[0-9]){3,}).*$' #from ChatGPT
 email_verify = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b' #code from GeeksForGeeks
+
+
 
 def on_account_creation():
     create_flag = False
@@ -39,12 +43,12 @@ def on_account_creation():
             messagebox.showwarning("Submission not permitted", "Please fill out all the text fields")
             return
 
-        
+        '''
         if not re.fullmatch(password_verify, pass_ver_var.get()):
             print(f"password string ::{pass_ver_var.get()}")
             messagebox.showwarning("Submission not permitted", "Password must have at least 3 special chars, 3 uppercase letters, and 3 numbers")
             return
-
+        '''
         if not re.fullmatch(email_verify, email_var.get()):
             messagebox.showwarning("Submission not permitted", "Please enter a valid email, ex: abc@gmail.com")
             return
@@ -78,13 +82,21 @@ def on_account_creation():
                 messagebox.showwarning("Submission not permitted", "Error creating a new account")
             
 
-
 def hide():
     account_create.forget()
 
 def show():
+    root.configure(fg_color="#1B4965")
     import login
+    import home_page
+    import inputs
+    import view
+
     login.hide()
+    home_page.hide()
+    inputs.hide()
+    view.hide()
+
     account_create.pack(fill="both", expand=True)  # #62B6CB
     center_border = ctk.CTkFrame(account_create, fg_color = "#BEE9E8", corner_radius=20, width = 620, height= 640)
     center_border.place(relx= 0.5, rely = 0.5, anchor = "center")
@@ -129,7 +141,7 @@ def show():
 
     password_label = ctk.CTkLabel(pass_frame, text="Enter a password:", font=("Arial", 18), fg_color="#3095AE",text_color="black", padx=5, pady=6, corner_radius=5)
     password_input = ctk.CTkEntry(pass_frame, textvariable=new_pass_var, font=("Arial", 15), fg_color="#BEE9E8",text_color="black", width=390, corner_radius=5,show="*")
-    pas_reqs = ctk.CTkLabel(pass_frame, text = "Password must include at least 3 numbers, 3 special chars, and 3 uppercase letters.", font=("Arial", 14), fg_color="#3095AE", text_color="black")
+    pas_reqs = ctk.CTkLabel(pass_frame, text = "Suggestion: Include at least 3 numbers, 3 special chars, and 3 uppercase letters.", font=("Arial", 14), fg_color="#3095AE", text_color="black")
 
     password_label.grid(row=1, column=0, sticky="e", padx=5, pady=10, ipady=4)
     password_input.grid(row=1, column=1, sticky="w", padx=15, pady=10, ipady=5)
@@ -172,4 +184,3 @@ def show():
 if __name__ == "__main__":
     show()
     hide()
-
