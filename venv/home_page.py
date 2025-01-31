@@ -8,37 +8,17 @@ import datetime
 import PIL
 from PIL import Image
 import menu_bar
-from session_manager import SessionManager
-import db_connect as db
 
 
 root = root_window.root_init()
 home_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
-session = SessionManager()
 
-first_name = session.get("first_name")
-last_name = session.get("last_name")
-user_id = session.get("user_id")
-
-income_list = db.get_transaction_details(user_id,"income")
-expense_list = db.get_transaction_details(user_id,"expense")
-
-highest_income = db.get_highest_details(user_id,"income")
-highest_expense = db.get_highest_details(user_id,"expense")
-
-total =db.get_total_balance(user_id)
-
-query_for_notes = f"select notes from miscellaneous where user_id={user_id}"
-note_res = db.execute_query(query_for_notes)
-print(note_res[0])
-    
 top_nav = ctk.CTkFrame(home_page, fg_color="#33739A", height=70, corner_radius=0)
 top_nav.configure(fg_color="#33739A")
 welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=500, text="")
 user_label = ctk.CTkLabel(welcome_label, text=f"Welcome, {first_name} {last_name}!", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70)
 
 notes_var = tk.StringVar()
-notes_var.set(note_res[0])
 
 # I WILL CHANGE THE FILE PATHS LATER ONCE WE GET RID OF VENV
 face1 = ctk.CTkImage(light_image=Image.open("faces/very_happy.png"), size=(70,70))
