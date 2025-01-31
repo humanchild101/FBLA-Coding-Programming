@@ -22,9 +22,8 @@ CREATE TABLE IF NOT EXISTS transactions
 	  amount decimal(10,2),
     user_id integer,
     CONSTRAINT fk_user_id FOREIGN KEY (user_id)
-        REFERENCES users (user_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        REFERENCES users (user_id)
+
 )
 
 insert into transactions (income_or_expense,source,date_of_transaction,need_or_want,note,amount,user_id) 
@@ -40,9 +39,8 @@ CREATE TABLE IF NOT EXISTS miscellaneous
     user_id integer,
     CONSTRAINT miscellaneous_pkey PRIMARY KEY (id),
     CONSTRAINT fk_user_id FOREIGN KEY (user_id)
-        REFERENCES users(user_id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        REFERENCES users(user_id)
+
 )
 
 
