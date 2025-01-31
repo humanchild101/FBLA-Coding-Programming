@@ -7,15 +7,6 @@ import datetime
 import PIL
 from PIL import Image
 import menu_bar
-from session_manager import SessionManager
-import db_connect as db
-
-session = SessionManager()
-
-first_name = session.get("first_name")
-last_name = session.get("last_name")
-user_id = session.get("user_id")
-
 
 root = root_window.root_init()
 view_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
@@ -23,18 +14,16 @@ view_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
 top_nav = ctk.CTkFrame(view_page, fg_color="#33739A", height=70, corner_radius=0)
 top_nav.configure(fg_color="#33739A")
 welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=500, text="")
-user_label = ctk.CTkLabel(welcome_label, text=f"Welcome, {first_name} {last_name}!", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70)
+user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70)
 
 notes_var = tk.StringVar()
 
-
-
 # I WILL CHANGE THE FILE PATHS LATER ONCE WE GET RID OF VENV
-face1 = ctk.CTkImage(light_image=Image.open("faces/very_happy.png"), size=(70,70))
-face2 = ctk.CTkImage(light_image=Image.open("faces/happy.png"), size=(70,70))
-face3 = ctk.CTkImage(light_image=Image.open("faces/neutral.png"), size=(70,70))
-face4 = ctk.CTkImage(light_image=Image.open("faces/sad.png"), size=(70,70))
-face5 = ctk.CTkImage(light_image=Image.open("faces/very_sad.png"), size=(70,70))
+face1 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_happy.png"), size=(70,70))
+face2 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/happy.png"), size=(70,70))
+face3 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/neutral.png"), size=(70,70))
+face4 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/sad.png"), size=(70,70))
+face5 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_sad.png"), size=(70,70))
 
 status_area = ctk.CTkLabel(user_label, text="", image=face1, fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70, width = 80)
 
@@ -72,7 +61,7 @@ def show():
     # view tab name
     inputs_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx = 20, height = 80, width =200, text = "")
     inputs_label.grid(row=0, column = 1, padx = 12)
-    tab_label = ctk.CTkLabel(inputs_label, text="VIEW FINANCES", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx = 20, height = 70, width = 100)
+    tab_label = ctk.CTkLabel(inputs_label, text="VIEW FINANCES", font=("Arial", 25, "bold"), text_color="#BEE9E8", padx = 20, height = 70, width = 100)
     tab_label.grid(row = 0, column = 0, padx = 2, sticky = "w")
 
     #Add inputs icon here ^
@@ -88,31 +77,12 @@ def show():
     logoutbutton = ctk.CTkButton(icon_label, text="Log Out", font=("Arial", 20, "bold"), fg_color="#BEE9E8", hover_color="#9ACCD9", text_color="black", width=190, height=50, corner_radius=5, command=login.show)
     logoutbutton.grid(row=0, column=2, padx=15, pady=10, sticky="e")
 
-    
+
     #START HERE
-    
-    frame = ctk.CTkScrollableFrame(root, width=550, height=300)
-    frame.pack(pady=20)
 
-    # Fetch Data
-    data = db.fetch_all_query("select income_or_expense,source,need_or_Want,amount from transactions")
-    columns = ["income_or_expense","source","need_or_Want","amount"]  # Change according to your DB
-
-    # Add Column Headers
-    for col_index, col_name in enumerate(columns):
-        label = ctk.CTkLabel(frame, text=col_name, font=("Arial", 14, "bold"))
-        label.grid(row=0, column=col_index, padx=10, pady=5)
-
-    # Populate Table with Data
-    for row_index, row in enumerate(data):
-        for col_index, value in enumerate(row):
-            label = ctk.CTkLabel(frame, text=str(value), font=("Arial", 12))
-            label.grid(row=row_index + 1, column=col_index, padx=10, pady=5)
 
 
 #KEEP THESE 2 LINES IF YOU WANT TO SEE YOUR PROGRESS, OTHERWISE YOU CAN COMMENT THEM OUT OR REMOVE
-
-
 
 
 if __name__ == "__main__":
