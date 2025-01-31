@@ -4,6 +4,7 @@ from tkinter import messagebox
 import root_window
 from root_window import *
 import re #for regex
+import db_connect as db
 
 
 #sample account:
@@ -29,18 +30,25 @@ entry_fields.append(new_pass_var)
 entry_fields.append(pass_ver_var)
 entry_fields.append(email_var)
 
+#regex
+#password_verify = pattern = r'^(?=(.*[A-Z]){3,})(?=(.*[!@#$%^&*(),.?":{}|<>]){3,})(?=(.*[0-9]){3,}).*$' #from ChatGPT
 email_verify = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b' #code from GeeksForGeeks
 
 
+
 def on_account_creation():
+    create_flag = False
     for i in entry_fields:
         if not i.get():
             messagebox.showwarning("Submission not permitted", "Please fill out all the text fields")
             return
 
-        #SHARVIKAAAAAA this is your domain (pls educate the poor TvT
-        #if database already contains new_user_var.get() then dont add the account and display username already exists
-
+        '''
+        if not re.fullmatch(password_verify, pass_ver_var.get()):
+            print(f"password string ::{pass_ver_var.get()}")
+            messagebox.showwarning("Submission not permitted", "Password must have at least 3 special chars, 3 uppercase letters, and 3 numbers")
+            return
+        '''
         if not re.fullmatch(email_verify, email_var.get()):
             messagebox.showwarning("Submission not permitted", "Please enter a valid email, ex: abc@gmail.com")
             return
@@ -50,7 +58,27 @@ def on_account_creation():
             return
 
         else:
-            messagebox.showinfo("Success", "Account created successfully!")
+            create_flag=True
+    
+    if create_flag == True:
+        #SQL statement to insert a new row to the table
+        insertQuery = """
+        INSERT into users (username, user_password, email, first_name, last_name) 
+        VALUES ('{}', '{}', '{}', '{}', '{}');""".format(new_user_var.get(), new_pass_var.get(), email_var.get(), new_fname.get(), new_lname.get())
+           
+
+        try:
+            db.insert_values(insertQuery)
+
+        except(Exception) as error:
+            if "violates unique constraint" in str(error): 
+                #Username & Email are supposed to be unique
+                #If not, warning will pop up
+                messagebox.showwarning("Submission not permitted", "Username / Email already exists. Login?")
+
+            else:
+                messagebox.showwarning("Submission not permitted", "Error creating a new account")
+            
 
 def hide():
     account_create.forget()

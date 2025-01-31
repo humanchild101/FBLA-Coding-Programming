@@ -8,23 +8,44 @@ import datetime
 import PIL
 from PIL import Image
 import menu_bar
+from session_manager import SessionManager
+import db_connect as db
+
 
 root = root_window.root_init()
 home_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
+session = SessionManager()
 
+first_name = session.get("first_name")
+last_name = session.get("last_name")
+user_id = session.get("user_id")
+
+income_list = db.get_transaction_details(user_id,"income")
+expense_list = db.get_transaction_details(user_id,"expense")
+
+highest_income = db.get_highest_details(user_id,"income")
+highest_expense = db.get_highest_details(user_id,"expense")
+
+total =db.get_total_balance(user_id)
+
+query_for_notes = f"select notes from miscellaneous where user_id={user_id}"
+note_res = db.execute_query(query_for_notes)
+print(note_res[0])
+    
 top_nav = ctk.CTkFrame(home_page, fg_color="#33739A", height=70, corner_radius=0)
 top_nav.configure(fg_color="#33739A")
 welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=500, text="")
-user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70)
+user_label = ctk.CTkLabel(welcome_label, text=f"Welcome, {first_name} {last_name}!", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70)
 
 notes_var = tk.StringVar()
+notes_var.set(note_res[0])
 
 # I WILL CHANGE THE FILE PATHS LATER ONCE WE GET RID OF VENV
-face1 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_happy.png"), size=(70,70))
-face2 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/happy.png"), size=(70,70))
-face3 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/neutral.png"), size=(70,70))
-face4 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/sad.png"), size=(70,70))
-face5 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_sad.png"), size=(70,70))
+face1 = ctk.CTkImage(light_image=Image.open("faces/very_happy.png"), size=(70,70))
+face2 = ctk.CTkImage(light_image=Image.open("faces/happy.png"), size=(70,70))
+face3 = ctk.CTkImage(light_image=Image.open("faces/neutral.png"), size=(70,70))
+face4 = ctk.CTkImage(light_image=Image.open("faces/sad.png"), size=(70,70))
+face5 = ctk.CTkImage(light_image=Image.open("faces/very_sad.png"), size=(70,70))
 
 status_area = ctk.CTkLabel(user_label, text="", image=face1, fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70, width = 80)
 
@@ -38,16 +59,22 @@ def on_sad():
     status_area.configure(image = face4)
 def on_v_sad():
     status_area.configure(image = face5)
-#SHARVIKAAAAAAA you have to put the txt they enter in the database and then save it every time it updates.. i put the notes_var variable for now, but idk you might have to replace that w/ something in the database
+
+
 def update_notes_var(text_box):
+    print("step 1")
     notes_var.set(text_box.get("0.0", "end-1c"))
 
 def edit_notes(text_box):
-    text_box.insert("0.0", notes_var.get())  # Insert sample text
+    print("step 2")
+    text_box.insert("0.0", note_res[0])  # Insert sample text
     text_box.configure(state = "normal")
-
+    
 def save_notes(text_box):
+    print("step 3")
     update_notes_var(text_box)
+    update_note_Value = text_box.get("0.0", "end-1c")
+    db.execute_upsert(update_note_Value,"mood",user_id)
     text_box.configure(state="disabled")
 
 def hide():
@@ -55,7 +82,6 @@ def hide():
 
 def show():
     root.configure(fg_color="#BEE9E8")
-
 
     import login
     import create_account
@@ -82,8 +108,6 @@ def show():
     user_label.grid(row = 0, column = 0, sticky ="w", padx = 2)
 
     status_area.grid(row = 0, column = 1, sticky = "w", padx = 2)
-
-    #ADD SMILY FACE HERE ^
 
     # home tab name
     home_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx = 20, height = 80, width =200, text = "")
@@ -256,7 +280,7 @@ def show():
     total_label = ctk.CTkLabel(total_frame, text="Total", font=("Arial", 16, "bold"), text_color="#0C2B3E")
     total_label.place(relx=0.05, rely=0.5, anchor="w")  # Position the label on the left side of the frame
 
-    # Add a progress bar for wants SHARVIKAAAAA --> progress is set based on budget which is set in inputs by the user
+    # Add a progress bar for total SHARVIKAAAAA --> progress is set based on budget which is set in inputs by the user
     total_progress = ctk.CTkProgressBar(total_frame, width=280, height=20, corner_radius=10, fg_color="#BEE9E8",border_color="#1B4965", border_width=1)
     total_progress.place(relx=0.2, rely=0.5, anchor="w")  # Position the progress bar next to the label
     total_progress.set(0.1)

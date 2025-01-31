@@ -3,6 +3,10 @@ import tkinter as tk  # for StringVar + messagebox + lines
 from tkinter import messagebox
 import root_window
 from root_window import *
+import db_connect as db
+from session_manager import SessionManager
+import time
+
 
 
 root = root_window.root_init()
@@ -16,13 +20,15 @@ root.configure(fg_color="#1B4965")
 # entries = #BEE9E8
 
 #------------------------
+session = SessionManager()
+session.clear_session()
 login_page = ctk.CTkFrame(root, fg_color="#1B4965")
-user_var = tk.StringVar(value="Username Here")  # 1B4965 and then BEE9E8
-password_var = tk.StringVar(value="Password Here")  # 1B4965 and then BEE9E8
+user_var = tk.StringVar()  # 1B4965 and then BEE9E8
+password_var = tk.StringVar()  # 1B4965 and then BEE9E8
 
+#----
 
 def on_login():
-    import home_page
     username_in = user_var.get()
     password_in = password_var.get()
     if not username_in and not password_in:
@@ -36,16 +42,38 @@ def on_login():
             messagebox.showwarning("No input", "Please enter a password")
             return
     if username_in and password_in:
-        home_page.show()
-def forgot_password():
-    messagebox.showinfo("Message", "I will create a new password changing window thing for this")
+        session = SessionManager()
+        session.clear_session()
+        query = "SELECT username,user_password,user_id,first_name,last_name FROM users WHERE username = '%s'" %username_in
+        res = db.execute_query(query)
+        
+        if res:
+            if res[1] == password_in:
+                session.set("username", res[0])
+                session.set("user_id", res[2])
+                session.set("first_name", res[3])
+                session.set("last_name", res[4])
+                import home_page
+                home_page.show()
+            else:
+                messagebox.showwarning("Error", "Incorrect password")
+
+        else:
+            messagebox.showwarning("Error", "User does not exist. Please go ahead with creating new account!")
+
+
+
+#def forgot_password():
+    #messagebox.showinfo("Message", "I will create a new password changing window thing for this")
 
 def create_new_account():
     import create_account
     create_account.show()
 
+
 def hide():
     login_page.forget()
+
 
 def show():
     root.configure(fg_color="#1B4965")

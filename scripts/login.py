@@ -8,7 +8,10 @@ from session_manager import SessionManager
 import time
 
 
+
 root = root_window.root_init()
+root.configure(fg_color="#1B4965")
+
 
 # bg = #1B4965
 # border = #BEE9E8
@@ -23,6 +26,7 @@ login_page = ctk.CTkFrame(root, fg_color="#1B4965")
 user_var = tk.StringVar()  # 1B4965 and then BEE9E8
 password_var = tk.StringVar()  # 1B4965 and then BEE9E8
 
+#----
 
 def on_login():
     username_in = user_var.get()
@@ -57,8 +61,10 @@ def on_login():
         else:
             messagebox.showwarning("Error", "User does not exist. Please go ahead with creating new account!")
 
-def forgot_password():
-    messagebox.showinfo("Message", "I will create a new password changing window thing for this")
+
+
+#def forgot_password():
+    #messagebox.showinfo("Message", "I will create a new password changing window thing for this")
 
 def create_new_account():
     import create_account
@@ -68,9 +74,17 @@ def create_new_account():
 def hide():
     login_page.forget()
 
+
 def show():
+    root.configure(fg_color="#1B4965")
     import create_account
+    import home_page
+    import inputs
+    import view
     create_account.hide()
+    home_page.hide()
+    inputs.hide()
+    view.hide()
     login_page.pack(fill="both", expand=True)  # #62B6CB
 
     # center frame w/ border
