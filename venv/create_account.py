@@ -4,7 +4,6 @@ from tkinter import messagebox
 import root_window
 from root_window import *
 import re #for regex
-import db_connect as db
 
 
 #sample account:
