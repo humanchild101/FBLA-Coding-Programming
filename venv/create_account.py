@@ -38,7 +38,6 @@ def on_account_creation():
             messagebox.showwarning("Submission not permitted", "Please fill out all the text fields")
             return
 
-        #SHARVIKAAAAAA this is your domain (pls educate the poor TvT
         #if database already contains new_user_var.get() then dont add the account and display username already exists
 
         if not re.fullmatch(email_verify, email_var.get()):
