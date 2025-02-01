@@ -3,6 +3,8 @@
 # NOTE FOR SHARVIKA: make sure to carefully combine the latest changes in this w/ your db stuff.
 # you'll probably have to add some things for db as well. make sure that no structure changes are deleted
 # I'll also be more careful with commits and stuff after what happened yesterday TvT
+# ONE OTHER THING: progress bars... they should move by how much ever percentage of the budget is used up. (IM STILL WORKING ON THE NEED WANT BUDGET INPUT)
+# The "X" and "Y" should be the amount used out of specified budgets for needs/wants/total
 
 # imports
 import customtkinter as ctk

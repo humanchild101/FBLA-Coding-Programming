@@ -1,4 +1,5 @@
 # NOTE FOR NIKHILA: CREDIT THAT ONE YT CHANNEL HERE. MOST OF THIS CODE IS FROM THEIR EXAMPLE. Also add delete account option
+
 # NOTE FOR SHARVIKA: Once I have added delete account, i'll let you know where that is, so database probably has to be done for that also
 
 import customtkinter as ctk

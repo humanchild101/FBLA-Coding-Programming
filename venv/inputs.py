@@ -1,4 +1,4 @@
-# NOTE FOR NIKHILA: update icons stuff
+# NOTE FOR NIKHILA: update icons stuff + ADD NEEDS AND WANTS
 
 # NOTE FOR SHARVIKA: ctrl-F your name and you will find specific places you need to do db for. idk if there's more in this page.
 # Make sure all recent updates are updated into your scripts files and make sure db is doing its thing for all of it
