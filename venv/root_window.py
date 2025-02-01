@@ -1,5 +1,6 @@
 import customtkinter as ctk
 
+# creates a single global root instance that can be used in all files.
 root = None
 def root_init():
     global root
@@ -11,5 +12,4 @@ def root_init():
         root.maxsize(1200, 1000)
         root.configure(fg_color="#1B4965")
 
-        #somehow make it so that the root window color changes based on the page
     return root

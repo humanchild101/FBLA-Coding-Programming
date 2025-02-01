@@ -1,3 +1,8 @@
+# NOTE FOR NIKHILA: add forgot password
+
+# NOTE FOR SHARVIKA: i think you've got this page done.
+# just make sure again just like other pages that ALL structural changes are updated into scripts where you're doing db
+
 # imports
 import customtkinter as ctk
 import tkinter as tk
@@ -5,7 +10,7 @@ from tkinter import messagebox
 import root_window
 from root_window import *
 
-# configuring the root window (same root window for all pages) and login page frame
+# initializing the root window and login page frame
 root = root_window.root_init()
 root.configure(fg_color="#1B4965")
 login_page = ctk.CTkFrame(root, fg_color="#1B4965")

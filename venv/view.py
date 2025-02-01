@@ -1,5 +1,8 @@
+# NOTE FOR SHARVIKA: I saw your ss on discord for view page. it looks rlly good!
+
+#imports
 import customtkinter as ctk
-import tkinter as tk  # for StringVar + messagebox + lines
+import tkinter as tk
 from tkinter import messagebox
 import root_window
 from root_window import *

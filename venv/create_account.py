@@ -1,4 +1,9 @@
-# necessary importss
+# NOTE FOR NIKHILA: add email sending feature
+
+# NOTE FOR SHARVIKA: hmmmmm idk. just make sure all structural stuff is updated into your scripts files
+# and check/ensure that database is there for all that need it
+
+# imports
 import customtkinter as ctk
 import tkinter as tk
 from tkinter import messagebox
@@ -6,7 +11,7 @@ import root_window
 from root_window import *
 import re
 
-# initializing root window (same across all pages
+# initializing root window
 root = root_window.root_init()
 root.configure(fg_color="#1B4965")
 
@@ -16,7 +21,7 @@ account_create = ctk.CTkFrame(root, fg_color="#1B4965")
 # ALL Entry Fields
 entry_fields = []
 
-# String vars too hold user input
+# String vars to hold user input
 new_fname = tk.StringVar()
 new_lname = tk.StringVar()
 new_user_var = tk.StringVar()
@@ -43,7 +48,6 @@ def on_account_creation():
             messagebox.showwarning("Submission not permitted", "Please fill out all the text fields")
             return
 
-        # SHARVIKAAAAAA this is your domain (pls educate the poor TvT
         # if database already contains new_user_var.get() then dont add the account and display username already exists
 
         if not re.fullmatch(email_verify, email_var.get()):
