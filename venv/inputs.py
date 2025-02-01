@@ -29,37 +29,33 @@ face3 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programm
 face4 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/sad.png"), size=(70,70))
 face5 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_sad.png"), size=(70,70))
 
-status_area = ctk.CTkLabel(user_label, text="", image=face1, fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70, width = 80)
+status_area = ctk.CTkLabel(user_label, text="", image=face1, fg_color="#1B4965", font=("Arial", 20, "bold"), text_color="#BEE9E8", padx=20, height=70, width = 80)
 
-# Manual Budget Update
-monthly_budget_frame = ctk.CTkFrame(inputs_page, fg_color="#62B6CB", corner_radius=20, width=640, height=100)
-monthly_budget_frame.grid(row=1, column=0, padx=15, pady=15, sticky="e")
-
-# Manual Balance Updates
-manual_balance_update_frame = ctk.CTkFrame(inputs_page, fg_color="#62B6CB", corner_radius=20, width=480, height=100)
-manual_balance_update_frame.grid(row=1, column=1, padx=15, pady=15, sticky="w")
 
 tab_view = ctk.CTkTabview(inputs_page, fg_color="#1B4965", corner_radius=20, width=1100, height=700)
 tab_view.place(relx=0.026, rely=0.2)
 
 transactions = tab_view.add("Transactions")
 deposits = tab_view.add("Deposits")
-income_sources = tab_view.add("Income Sources")
+#income_sources = tab_view.add("Income Sources")
 
 pattern = r'^\d+(\.\d+)?$'
 
 #STRING VARS for transactions
-amount_var = tk.StringVar(value="0.00")
+amount_var = tk.DoubleVar(value = 0.00)
 purpose_var = tk.StringVar(value="Choose")  # Default value set to 'Need'
 date_options = [(datetime.date.today() - datetime.timedelta(days=i)).strftime("%m-%d-%Y") for i in range(500)]
 date_var = ctk.StringVar(value=date_options[0])  # Default to today's date
 need_var = tk.StringVar(value="Need")  # Default value set to 'Need'
 
 #STRING VARS for deposits
-amountd_var = tk.StringVar(value="0.00")
+amountd_var = tk.DoubleVar(value = 0.00)
 sourced_var = tk.StringVar(value="None")  # Default value set to 'None'
 date_options = [(datetime.date.today() - datetime.timedelta(days=i)).strftime("%m-%d-%Y") for i in range(500)]
 dated_var = ctk.StringVar(value=date_options[0])  # Default to today's date
+
+b_var = tk.DoubleVar(value = 0.00)
+ba_var = tk.DoubleVar(value = 0.00)
 
 #data table
 #t_frame = ctk.CTkCanvas(transactions, width=620, height=400)
@@ -69,33 +65,58 @@ dated_var = ctk.StringVar(value=date_options[0])  # Default to today's date
 transactions_table = ttk.Treeview(transactions, columns=("No.", "Transaction", "N/W", "Amount", "Date", "Del"), show="headings", height=200)
 deposits_table = ttk.Treeview(deposits, columns=("No.", "Deposit", "Amount", "Date", "Del"), show="headings", height=200)
 
+monthly_budget_frame = ctk.CTkFrame(inputs_page, fg_color="#62B6CB", corner_radius=20, width=500, height=100)
+manual_balance_update_frame = ctk.CTkFrame(inputs_page, fg_color="#62B6CB", corner_radius=20, width=540, height=100)
+
+budget = ctk.CTkLabel(monthly_budget_frame, text="$" + str(b_var.get()), font=("Arial", 20, "bold"), corner_radius=20,
+                      text_color="black", padx=10, height=40, width=60)
+total_balance = ctk.CTkLabel(manual_balance_update_frame, text="$" + str(ba_var.get()), font=("Arial", 20, "bold"), corner_radius=20,
+                      text_color="black", padx=10, height=40, width=60)
 
 # function to add a new transaction
 def on_t_input():
-    no = len(transactions_table.get_children()) + 1  # automatically adds 1 to the tree length
+    no = len(transactions_table.get_children()) + 1
     transaction = purpose_var.get()
     nw = need_var.get()
     amount = amount_var.get()
     date = date_var.get()
 
-    if (transaction and nw and amount and date) and (re.fullmatch(pattern, amount) and transaction != "Choose") :
+    if transaction and nw and amount and date and transaction != "Choose":
         transactions_table.insert("", "end", values=(no, transaction, nw, amount, date))
+        # Update balance values
+        new_balance = ba_var.get() - amount
+        new_budget = b_var.get() - amount
+        ba_var.set(new_balance)
+        b_var.set(new_budget)
+        # Update UI
+        total_balance.configure(text=f"${new_balance:.2f}")
+        budget.configure(text=f"${new_budget:.2f}")
     else:
-        messagebox.showwarning("Transaction not created", "Please enter all correct fields. Amount must have only numbers with no other characters except a decimal point '.' ")
+        messagebox.showwarning("Transaction not created", "Please enter all correct fields.")
 
 
 def on_d_input():
-    no = len(deposits_table.get_children()) + 1  # automatically adds 1 to the tree length
+    no = len(deposits_table.get_children()) + 1
     deposit = sourced_var.get()
     amount = amountd_var.get()
     date = dated_var.get()
 
-    if (deposit and nw and amount and date) and (re.fullmatch(pattern, amount) and deposit != "None"):
+    if deposit and amount and date and deposit != "None":
         deposits_table.insert("", "end", values=(no, deposit, amount, date))
+        # Update balance values
+        new_balance = ba_var.get() + amount
+        ba_var.set(new_balance)
+        # Update UI
+        total_balance.configure(text=f"${new_balance:.2f}")
     else:
-        messagebox.showwarning("Deposit not created",
-                               "Please enter all correct fields. Amount must have only numbers with no other characters except a decimal point '.' ")
+        messagebox.showwarning("Deposit not created", "Please enter all correct fields.")
 
+def update_month_budget():
+    budget.configure(text= "$" + str(b_var.get()))
+
+
+def update_balance():
+    total_balance.configure(text="$" + str(ba_var.get()))
 
 def hide():
     inputs_page.forget()
@@ -145,6 +166,39 @@ def show():
     # button for logout
     logoutbutton = ctk.CTkButton(icon_label, text="Log Out", font=("Arial", 20, "bold"), fg_color="#BEE9E8", hover_color="#9ACCD9", text_color="black", width=190, height=50, corner_radius=5, command=login.show)
     logoutbutton.grid(row=0, column=2, padx=15, pady=10, sticky="e")
+
+    # Manual Budget Update
+    monthly_budget_frame.grid(row=1, column=0, padx=15, pady=15, sticky="e")
+    current_month = datetime.datetime.now().strftime("%B")
+    budget_text = ctk.CTkLabel(monthly_budget_frame, text="Update " + current_month +" Budget", font=("Arial", 20, "bold"), corner_radius=20, text_color="black", padx = 10, height = 40, width = 60)
+    budget_text.place(relx =0.0001, rely = 0.004)
+
+    budget.place(relx=0.03, rely=0.5)
+    b_amount = ctk.CTkEntry(monthly_budget_frame, width=100, height=40, textvariable=b_var, font=("Arial", 12))
+    b_amount.place(relx=0.4, rely=0.5)
+
+    updateb = ctk.CTkButton(monthly_budget_frame, text="Update", font=("Arial", 20, "bold"), fg_color="#BEE9E8", hover_color="#9ACCD9", text_color="black", width=120, height=50, corner_radius=5, command=update_month_budget)
+    updateb.place(relx=0.7, rely=0.4)
+
+
+    # Manual Balance Updates
+    manual_balance_update_frame.grid(row=1, column=2, padx=15, pady=15, sticky="w")
+
+    balance_txt = ctk.CTkLabel(manual_balance_update_frame, text="Update Balance",
+                               font=("Arial", 20, "bold"), corner_radius=20, text_color="black", padx=10, height=40,
+                               width=60)
+    balance_txt.place(relx=0.0001, rely=0.004)
+
+    total_balance.place(relx=0.03, rely=0.5)
+    ba_amount = ctk.CTkEntry(manual_balance_update_frame, width=100, height=40, textvariable=ba_var, font=("Arial", 12))
+    ba_amount.place(relx=0.4, rely=0.5)
+
+    updateba = ctk.CTkButton(manual_balance_update_frame, text="Update", font=("Arial", 20, "bold"), fg_color="#BEE9E8",
+                            hover_color="#9ACCD9", text_color="black", width=140, height=50, corner_radius=5,
+                            command=update_balance)
+    updateba.place(relx=0.7, rely=0.4)
+
+
 
 
     amount_label = ctk.CTkLabel(transactions, fg_color="#62B6CB", corner_radius=5, width=60, height=40, text_color="black", font = ("Arial", 20, "bold"), text = "Amount: ")
@@ -222,7 +276,7 @@ def show():
     sourced_label.place(relx=0.001, rely=0.13)
     sourced_entry = ctk.CTkEntry(deposits, width=100, height=40, textvariable = sourced_var, font=("Arial", 12))
 
-    sourced_entry.place(relx=0.25, rely=0.13)
+    sourced_entry.place(relx=0.2, rely=0.13)
 
     # date label + calendar dropdown
     dated_label = ctk.CTkLabel(deposits, text="Date: ", font=("Arial", 20, "bold"), fg_color="#62B6CB",
@@ -262,6 +316,7 @@ def show():
 
 show()
 root.mainloop()
+
 if __name__ == "__main__":
     show()
     hide()

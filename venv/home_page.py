@@ -1,6 +1,6 @@
 '''NOTE: HOME PAGE INFO SHOULD BE TAKEN FROM DATABASE FOR EACH INDIVIDUAL USER. ALL INFO IN HOMEPAGE IS UNIQUE TO EACH INDIVIDUAL'''
 import customtkinter as ctk
-import tkinter as tk  # for StringVar + messagebox + lines
+import tkinter as tk
 from tkinter import messagebox
 import root_window
 from root_window import *
@@ -15,7 +15,7 @@ home_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
 top_nav = ctk.CTkFrame(home_page, fg_color="#33739A", height=70, corner_radius=0)
 top_nav.configure(fg_color="#33739A")
 welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=500, text="")
-user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70)
+user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1B4965", font=("Arial", 20, "bold"), text_color="#BEE9E8", padx=20, height=70)
 
 notes_var = tk.StringVar()
 
@@ -209,6 +209,7 @@ def show():
     monthly_budget_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", corner_radius=20, width=475, height=510)
     monthly_budget_frame.place_configure(relx = 0.37, rely = 0.1)
     current_month = datetime.datetime.now().strftime("%B")
+
     # update the month
     your_budget = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 20, "bold"), text="Your Budget in " + current_month, corner_radius=100, width=200, height=30)
     your_budget.grid(row = 0, column = 0, padx = 10, pady = 10, sticky = "w") #relx=0.04, rely=0.03
