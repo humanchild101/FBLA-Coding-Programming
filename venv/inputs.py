@@ -2,7 +2,10 @@
 
 # NOTE FOR SHARVIKA: ctrl-F your name and you will find specific places you need to do db for. idk if there's more in this page.
 # Make sure all recent updates are updated into your scripts files and make sure db is doing its thing for all of it
-# (feel free to give me updates so i can also suggest what might need db if you'd like)
+# (feel free to give me updates, so I can also suggest what might need db if you'd like)
+# another important thing sharvika: each input row in either transactions or deposits table in this page should have a delete option
+# for this ^, check the column names I put for the transactios/deposits on ln 75 + 77
+
 
 # imports
 import customtkinter as ctk

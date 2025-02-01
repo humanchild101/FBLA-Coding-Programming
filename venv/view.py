@@ -1,4 +1,5 @@
 # NOTE FOR SHARVIKA: I saw your ss on discord for view page. it looks rlly good!
+# just like the rest of the files, make sure to update it all in scripts and get db done for it :>
 
 #imports
 import customtkinter as ctk
