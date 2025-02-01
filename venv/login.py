@@ -1,4 +1,4 @@
-# NOTE FOR NIKHILA: add forgot password
+# NOTE FOR NIKHILA: add forgot password (possibly now or later?)
 
 # NOTE FOR SHARVIKA: i think you've got this page done.
 # just make sure again just like other pages that ALL structural changes are updated into scripts where you're doing db

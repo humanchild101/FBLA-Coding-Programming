@@ -4,7 +4,7 @@
 # you'll probably have to add some things for db as well. make sure that no structure changes are deleted
 # I'll also be more careful with commits and stuff after what happened yesterday TvT
 # ONE OTHER THING: progress bars (or ig you're replacing w/ graph? if so, ignore the next few comments)
-# 
+#
 # they should move by how much ever percentage of the budget is used up. (IM STILL WORKING ON THE NEED WANT BUDGET INPUT)
 # The "X" and "Y" should be the amount used out of specified budgets for needs/wants/total
 
