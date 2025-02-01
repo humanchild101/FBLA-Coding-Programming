@@ -1,6 +1,6 @@
-# NOTE FOR NIKHILA: CREDIT THAT ONE YT CHANNEL HERE. MOST OF THIS CODE IS FROM THEIR EXAMPLE. Also add delete account option
+# NOTE FOR NIKHILA: CREDIT THAT ONE YT CHANNEL HERE. MOST OF THIS CODE IS FROM THEIR EXAMPLE. Also add delete account option LATER
 
-# NOTE FOR SHARVIKA: Once I have added delete account, i'll let you know where that is, so database probably has to be done for that also
+# NOTE FOR SHARVIKA: Once I have added delete account, i'll let you know where that is, so database probably has to be done for that also (LATER NOT NOW)
 
 import customtkinter as ctk
 
@@ -82,9 +82,3 @@ def animate_backward():
          in_start_pos = True
     menu_bar.forget()
 
-if __name__ == "__main__":
-    hide_previous_menu()
-    menu_init()
-    animate()
-    animate_backward()
-    animate_forward()

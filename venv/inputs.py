@@ -4,7 +4,7 @@
 # Make sure all recent updates are updated into your scripts files and make sure db is doing its thing for all of it
 # (feel free to give me updates, so I can also suggest what might need db if you'd like)
 # another important thing sharvika: each input row in either transactions or deposits table in this page should have a delete option
-# for this ^, check the column names I put for the transactios/deposits on ln 75 + 77
+# for this ^, check the column names I put for the transactions/deposits on ln 75 + 77
 
 
 # imports
@@ -29,7 +29,7 @@ inputs_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
 top_nav = ctk.CTkFrame(inputs_page, fg_color="#33739A", height=70, corner_radius=0)
 top_nav.configure(fg_color="#33739A")
 welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=500, text="")
-user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1B4965", font=("Arial", 30, "bold"),
+user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1B4965", font=("Arial", 20, "bold"),
                           text_color="#BEE9E8", padx=20, height=70)
 
 # string var to hold notes
