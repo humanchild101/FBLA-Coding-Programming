@@ -60,15 +60,32 @@ def show():
         need_want = need_want_dropdown.get()
         date_range = date_range_dropdown.get()
         amount_range = amount_range_dropdown.get()
+        source = sources_dropdown.get()
+        purpose = purposes_dropdown.get()
 
         income_expense_filter = ""
         need_want_filter = ""
         date_range_filter = ""
         amount_range_filter = ""
 
+        #SHARVIKAAAAAA do what you need to with these new things
+        source_filter = ""
+        purpose_filter = ""
+
         if income_expense != "All":
             income_expense_filter = f"AND income_or_expense = LOWER('{income_expense}')"
 
+        #SHAVRIKAAAA IF THE THING CHOSEN IS INCOME, DO NOT TAAKE INTO CONSIDERATION THE PURPOSES INPUTTED IN THE PURPOSE DROPDOWN. VICE VERSA FOR EXPENSES
+        if income_expense == "Income":
+            sources_dropdown.configure(state = "normal")
+            purposes_dropdown.set("None")
+            purposes_dropdown.configure(state = "disabled")
+
+        if income_expense == "Expense":
+            sources_dropdown.configure(state = "disabled")
+            sources_dropdown.set("None")
+            purposes_dropdown.configure(state = "normal")
+          
         if need_want != "All":
             need_want_filter = f"AND need_or_want = LOWER('{need_want}')"
 
@@ -211,10 +228,10 @@ def show():
     amount_range_dropdown.grid(row=2, column=3, padx=10, pady=5, sticky="w")
 
     # Apply Filter Button (Now below all dropdowns)
-    sources_dropdown = ctk.CTkComboBox(filter_frame, values=["All", "Job", "Scholarship"], width=150) #SHARVIKAAAAAA in values, you have to also add in the sources/expenses that the user adds from inputs page. you can reconfigure what values the dropdown holds with the .configure(values = []) function
+    sources_dropdown = ctk.CTkComboBox(filter_frame, values=["None", "All", "Job", "Scholarship"], width=150) #SHARVIKAAAAAA in values, you have to also add in the sources/expenses that the user adds from inputs page. you can reconfigure what values the dropdown holds with the .configure(values = []) function
     sources_dropdown.grid(row=2, column=4, padx=10, pady=5, sticky="w")
 
-    purposes_label = ctk.CTkComboBox(filter_frame, values=["All", "Bills/Rent", "Necessities", "Transportation", "Healthcare", "Education", "Donations", "Entertainment"], width=150) #SHARVIKAAAAAA in values, you have to also add in the sources/purposes that the user adds from inputs page. you can reconfigure what values the dropdown holds with the .configure(values = []) function
+    purposes_label = ctk.CTkComboBox(filter_frame, values=["None", "All", "Bills/Rent", "Necessities", "Transportation", "Healthcare", "Education", "Donations", "Entertainment"], width=150) #SHARVIKAAAAAA in values, you have to also add in the sources/purposes that the user adds from inputs page. you can reconfigure what values the dropdown holds with the .configure(values = []) function
     purposes_label.grid(row=2, column=5, padx=10, pady=5, sticky="w")
 
     # Apply Filter Button (Now below all dropdowns)
