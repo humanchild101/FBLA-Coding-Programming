@@ -23,7 +23,7 @@ top_nav = ctk.CTkFrame(view_page, fg_color="#33739A", height=70, corner_radius=0
 top_nav.configure(fg_color="#33739A")
 welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=500, text="")
 user_label = ctk.CTkLabel(welcome_label, text=f"Welcome, {first_name} {last_name}!", fg_color="#1B4965",
-                          font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70)
+                          font=("Arial", 20, "bold"), text_color="#BEE9E8", padx=20, height=70)
 
 notes_var = tk.StringVar()
 
@@ -139,7 +139,7 @@ def show():
     # view tab name
     inputs_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=200, text="")
     inputs_label.grid(row=0, column=1, padx=12)
-    tab_label = ctk.CTkLabel(inputs_label, text="VIEW FINANCES", font=("Arial", 30, "bold"), text_color="#BEE9E8",
+    tab_label = ctk.CTkLabel(inputs_label, text="VIEW FINANCES", font=("Arial", 20, "bold"), text_color="#BEE9E8",
                              padx=20, height=70, width=100)
     tab_label.grid(row=0, column=0, padx=2, sticky="w")
 
