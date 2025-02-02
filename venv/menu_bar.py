@@ -18,7 +18,7 @@ def menu_init(parent, start_pos=1.05, end_pos=0.8):
     menu_bar.place(relx=pos, rely=0, relwidth=abs(start_pos - end_pos), relheight=1)
 
     import home_page
-    import inputs
+    import inputss
     import view
 
     menu = ctk.CTkLabel(menu_bar, text="Menu", font=("Arial", 24, "bold"), fg_color="#33739A", text_color="white", width=240, height=70, corner_radius=0)
@@ -32,6 +32,10 @@ def menu_init(parent, start_pos=1.05, end_pos=0.8):
 
     view = ctk.CTkButton(menu_bar, text="View Finances", font=("Arial", 24, "bold"), fg_color="#BEE9E8", hover_color="#9ACCD9", text_color="black", width=240, height=50, corner_radius=0, border_color="#1B4965", border_width=2, command = view.show)
     view.place(relx=0.01, rely=0.17)
+
+    help_ = ctk.CTkButton(menu_bar, text="Usage Manual", font=("Arial", 24, "bold"), fg_color="#BEE9E8", hover_color="#9ACCD9", text_color="black", width=240, height=50, corner_radius=0, border_color="#1B4965", border_width=2, command = help.show)
+    help_.place(relx=0.01, rely=0.17)
+
     menu_bar.lift()
     return menu_bar
 
