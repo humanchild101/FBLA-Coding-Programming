@@ -1,25 +1,12 @@
-'''import customtkinter as ctk
+import customtkinter as ctk
 
+# creates a single global root instance that can be used in all files.
 root = None
+
+
 def root_init():
     global root
     if root == None:
-        root = ctk.CTk()
-        root.title("FBLA Coding and Programming Sharvika & Nikhila")
-        root.state('zoomed')
-        root.geometry('1200x1000')
-        root.resizable(True, True)
-    return root
-'''
-
-import customtkinter as ctk
-
-root = None
-
-
-def root_init():
-    global root
-    if root is None:
         root = ctk.CTk()
         root.title("FBLA Coding and Programming Sharvika & Nikhila")
         root.geometry('1200x1000')

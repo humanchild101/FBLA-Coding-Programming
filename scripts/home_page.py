@@ -1,4 +1,4 @@
-'''NOTE: HOME PAGE INFO SHOULD BE TAKEN FROM DATABASE FOR EACH INDIVIDUAL USER. ALL INFO IN HOMEPAGE IS UNIQUE TO EACH INDIVIDUAL'''
+#imports
 import customtkinter as ctk
 import tkinter as tk  # for StringVar + messagebox + lines
 from tkinter import messagebox
@@ -10,7 +10,11 @@ from PIL import Image
 import menu_bar
 from session_manager import SessionManager
 import db_connect as db
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import pandas as pd
 
+# initializing root window + home page frame
 root = root_window.root_init()
 home_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
 session = SessionManager()
@@ -32,23 +36,28 @@ note_res = db.execute_query(query_for_notes)
 print(note_res[0])
 
 
+#top navigation bar frame
 top_nav = ctk.CTkFrame(home_page, fg_color="#33739A", height=70, corner_radius=0)
 top_nav.configure(fg_color="#33739A")
+
+# welcome-label wih the user's username
 welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=500, text="")
 user_label = ctk.CTkLabel(welcome_label, text=f"Welcome, {first_name} {last_name}!", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70)
 
+# String var for the notes
 notes_var = tk.StringVar()
 notes_var.set(note_res[0])
 
 print(f"notes_var.get() :: {notes_var.get()}")
 
-# I WILL CHANGE THE FILE PATHS LATER ONCE WE GET RID OF VENV
+# image files for the status
 face1 = ctk.CTkImage(light_image=Image.open("faces/very_happy.png"), size=(70,70))
 face2 = ctk.CTkImage(light_image=Image.open("faces/happy.png"), size=(70,70))
 face3 = ctk.CTkImage(light_image=Image.open("faces/neutral.png"), size=(70,70))
 face4 = ctk.CTkImage(light_image=Image.open("faces/sad.png"), size=(70,70))
 face5 = ctk.CTkImage(light_image=Image.open("faces/very_sad.png"), size=(70,70))
 
+#status area
 status_area = ctk.CTkLabel(user_label, text="", image=face1, fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70, width = 80)
 
 def on_v_happy():
@@ -62,15 +71,18 @@ def on_sad():
 def on_v_sad():
     status_area.configure(image = face5)
 
+# update notes
 def update_notes_var(text_box):
     print("step 1")
     notes_var.set(text_box.get("0.0", "end-1c"))
 
+# edit notes
 def edit_notes(text_box):
     print("step 2")
     text_box.insert("0.0", note_res[0])  # Insert sample text
     text_box.configure(state = "normal")
 
+# saving the user's notes
 def save_notes(text_box):
     print("step 3")
     update_notes_var(text_box)
@@ -78,13 +90,15 @@ def save_notes(text_box):
     db.execute_upsert(update_note_Value,"mood",user_id)
     text_box.configure(state="disabled")
 
+# hide page
 def hide():
     home_page.forget()
 
+# show page
 def show():
     root.configure(fg_color="#BEE9E8")
 
-
+    # imports
     import login
     import create_account
     import inputs
@@ -95,23 +109,19 @@ def show():
     inputs.hide()
     view.hide()
 
+    # initializing the size menu
     side_menu = menu_bar.menu_init(home_page)
-
     side_menu.forget()
     menu_bar.animate_backward()
 
     home_page.pack(fill="both", expand=True)  # #62B6CB
     top_nav.grid(row = 0, column = 0, columnspan =4, sticky ="nw")
 
-
-    # welcome and user sign
+    # welcome and user-name sign
     welcome_label.grid(row = 0, column = 0)
-    #SHARVIKAAAAA USER NAME HEREEEE (ignore my uppercase im just hoping you see the comments among the rest)
     user_label.grid(row = 0, column = 0, sticky ="w", padx = 2)
-
     status_area.grid(row = 0, column = 1, sticky = "w", padx = 2)
 
-    #ADD SMILY FACE HERE ^
 
     # home tab name
     home_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx = 20, height = 80, width =200, text = "")
@@ -209,10 +219,7 @@ def show():
     balance = ctk.CTkLabel(total_balance_frame, fg_color="#62B6CB", corner_radius=20, text_color="black", text=f"$ {total[0]}" , font=("Arial", 70, "bold"))
     balance.place(relx=0.02, rely=0.45)
 
-
-
-
-    #notes SHARVIKAAAA here you need to save this stuff in the database. i will create a new function for saving and editing and stuff
+    # notes frame
     notes_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", width = 470, height = 250, corner_radius=20)
     notes_frame.place(relx = 0.37, rely = 0.63)
 
@@ -228,8 +235,6 @@ def show():
 
     save_button = ctk.CTkButton(notes_frame, text="Save", font=("Arial", 15, "bold"), fg_color="#BEE9E8",hover_color="#9ACCD9", text_color="black", width=130, height = 30, corner_radius=15, command = lambda: save_notes(notes_box))
     save_button.place(relx = 0.6, rely = 0.872)
-
-
 
 
 
@@ -293,7 +298,6 @@ def show():
     total_left = ctk.CTkLabel(total_frame, width=20, height=15, corner_radius=10, fg_color="#539CCA",text_color="#0C2B3E", font=("Arial", 16, "bold"), text="$X/$Y")
     total_left.place(relx=0.9, rely=0.5, anchor="center")
 
-    #displays percent of total budget used SHARVIKAAAAAAAAAA TOTAL BUDGET MUST BE UPDATED HERE> THIS IS BASICALLY THE WANTS + NEEDS USED / TOTALL BUDGET
     percent_budget = ctk.CTkLabel(monthly_budget_frame, fg_color = "#62B6CB", corner_radius=20, text_color = "black", text = "XYZ% of Budget Used", font = ("Arial", 30, "bold"))
     percent_budget.grid(row=5, column=0, columnspan=2, pady=25, ipady = 10, padx=10, sticky="ew")
 
