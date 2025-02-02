@@ -72,7 +72,7 @@ def on_account_creation(button):
         msg = MIMEText("Congratulations " + new_fname.get() + " " + new_lname.get() + "! Your account has been created successfully")
         msg['Subject'] = "Finance Management Account Creation"
         to = email_var.get()
-        smtp.sendmail(from_addr="nikhilamadhavi@gmail.com", to_addrs=to, msg = msg.as_string())
+        smtp.sendmail(from_addr="nikhilamadhavi@gmail.com", to_addrs=to, msg = msg.a_string())
         smtp.quit()
         messagebox.showinfo("Success", "Account created successfully!")
 

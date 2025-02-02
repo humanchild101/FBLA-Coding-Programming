@@ -32,9 +32,6 @@ welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, wi
 user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1B4965", font=("Arial", 20, "bold"),
                           text_color="#BEE9E8", padx=20, height=70)
 
-# String var for the notes
-notes_var = tk.StringVar()
-
 
 # image files for the status
 face1 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_happy.png"),
@@ -48,6 +45,11 @@ face5 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programm
 status_area = ctk.CTkLabel(user_label, text="", image=face1, fg_color="#1B4965", font=("Arial", 30, "bold"),
                            text_color="#BEE9E8", padx=20, height=70, width=80)
 
+# String var for the notes + notes box + notes frame
+notes_var = tk.StringVar()
+notes_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", width=470, height=250, corner_radius=20)
+notes_box = ctk.CTkTextbox(notes_frame, width=430, height=140, state="disabled", corner_radius=5,
+                           fg_color="#1B4965")
 
 # next 5 functions are for when the face buttons are clicked
 def on_v_happy():
@@ -75,20 +77,23 @@ def on_v_sad():
 
 
 # updates notes
-def update_notes_var(text_box):
-    notes_var.set(text_box.get("0.0", "end-1c"))
+def update_notes_var():
+    notes_var.set(notes_box.get("0.0", "end-1c"))
 
 
 # edit notes
-def edit_notes(text_box):
-    text_box.insert("0.0", notes_var.get())  # Insert sample text
-    text_box.configure(state="normal")
+def edit_notes():
+    notes_box.configure(state="normal")
+    notes_box.delete("0.0", "end-1c")
+    notes_box.insert("0.0", notes_var.get())
 
 
 # save notes
-def save_notes(text_box):
-    update_notes_var(text_box)
-    text_box.configure(state="disabled")
+def save_notes():
+    notes_box.configure(state="disabled")
+    update_notes_var()
+    notes_box.delete("0.0", "end-1c")
+    notes_box.insert("0.0", notes_var.get())
 
 
 # hide page
@@ -233,27 +238,23 @@ def show():
     balance.place(relx=0.02, rely=0.45)
 
     # notes frame
-    notes_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", width=470, height=250, corner_radius=20)
     notes_frame.place(relx=0.37, rely=0.63)
-
     notes = ctk.CTkLabel(notes_frame, fg_color="#BEE9E8", text="Notes ~ ", text_color="black",
                          font=("Arial", 25, "bold"), corner_radius=20, padx=20, pady=10, width=450)
     notes.grid(row=0, column=0, sticky="w", padx=10, pady=10)
-
-    notes_box = ctk.CTkTextbox(notes_frame, width=430, height=140, state="disabled", corner_radius=5,
-                               fg_color="#1B4965")
     notes_box.grid(row=1, column=0, ipady=15, pady=15, padx=20)
 
     # buttons for editing and saving notes
     edit_button = ctk.CTkButton(notes_frame, text="Edit", font=("Arial", 15, "bold"), fg_color="#BEE9E8",
                                 hover_color="#9ACCD9", text_color="black", width=130, height=30, corner_radius=15,
-                                command=lambda: edit_notes(notes_box))
+                                command=edit_notes)
     edit_button.grid(row=2, column=0, padx=50, sticky="w", pady=10)
 
     save_button = ctk.CTkButton(notes_frame, text="Save", font=("Arial", 15, "bold"), fg_color="#BEE9E8",
                                 hover_color="#9ACCD9", text_color="black", width=130, height=30, corner_radius=15,
-                                command=lambda: save_notes(notes_box))
+                                command=save_notes)
     save_button.place(relx=0.6, rely=0.872)
+
 
     # monthly budget frame
     monthly_budget_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", corner_radius=20, width=475, height=510)
@@ -354,6 +355,8 @@ def show():
     very_sad.place(relx=0.5, rely=0.90, anchor="center")
 
 
+show()
+root.mainloop()
 if __name__ == "__main__":
     show()
     hide()

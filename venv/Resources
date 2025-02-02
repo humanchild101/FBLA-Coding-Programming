@@ -30,6 +30,7 @@ Tools
 7. re
 8. psycopg2
 9. Pillow
+10. stmplib
 
 
 
