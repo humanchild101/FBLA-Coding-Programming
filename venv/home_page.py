@@ -35,6 +35,7 @@ user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1
 # String var for the notes
 notes_var = tk.StringVar()
 
+
 # image files for the status
 face1 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_happy.png"),
                      size=(70, 70))

@@ -73,7 +73,7 @@ def show():
     login_page.pack(fill="both", expand=True)  # #62B6CB
 
     # center frame
-    center_border = ctk.CTkFrame(login_page, fg_color="#BEE9E8", corner_radius=20, width=620, height=355)
+    center_border = ctk.CTkFrame(login_page, fg_color="#BEE9E8", corner_radius=20, width=620, height=327)
     center_border.place(relx=0.5, rely=0.5, anchor="center")
     center_frame = ctk.CTkFrame(center_border, fg_color='#62B6CB', corner_radius=15)  # 62B6CB
     center_frame.place(relx=0.5, rely=0.5, anchor="center")

@@ -10,6 +10,8 @@ from tkinter import messagebox
 import root_window
 from root_window import *
 import re
+from email.mime.text import MIMEText
+import smtplib
 
 # initializing root window
 root = root_window.root_init()
@@ -42,25 +44,39 @@ email_verify = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
 
 # function for when the create account button is pressed. ensures that all entries all filled with valid inputs
-def on_account_creation():
+def on_account_creation(button):
+    button.configure(state="disabled")
     for i in entry_fields:
         if not i.get():
             messagebox.showwarning("Submission not permitted", "Please fill out all the text fields")
+            button.configure(state="normal")
             return
 
-        # if database already contains new_user_var.get() then dont add the account and display username already exists
+    # if database already contains new_user_var.get() then dont add the account and display username already exists
 
-        if not re.fullmatch(email_verify, email_var.get()):
-            messagebox.showwarning("Submission not permitted", "Please enter a valid email, ex: abc@gmail.com")
-            return
+    if not re.fullmatch(email_verify, email_var.get()):
+        messagebox.showwarning("Submission not permitted", "Please enter a valid email, ex: abc@gmail.com")
+        button.configure(state="normal")
+        return
 
-        if not new_pass_var.get() == pass_ver_var.get():
-            messagebox.showwarning("Submission not permitted", "Re-typed password does not match original password")
-            return
+    if not new_pass_var.get() == pass_ver_var.get():
+        messagebox.showwarning("Submission not permitted", "Re-typed password does not match original password")
+        button.configure(state="normal")
+        return
 
-        else:
-            messagebox.showinfo("Success", "Account created successfully!")
+    else:
+        smtp = smtplib.SMTP("smtp.gmail.com", 587)
+        smtp.ehlo()
+        smtp.starttls()
+        smtp.login("nikhilamadhavi@gmail.com", "uwxo diwy libt hpim")
+        msg = MIMEText("Congratulations " + new_fname.get() + " " + new_lname.get() + "! Your account has been created successfully")
+        msg['Subject'] = "Finance Management Account Creation"
+        to = email_var.get()
+        smtp.sendmail(from_addr="nikhilamadhavi@gmail.com", to_addrs=to, msg = msg.as_string())
+        smtp.quit()
+        messagebox.showinfo("Success", "Account created successfully!")
 
+    button.configure(state="normal")
 
 # hides page
 def hide():
@@ -174,7 +190,7 @@ def show():
     create_frame = ctk.CTkFrame(center_frame, fg_color="#BEE9E8", corner_radius=8, width=160, height=30)
     create_button = ctk.CTkButton(create_frame, text="Create this account", font=("Arial", 18), fg_color="#3095AE",
                                   hover_color="#246690", text_color="black", width=200, corner_radius=5,
-                                  command=on_account_creation)
+                                  command= lambda: on_account_creation(create_button))
     create_frame.grid(row=6, column=0, columnspan=2)
     create_button.grid(row=1, column=0, columnspan=2, pady=5, padx=5, ipady=5)
 
