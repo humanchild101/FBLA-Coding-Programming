@@ -188,6 +188,12 @@ def show():
     amount_range_label = ctk.CTkLabel(filter_frame, text="Amount Range", font=("Arial", 12, "bold"), text_color= "black")
     amount_range_label.grid(row=1, column=3, padx=10, pady=(5, 0), sticky="w")
 
+    sources_label = ctk.CTkLabel(filter_frame, text="Sources", font=("Arial", 12, "bold"), text_color= "black") #SHARVIKAAAAAA in values, you have to also add in the sources/purposes that the user adds from inputs page. you can reconfigure what values the dropdown holds with the .configure(values = []) function
+    sources_label.grid(row=1, column=4, padx=10, pady=5, sticky="w")
+
+    purposes_label = ctk.CTkLabel(filter_frame, text="Purposes", font=("Arial", 12, "bold"), text_color= "black") #SHARVIKAAAAAA in values, you have to also add in the sources/purposes that the user adds from inputs page. you can reconfigure what values the dropdown holds with the .configure(values = []) function
+    purposes_label.grid(row=1, column=5, padx=10, pady=5, sticky="w")
+
     '''columns_label = ctk.CTkLabel(filter_frame, text="Select Columns", font=("Arial", 12, "bold"))
     columns_label.grid(row=1, column=4, padx=10, pady=(5, 0), sticky="w")'''
 
@@ -205,8 +211,15 @@ def show():
     amount_range_dropdown.grid(row=2, column=3, padx=10, pady=5, sticky="w")
 
     # Apply Filter Button (Now below all dropdowns)
-    apply_filter_button = ctk.CTkButton(filter_frame, text="Apply Filter", fg_color="#33739A", hover_color="#1B4965", command = filter_button_clicked)
-    apply_filter_button.grid(row=2, column=5, padx=10, pady=5, sticky="w")
+    sources_dropdown = ctk.CTkComboBox(filter_frame, values=["All", "Job", "Scholarship"], width=150) #SHARVIKAAAAAA in values, you have to also add in the sources/expenses that the user adds from inputs page. you can reconfigure what values the dropdown holds with the .configure(values = []) function
+    sources_dropdown.grid(row=2, column=4, padx=10, pady=5, sticky="w")
+
+    purposes_label = ctk.CTkComboBox(filter_frame, values=["All", "Bills/Rent", "Necessities", "Transportation", "Healthcare", "Education", "Donations", "Entertainment"], width=150) #SHARVIKAAAAAA in values, you have to also add in the sources/purposes that the user adds from inputs page. you can reconfigure what values the dropdown holds with the .configure(values = []) function
+    purposes_label.grid(row=2, column=5, padx=10, pady=5, sticky="w")
+
+    # Apply Filter Button (Now below all dropdowns)
+    apply_filter_button = ctk.CTkButton(filter_frame, text="Apply Filter", fg_color="#33739A", hover_color="#1B4965", width = 60, command = filter_button_clicked)
+    apply_filter_button.grid(row=2, column=6, padx=10, pady=5, sticky="w")
 
     # Database Container (Expands to bottom)
     database_frame = ctk.CTkFrame(view_page, fg_color="#BEE9E8")
