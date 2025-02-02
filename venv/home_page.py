@@ -355,8 +355,7 @@ def show():
     very_sad.place(relx=0.5, rely=0.90, anchor="center")
 
 
-show()
-root.mainloop()
+
 if __name__ == "__main__":
     show()
     hide()
