@@ -172,20 +172,20 @@ def show():
     filter_frame = ctk.CTkFrame(view_page, fg_color="#62B6CB", height=140)
     filter_frame.grid(row=1, column=0, columnspan=4, padx=20, pady=(10, 5), sticky="ew")
 
-    filter_label = ctk.CTkLabel(filter_frame, text="Filter Options:", font=("Arial", 16, "bold"))
+    filter_label = ctk.CTkLabel(filter_frame, text="Filter Options:", font=("Arial", 16, "bold"), text_color="black")
     filter_label.grid(row=0, column=0, padx=10, pady=5, sticky="w")
 
     # Labels for Dropdowns
-    income_expense_label = ctk.CTkLabel(filter_frame, text="Income/Expense", font=("Arial", 12, "bold"))
+    income_expense_label = ctk.CTkLabel(filter_frame, text="Income/Expense", font=("Arial", 12, "bold"), text_color= "black")
     income_expense_label.grid(row=1, column=0, padx=10, pady=(5, 0), sticky="w")
 
-    need_want_label = ctk.CTkLabel(filter_frame, text="Need or Want", font=("Arial", 12, "bold"))
+    need_want_label = ctk.CTkLabel(filter_frame, text="Need or Want", font=("Arial", 12, "bold"), text_color= "black")
     need_want_label.grid(row=1, column=1, padx=10, pady=(5, 0), sticky="w")
 
-    date_range_label = ctk.CTkLabel(filter_frame, text="Date Range", font=("Arial", 12, "bold"))
+    date_range_label = ctk.CTkLabel(filter_frame, text="Date Range", font=("Arial", 12, "bold"), text_color= "black")
     date_range_label.grid(row=1, column=2, padx=10, pady=(5, 0), sticky="w")
 
-    amount_range_label = ctk.CTkLabel(filter_frame, text="Amount Range", font=("Arial", 12, "bold"))
+    amount_range_label = ctk.CTkLabel(filter_frame, text="Amount Range", font=("Arial", 12, "bold"), text_color= "black")
     amount_range_label.grid(row=1, column=3, padx=10, pady=(5, 0), sticky="w")
 
     '''columns_label = ctk.CTkLabel(filter_frame, text="Select Columns", font=("Arial", 12, "bold"))
