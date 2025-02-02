@@ -8,14 +8,13 @@
 8. https://www.geeksforgeeks.org/minsize-method-in-tkinter-python/
 9. https://stackoverflow.com/questions/10448882/how-do-i-set-the-initial-window-size-as-the-minimum-window-size-in-tkinter
 10. https://www.youtube.com/watch?v=yQSEXcf6s2I&list=PLCC34OHNcOtoC6GglhF3ncJ5rLwQrLGnV
-<<<<<<< HEAD
-=======
 11. https://www.youtube.com/watch?v=-D7tgeCqJfc
 12. https://www.youtube.com/watch?v=Miydkti_QVE
 13. https://stackoverflow.com/questions/52875751/is-their-a-grid-remember-reversible-grid-forget?rq=3
 14. https://stackoverflow.com/questions/65799158/how-do-i-save-my-text-from-the-textbox-on-tkinter-to-a-text-file
 15. https://stackoverflow.com/questions/66884410/always-keep-a-widget-on-top-of-the-others-in-tkinter
 16. https://www.youtube.com/watch?v=vVRrOi5LGSo
+17. https://www.geeksforgeeks.org/how-to-send-automated-email-messages-in-python/
 
 
 
@@ -31,6 +30,7 @@ Tools
 7. re
 8. psycopg2
 9. Pillow
+10. stmplib
 
 
 
