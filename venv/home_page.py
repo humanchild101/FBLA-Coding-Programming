@@ -135,7 +135,7 @@ def show():
     # home tab name
     home_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=200, text="")
     home_label.grid(row=0, column=1, padx=12)
-    tab_label = ctk.CTkLabel(home_label, text="HOME", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20,
+    tab_label = ctk.CTkLabel(home_label, text="HOME", font=("Arial", 20, "bold"), text_color="#BEE9E8", padx=20,
                              height=70, width=100)
     tab_label.grid(row=0, column=0, padx=2, sticky="w")
 
