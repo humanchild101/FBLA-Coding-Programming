@@ -15,12 +15,13 @@ from tkinter import messagebox
 import root_window
 from root_window import *
 import datetime
+from dateutil.relativedelta import relativedelta
 import PIL
 from PIL import Image
 import menu_bar
-import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import pandas as pd
 
 # initializing root window + home page frame
 root = root_window.root_init()
@@ -71,6 +72,8 @@ figure = plt.Figure(fig_size = (5,4), dpi = 100)
 figure_plot = figure.add_subplot(1,1,1)
 figure_plot.set_ylabel("Total Monthly Expenses")
 line_graph = FigureCanvasTkAgg(figure, monthly_budget_frame)
+dataframe = dataframe[("month", "total_used")].groupby("month").sum()
+dataframe.plot(kind = "line", legend =True, ax = figure_plot, color = "b", marker = "o", fontsize =10)
 
 
 # next 5 functions are for when the face buttons are clicked
