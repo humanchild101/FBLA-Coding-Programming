@@ -18,6 +18,9 @@ import datetime
 import PIL
 from PIL import Image
 import menu_bar
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 # initializing root window + home page frame
 root = root_window.root_init()
@@ -32,6 +35,7 @@ welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, wi
 user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1B4965", font=("Arial", 20, "bold"),
                           text_color="#BEE9E8", padx=20, height=70)
 
+monthly_budget_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", corner_radius=20, width=475, height=510)
 
 # image files for the status
 face1 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_happy.png"),
@@ -50,6 +54,24 @@ notes_var = tk.StringVar()
 notes_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", width=470, height=250, corner_radius=20)
 notes_box = ctk.CTkTextbox(notes_frame, width=430, height=140, state="disabled", corner_radius=5,
                            fg_color="#1B4965")
+#current month
+current_month = datetime.datetime.now().strftime("%B")
+current_date = datetime.datetime.now()
+past_12_months = [(current_date - relativedelta(months=i)).strftime("%Y-%m") for i in range(12)]
+
+# line graph data SHARVIKAAA (for total used... you have to input some random values
+# into the db for past 12 months and then get them to show up in this total_used list
+# for actual values you have to take all transactions in a certain month, and then add them together
+# and then divide by the currently stated budget
+monthly_total_expenses = {'month': past_12_months, 'total_used': []}
+
+dataframe = pd.DataFrame(monthly_total_expenses)
+figure = plt.Figure(fig_size = (5,4), dpi = 100)
+# rows, columns, index pos (the 1,1,1)
+figure_plot = figure.add_subplot(1,1,1)
+figure_plot.set_ylabel("Total Monthly Expenses")
+line_graph = FigureCanvasTkAgg(figure, monthly_budget_frame)
+
 
 # next 5 functions are for when the face buttons are clicked
 def on_v_happy():
@@ -259,30 +281,32 @@ def show():
 
 
     # monthly budget frame
-    monthly_budget_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", corner_radius=20, width=475, height=510)
     monthly_budget_frame.place_configure(relx=0.37, rely=0.1)
-    current_month = datetime.datetime.now().strftime("%B")
 
     # update the month
     your_budget = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 20, "bold"),
-                               text="Your Budget in " + current_month, corner_radius=100, width=200, height=30)
+                               text="Your Spending Over Months", corner_radius=100, width=200, height=30)
     your_budget.grid(row=0, column=0, padx=10, pady=10, sticky="w")
 
     canvas = ctk.CTkCanvas(monthly_budget_frame, width=430, height=3, bg="#1B4965", highlightthickness=0)
     canvas.grid(row=1, column=0, columnspan=2, pady=10, padx=20, sticky="w")
 
+    line_graph.get_tk_widget().grid(row = 2, column = 0, sticky = "w")
+    '''
     # frame for wants progress bar
     wants_frame = ctk.CTkFrame(monthly_budget_frame, fg_color="#539CCA", corner_radius=10, width=450, height=50)
     wants_frame.grid(row=2, column=0, columnspan=2, pady=30, padx=10, sticky="w")
-
+    
     wants_label = ctk.CTkLabel(wants_frame, text="Wants", font=("Arial", 16, "bold"), text_color="#0C2B3E")
     wants_label.place(relx=0.05, rely=0.5, anchor="w")
 
+    
     # Add a progress bar for wants SHARVIKAAAAA --> progress is set based on budget which is set in inputs by the user
     wants_progress = ctk.CTkProgressBar(wants_frame, width=280, height=20, corner_radius=10, fg_color="#BEE9E8",
                                         border_color="#1B4965", border_width=1)
     wants_progress.place(relx=0.2, rely=0.5, anchor="w")  # Position the progress bar next to the label
     wants_progress.set(0.1)
+    
 
     wants_left = ctk.CTkLabel(wants_frame, width=20, height=15, corner_radius=10, fg_color="#539CCA",
                               text_color="#0C2B3E", font=("Arial", 16, "bold"), text="$X/$Y")
@@ -295,12 +319,13 @@ def show():
     needs_label = ctk.CTkLabel(needs_frame, text="Needs", font=("Arial", 16, "bold"), text_color="#0C2B3E")
     needs_label.place(relx=0.05, rely=0.5, anchor="w")  # Position the label on the left side of the frame
 
+    
     # Add a progress bar for wants SHARVIKAAAAA --> progress is set based on budget which is set in inputs by the user
     needs_progress = ctk.CTkProgressBar(needs_frame, width=280, height=20, corner_radius=10, fg_color="#BEE9E8",
                                         border_color="#1B4965", border_width=1)
     needs_progress.place(relx=0.2, rely=0.5, anchor="w")  # Position the progress bar next to the label
     needs_progress.set(0.1)
-
+    
     needs_left = ctk.CTkLabel(needs_frame, width=20, height=15, corner_radius=10, fg_color="#539CCA",
                               text_color="#0C2B3E", font=("Arial", 16, "bold"), text="$X/$Y")
     needs_left.place(relx=0.9, rely=0.5, anchor="center")
@@ -312,19 +337,22 @@ def show():
     total_label = ctk.CTkLabel(total_frame, text="Total", font=("Arial", 16, "bold"), text_color="#0C2B3E")
     total_label.place(relx=0.05, rely=0.5, anchor="w")  # Position the label on the left side of the frame
 
+    
     # Add a progress bar for wants SHARVIKAAAAA --> progress is set based on budget which is set in inputs by the user
     total_progress = ctk.CTkProgressBar(total_frame, width=280, height=20, corner_radius=10, fg_color="#BEE9E8",
                                         border_color="#1B4965", border_width=1)
     total_progress.place(relx=0.2, rely=0.5, anchor="w")  # Position the progress bar next to the label
     total_progress.set(0.1)
-
+    
     total_left = ctk.CTkLabel(total_frame, width=20, height=15, corner_radius=10, fg_color="#539CCA",
                               text_color="#0C2B3E", font=("Arial", 16, "bold"), text="$X/$Y")
     total_left.place(relx=0.9, rely=0.5, anchor="center")
+    '''
+
 
     # displays percent of total budget used SHARVIKAAAAAAAAAA
     percent_budget = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", corner_radius=20, text_color="black",
-                                  text="XYZ% of Budget Used", font=("Arial", 30, "bold"))
+                                  text="XYZ% of "+current_month+" Budget Used", font=("Arial", 20, "bold"))
     percent_budget.grid(row=5, column=0, columnspan=2, pady=25, ipady=10, padx=10, sticky="ew")
 
     # status frame
@@ -357,6 +385,8 @@ def show():
     very_sad.place(relx=0.5, rely=0.90, anchor="center")
 
 
+show()
+root.mainloop()
 
 if __name__ == "__main__":
     show()
