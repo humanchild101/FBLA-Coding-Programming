@@ -19,11 +19,13 @@ import PIL
 from PIL import Image
 import menu_bar
 from session_manager import SessionManager
+import db_connect as db
 
 session = SessionManager()
 
 first_name = session.get("first_name")
 last_name = session.get("last_name")
+user_id = session.get("user_id")
 
 # root window initialization
 root = root_window.root_init()
@@ -108,6 +110,18 @@ def on_t_input():
     if transaction and nw and amount and date and transaction != "Choose":
         transactions_table.insert("", "end", values=(no, transaction, nw, amount, date))
         # updates balance values
+        # Convert to datetime object
+        date_obj = datetime.datetime.strptime(date, "%d-%m-%Y")
+
+        # Convert to new format
+        new_date_str = date_obj.strftime("%Y-%m-%d")
+        print(new_date_str)
+
+        insert_query = f"""insert into transactions (income_or_expense,source,date_of_transaction,need_or_want,note,amount,user_id) 
+                        values ('expense','{transaction}',TO_DATE('{new_date_str}', 'YYYY-MM-dd'),'{nw}','{transaction}',{amount},{user_id})"""
+        # updates balance values
+        db.insert_values(insert_query)
+        
         new_balance = ba_var.get() - amount
         new_budget = b_var.get() - amount
         ba_var.set(new_balance)
@@ -129,6 +143,17 @@ def on_d_input():
     if deposit and amount and date and deposit != "None":
         deposits_table.insert("", "end", values=(no, deposit, amount, date))
         # update balance values
+        date_obj = datetime.datetime.strptime(date, "%d-%m-%Y")
+
+        # Convert to new format
+        new_date_str = date_obj.strftime("%Y-%m-%d")
+        print(new_date_str)
+
+        insert_query = f"""insert into transactions (income_or_expense,source,date_of_transaction,need_or_want,note,amount,user_id) 
+                        values ('income','{deposit}',TO_DATE('{new_date_str}', 'YYYY-MM-dd'),'n/a','{deposit}',{amount},{user_id})"""
+        # updates balance values
+        db.insert_values(insert_query)
+        
         new_balance = ba_var.get() + amount
         ba_var.set(new_balance)
         # update
