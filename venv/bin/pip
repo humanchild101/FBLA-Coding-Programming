@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/Users/nikhila/Downloads/FBLA-project-main 2/venv/bin/python" "$0" "$@"
-' '''
+#!/Users/nikhila/FBLA-Coding-Programming/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
