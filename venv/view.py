@@ -37,13 +37,13 @@ def show():
     import create_account
     import home_page
     import inputs
-    import help
+    import help_p
 
     login.hide()
     create_account.hide()
     home_page.hide()
     inputs.hide()
-    help.hide()
+    help_p.hide()
 
     view_page.pack(fill="both", expand=True)  # #62B6CB
     top_nav.grid(row = 0, column = 0, columnspan =4, sticky ="nw")

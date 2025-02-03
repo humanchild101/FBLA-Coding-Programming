@@ -18,6 +18,7 @@ import datetime
 import PIL
 from PIL import Image
 import menu_bar
+import re
 
 # root window initialization
 root = root_window.root_init()
@@ -69,8 +70,8 @@ sourced_var = tk.StringVar(value="None")
 date_options = [(datetime.date.today() - datetime.timedelta(days=i)).strftime("%m-%d-%Y") for i in range(500)]
 dated_var = ctk.StringVar(value=date_options[0])
 # double vars to hold balance and budget amounts
-b_var = tk.DoubleVar(value=0.00)
-ba_var = tk.DoubleVar(value=0.00)
+b_var = tk.DoubleVar()
+ba_var = tk.DoubleVar()
 
 # string vars for new deposit sources + expense purposes
 new_sou_var = tk.StringVar()
@@ -103,6 +104,8 @@ total_balance = ctk.CTkLabel(manual_balance_update_frame, text="$" + str(ba_var.
                              corner_radius=20,
                              text_color="black", padx=10, height=40, width=60)
 
+#regex pattern for input validation of decimals
+pattern = r"^-?\d+\.\d+$"
 
 # function to add a new transaction
 def on_t_input():
@@ -113,6 +116,13 @@ def on_t_input():
     amount = amount_var.get()
     date = date_var.get()
 
+    if b_var.get() <= 0 or b_var.get() < amount or ba_var.get() < amount:
+        messagebox.showinfo("Not enough money", "Budget and/or balance amount not enough . Update budget and/or balance to continue transactions")
+        return
+    if not re.fullmatch(pattern, str(amount)):
+        messagebox.showwarning("Invalid Amount", "Please enter a valid decimal number.")
+        return
+
     # if all info is valid
     if transaction and nw and amount and date and transaction != "Choose":
         transactions_table.insert("", "end", values=(no, transaction, nw, amount, date))
@@ -121,12 +131,12 @@ def on_t_input():
         new_budget = b_var.get() - amount
         ba_var.set(new_balance)
         b_var.set(new_budget)
+
         # updates the text shown
         total_balance.configure(text=f"${new_balance:.2f}")
         budget.configure(text=f"${new_budget:.2f}")
     else:
         messagebox.showwarning("Transaction not created", "Please enter all correct fields.")
-
 
 # function to add a new deposit
 def on_d_input():
@@ -159,16 +169,17 @@ def update_balance():
     total_balance.configure(text="$" + str(ba_var.get()))
 
 def add_new_source():
-    if (new_sou_var.get() != ""):
+    if new_sou_var.get() != "":
         source_options.append(new_sou_var.get())
         source_dropdown.configure(values=source_options)
         messagebox.showinfo("Success", "Income source added")
 
 def add_new_purpose():
-    if (new_pur_var.get() != ""):
+    if new_pur_var.get() != "":
         purpose_options.append(new_pur_var.get())
         purpose_dropdown.configure(values=purpose_options)
         messagebox.showinfo("Success", "Expense purpose added")
+
 
 
 # hides page
@@ -185,11 +196,13 @@ def show():
     import create_account
     import home_page
     import view
+    import help_p
 
     login.hide()
     create_account.hide()
     home_page.hide()
     view.hide()
+    help_p.hide()
 
     inputs_page.pack(fill="both", expand=True)  # #62B6CB
     top_nav.grid(row=0, column=0, columnspan=4, sticky="nw")

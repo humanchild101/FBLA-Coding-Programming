@@ -110,11 +110,13 @@ def show():
     import create_account
     import inputs
     import view
+    import help_p
 
     login.hide()
     create_account.hide()
     inputs.hide()
     view.hide()
+    help_p.hide()
 
     # initializing the size menu
     side_menu = menu_bar.menu_init(home_page)
