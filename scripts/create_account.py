@@ -5,11 +5,11 @@
 
 # imports
 import customtkinter as ctk
-import tkinter as tk  # for StringVar + messagebox + lines
+import tkinter as tk
 from tkinter import messagebox
 import root_window
 from root_window import *
-import re #for regex
+import re
 import db_connect as db
 from email.mime.text import MIMEText
 import smtplib
@@ -21,7 +21,7 @@ root.configure(fg_color="#1B4965")
 # creating current page's frame
 account_create = ctk.CTkFrame(root, fg_color="#1B4965")
 
-#ALL Entry Fields
+# ALL Entry Fields
 entry_fields = []
 
 # String vars to hold user input
@@ -40,10 +40,10 @@ entry_fields.append(new_pass_var)
 entry_fields.append(pass_ver_var)
 entry_fields.append(email_var)
 
-#regex
+
 # code from GeeksForGeeks. Regex to verify a valid password
 #password_verify = pattern = r'^(?=(.*[A-Z]){3,})(?=(.*[!@#$%^&*(),.?":{}|<>]){3,})(?=(.*[0-9]){3,}).*$' #from ChatGPT
-email_verify = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b' #code from GeeksForGeeks
+email_verify = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
 
 
 # function for when the create account button is pressed. ensures that all entries all filled with valid inputs
@@ -113,6 +113,7 @@ def hide():
 # shows page
 def show():
     root.configure(fg_color="#1B4965")
+
     # imports to avoid circular import error
     import login
     import home_page
@@ -150,7 +151,7 @@ def show():
     fname_label.grid(row=1, column=0, sticky="e", padx=5, pady=10, ipady=4)
     fname_input.grid(row=1, column=1, sticky="w", padx=15, pady=10, ipady=5)
 
-    #last name entry frame + label + text fieldAzAAZZAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    # last name entry frame + label + text field
     lname_frame = ctk.CTkFrame(center_frame, fg_color="#3095AE", corner_radius=15, width=600, height=30)
     lname_frame.grid(row=1, column=1, columnspan=2, padx=5, pady=10, sticky="e")
 
@@ -158,7 +159,6 @@ def show():
     lname_input = ctk.CTkEntry(lname_frame, textvariable=new_lname, font=("Arial", 15), fg_color="#BEE9E8", text_color="black", width=150, corner_radius=5)
     lname_label.grid(row=1, column=0, sticky="e", padx=5, pady=10, ipady=4)
     lname_input.grid(row=1, column=1, sticky="w", padx=15, pady=10, ipady=5)
-
 
     # username entry
     user_frame = ctk.CTkFrame(center_frame, fg_color = "#3095AE", corner_radius=15, width = 600, height= 30)
@@ -181,7 +181,7 @@ def show():
     password_input.grid(row=1, column=1, sticky="w", padx=15, pady=10, ipady=5)
     pas_reqs.grid(row =2, column = 0,columnspan = 2)
 
-    # password verification (ensures the same password is retyped
+    # password verification (ensures the same password is retyped)
     pass_frame = ctk.CTkFrame(center_frame, fg_color="#3095AE", corner_radius=15, width=600, height=50)
     pass_frame.grid(row=4, column=0, columnspan=2, padx=5, pady=10, sticky = "w")
 

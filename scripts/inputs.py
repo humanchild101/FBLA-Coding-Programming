@@ -20,6 +20,7 @@ from PIL import Image
 import menu_bar
 from session_manager import SessionManager
 import db_connect as db
+import re
 
 session = SessionManager()
 
@@ -59,7 +60,7 @@ tab_view.place(relx=0.026, rely=0.2)
 # transaction and deposits tab. income tab may or may not be added later
 transactions = tab_view.add("Transactions")
 deposits = tab_view.add("Deposits")
-# income_sources = tab_view.add("Income Sources")
+purpose_sources = tab_view.add("Sources + Purposes")
 
 
 # string vars for transaction inputs with default values
@@ -76,14 +77,28 @@ date_options = [(datetime.date.today() - datetime.timedelta(days=i)).strftime("%
 dated_var = ctk.StringVar(value=date_options[0])
 
 # double vars to hold balance and budget amounts
-b_var = tk.DoubleVar(value=0.00)
-ba_var = tk.DoubleVar(value=0.00)
+b_var = tk.DoubleVar()
+ba_var = tk.DoubleVar()
+
+# string vars for new deposit sources + expense purposes
+new_sou_var = tk.StringVar()
+new_pur_var = tk.StringVar()
+
+purpose_options = ["Bills/Rent", "Necessities", "Transportation", "Healthcare", "Education", "Donations", "Entertainment"]
+source_options = ["Job", "Scholarship"]
 
 # SHARVIKAA: Tree view for data table, but you will replace this with the db table i suppose?
-transactions_table = ttk.Treeview(transactions, columns=("No.", "Transaction", "N/W", "Amount", "Date", "Del"),
+transactions_table = ttk.Treeview(transactions, columns=("No.", "Transaction", "N/W", "Amount", "Date", "Notes" "Del"),
                                   show="headings", height=200)
-deposits_table = ttk.Treeview(deposits, columns=("No.", "Deposit", "Amount", "Date", "Del"), show="headings",
+deposits_table = ttk.Treeview(deposits, columns=("No.", "Deposit", "Amount", "Date", "Notes", "Del"), show="headings",
                               height=200)
+
+source_dropdown = ctk.CTkOptionMenu(deposits, variable=sourced_var, values=source_options, font=("Arial", 15),
+                                  height=40, text_color="black", fg_color="#BEE9E8", button_color="#BEE9E8",
+                                  button_hover_color="#A0D8D3")
+purpose_dropdown = ctk.CTkOptionMenu(transactions, variable=purpose_var, values=purpose_options, font=("Arial", 15),
+                                     height=40, text_color="black", fg_color="#BEE9E8", button_color="#BEE9E8",
+                                     button_hover_color="#A0D8D3")
 
 # monthly budget + balance frames
 monthly_budget_frame = ctk.CTkFrame(inputs_page, fg_color="#62B6CB", corner_radius=20, width=500, height=100)
@@ -96,6 +111,8 @@ total_balance = ctk.CTkLabel(manual_balance_update_frame, text="$" + str(ba_var.
                              corner_radius=20,
                              text_color="black", padx=10, height=40, width=60)
 
+#regex pattern for input validation of decimals
+pattern = r"^-?\d+\.\d+$"
 
 # function to add a new transaction
 def on_t_input():
@@ -105,6 +122,13 @@ def on_t_input():
     nw = need_var.get()
     amount = amount_var.get()
     date = date_var.get()
+
+    if b_var.get() <= 0 or b_var.get() < amount or ba_var.get() < amount:
+        messagebox.showinfo("Not enough money", "Budget and/or balance amount not enough . Update budget and/or balance to continue transactions")
+        return
+    if not re.fullmatch(pattern, str(amount)):
+        messagebox.showwarning("Invalid Amount", "Please enter a valid decimal number.")
+        return
 
     # if all info is valid
     if transaction and nw and amount and date and transaction != "Choose":
@@ -139,6 +163,10 @@ def on_d_input():
     deposit = sourced_var.get()
     amount = amountd_var.get()
     date = dated_var.get()
+
+    if not re.fullmatch(pattern, str(amount)):
+        messagebox.showwarning("Invalid Amount", "Please enter a valid decimal number.")
+        return
 
     if deposit and amount and date and deposit != "None":
         deposits_table.insert("", "end", values=(no, deposit, amount, date))
@@ -180,6 +208,18 @@ def update_month_budget():
 def update_balance():
     total_balance.configure(text="$" + str(ba_var.get()))
 
+def add_new_source():
+    if new_sou_var.get() != "":
+        source_options.append(new_sou_var.get())
+        source_dropdown.configure(values=source_options)
+        messagebox.showinfo("Success", "Income source added")
+
+def add_new_purpose():
+    if new_pur_var.get() != "":
+        purpose_options.append(new_pur_var.get())
+        purpose_dropdown.configure(values=purpose_options)
+        messagebox.showinfo("Success", "Expense purpose added")
+
 
 # hides page
 def hide():
@@ -195,11 +235,13 @@ def show():
     import create_account
     import home_page
     import view
+    import help_p
 
     login.hide()
     create_account.hide()
     home_page.hide()
     view.hide()
+    help_p.hide()
 
     inputs_page.pack(fill="both", expand=True)  # #62B6CB
     top_nav.grid(row=0, column=0, columnspan=4, sticky="nw")
@@ -217,7 +259,7 @@ def show():
     # inputs tab name
     inputs_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=200, text="")
     inputs_label.grid(row=0, column=1, padx=12)
-    tab_label = ctk.CTkLabel(inputs_label, text="INPUTS", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20,
+    tab_label = ctk.CTkLabel(inputs_label, text="INPUTS", font=("Arial", 20, "bold"), text_color="#BEE9E8", padx=20,
                              height=70, width=100)
     tab_label.grid(row=0, column=0, padx=2, sticky="w")
 
@@ -240,7 +282,6 @@ def show():
     logoutbutton.grid(row=0, column=2, padx=15, pady=10, sticky="e")
 
     # manual budget update
-    monthly_budget_frame = ctk.CTkFrame(inputs_page, fg_color="#62B6CB", corner_radius=20, width=640, height=100)
     monthly_budget_frame.grid(row=1, column=0, padx=15, pady=15, sticky="e")
     current_month = datetime.datetime.now().strftime("%B")
     budget_text = ctk.CTkLabel(monthly_budget_frame, text="Update " + current_month + " Budget",
@@ -274,7 +315,38 @@ def show():
                              command=update_balance)
     updateba.place(relx=0.7, rely=0.4)
 
-    # transactions amount entry
+
+    # Input sources + purposes page
+    # These lines will allow user to add new income sources for user to choose from in filters/inputting deposits+expenses
+    new_source_label = ctk.CTkLabel(purpose_sources, fg_color="#62B6CB", corner_radius=5, width=60, height=40,
+                                    text_color="black", font=("Arial", 20, "bold"), text="New Income Source: ")
+    new_source_label.place(relx=0.001, rely=0.01)
+    new_source_entry = ctk.CTkEntry(purpose_sources, width=160, height=40, textvariable=new_sou_var, font=("Arial", 12))
+    new_source_entry.place(relx=0.22, rely=0.01)
+    new_source_add = ctk.CTkButton(purpose_sources, text="Add Income Source", font=("Arial", 18, "bold"),
+                                   fg_color="#9AC0BF", hover_color="#467F8D", height=40, text_color="black", width=200,
+                                   corner_radius=10, command=add_new_source)
+    new_source_add.place(relx=0.4, rely=0.01)
+
+    # These lines will allow user to add new expense purposes for user to choose from in filters/inputting deposits+expenses
+    new_purpose_label = ctk.CTkLabel(purpose_sources, fg_color="#62B6CB", corner_radius=5, width=60, height=40,
+                                     text_color="black", font=("Arial", 20, "bold"), text="New Expense Purpose: ")
+    new_purpose_label.place(relx=0.001, rely=0.1)
+    new_purpose_entry = ctk.CTkEntry(purpose_sources, width=160, height=40, textvariable=new_pur_var,
+                                     font=("Arial", 12))
+    new_purpose_entry.place(relx=0.24, rely=0.1)
+    new_purpose_add = ctk.CTkButton(purpose_sources, text="Add Expense Purpose", font=("Arial", 18, "bold"),
+                                    fg_color="#9AC0BF", hover_color="#467F8D", height=40, text_color="black", width=200,
+                                    corner_radius=10, command=add_new_purpose)
+    new_purpose_add.place(relx=0.42, rely=0.1)
+
+    # These lines will allow the user to see the purposes and expenses they have inputted available so far. (that which they have inputted only. default expense purposes will not be shown. user can also delete purposes/sources)  (SHARVIKAAA db stuff here)
+    # LINES FOR THIS PART START HERE
+
+
+
+
+    # Transactions tab amount entry
     amount_label = ctk.CTkLabel(transactions, fg_color="#62B6CB", corner_radius=5, width=60, height=40,
                                 text_color="black", font=("Arial", 20, "bold"), text="Amount: ")
     amount_label.place(relx=0.001, rely=0.01)
@@ -285,11 +357,7 @@ def show():
     purpose_label = ctk.CTkLabel(transactions, fg_color="#62B6CB", corner_radius=5, width=60, height=40,
                                  text_color="black", font=("Arial", 20, "bold"), text="Purpose of Transaction: ")
     purpose_label.place(relx=0.001, rely=0.13)
-    purpose_options = ["Bills/Rent", "Necessities", "Transportation", "Healthcare", "Education", "Donations",
-                       "Entertainment", "Other"]
-    purpose_dropdown = ctk.CTkOptionMenu(transactions, variable=purpose_var, values=purpose_options, font=("Arial", 15),
-                                         height=40, text_color="black", fg_color="#BEE9E8", button_color="#BEE9E8",
-                                         button_hover_color="#A0D8D3")
+
     purpose_dropdown.place(relx=0.25, rely=0.13)
 
     # date menu
@@ -325,6 +393,7 @@ def show():
     transactions_table.heading("N/W", text="N/W")
     transactions_table.heading("Amount", text="Amount")
     transactions_table.heading("Date", text="Date")
+    transactions_table.heading("Notes", text= "Notes")
     transactions_table.heading("Del", text="Del")
 
     transactions_table.column("No.", width=50)
@@ -332,6 +401,7 @@ def show():
     transactions_table.column("N/W", width=80)
     transactions_table.column("Amount", width=100)
     transactions_table.column("Date", width=100)
+    transactions_table.column("Notes", width = 70)
     transactions_table.column("Del", width=80)
 
     transactions_table.place(relx=0.2, rely=0.4)
@@ -347,10 +417,10 @@ def show():
     sourced_label = ctk.CTkLabel(deposits, fg_color="#62B6CB", corner_radius=5, width=60, height=40,
                                  text_color="black", font=("Arial", 20, "bold"), text="Source of Money: ")
     sourced_label.place(relx=0.001, rely=0.13)
-    sourced_entry = ctk.CTkEntry(deposits, width=100, height=40, textvariable=sourced_var, font=("Arial", 12))
-    sourced_entry.place(relx=0.2, rely=0.13)
 
-    # date label +  dropdown
+    source_dropdown.place(relx=0.2, rely=0.13)
+
+    # date label + dropdown
     dated_label = ctk.CTkLabel(deposits, text="Date: ", font=("Arial", 20, "bold"), fg_color="#62B6CB",
                                corner_radius=5, height=40, width=30, text_color="black")
     dated_label.place(relx=0.001, rely=0.28, anchor="w")
@@ -370,20 +440,14 @@ def show():
     deposits_table.heading("Deposit", text="Deposit")
     deposits_table.heading("Amount", text="Amount")
     deposits_table.heading("Date", text="Date")
+    deposits_table.heading("Notes", text= "Notes")
     deposits_table.heading("Del", text="Del")
 
     deposits_table.column("No.", width=50)
     deposits_table.column("Deposit", width=200)
     deposits_table.column("Amount", width=100)
     deposits_table.column("Date", width=100)
+    deposits_table.column("Notes",width =70)
     deposits_table.column("Del", width=80)
 
     deposits_table.place(relx=0.2, rely=0.4)
-
-
-show()
-root.mainloop()
-
-if __name__ == "__main__":
-    show()
-    hide()

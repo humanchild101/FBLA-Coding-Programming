@@ -420,10 +420,6 @@ def show():
                              height=10, corner_radius=5, command=on_v_sad)
     very_sad.place(relx=0.5, rely=0.90, anchor="center")
 
-show()
-root.mainloop()
-
-
 if __name__ == "__main__":
     show()
     hide()
