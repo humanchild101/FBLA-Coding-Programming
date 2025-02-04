@@ -288,11 +288,33 @@ def show():
 
     # update the month
     your_budget = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 20, "bold"),
-                               text="Your Spending Over Months", corner_radius=100, width=200, height=30)
+                               text="Finance Tips", corner_radius=100, width=200, height=30)
     your_budget.grid(row=0, column=0, padx=10, pady=10, sticky="w")
 
     canvas = ctk.CTkCanvas(monthly_budget_frame, width=430, height=3, bg="#1B4965", highlightthickness=0)
     canvas.grid(row=1, column=0, columnspan=2, pady=10, padx=20, sticky="w")
+
+    note1 = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 16), justify = "left",
+                               text="- 50/30/20 Rule: Keep 50% of your budget for\n necessities, 30% for your wants, and 20% for savings", corner_radius=100, width=200, height=30)
+    note1.grid(row=2, column=0, padx=10, pady=4, sticky="w")
+
+    note2 = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 16),
+                         justify="left",
+                         text="- Stay committed to your budget",
+                         corner_radius=100, width=200, height=30)
+    note2.grid(row=3, column=0, padx=10, pady=4, sticky="w")
+
+    note3 = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 16),
+                         justify="left",
+                         text="- Always save money and have an emergency fund to\n avoid financial setbacks in urgent situations",
+                         corner_radius=100, width=200, height=30)
+    note3.grid(row=4, column=0, padx=10, pady=4, sticky="w")
+
+    note4 = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 16),
+                         justify="left",
+                         text="- Built your credit score by making responsible financial decisions such as paying your bills and ",
+                         corner_radius=100, width=200, height=30)
+    note4.grid(row=5, column=0, padx=10, pady=4, sticky="w")
 
     #line_graph.get_tk_widget().grid(row=2, column=0, sticky="w")
     '''
@@ -351,12 +373,12 @@ def show():
                               text_color="#0C2B3E", font=("Arial", 16, "bold"), text="$X/$Y")
     total_left.place(relx=0.9, rely=0.5, anchor="center")
     '''
-
+    '''
     # displays percent of total budget used SHARVIKAAAAAAAAAA
     percent_budget = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", corner_radius=20, text_color="black",
                                   text="XYZ% of " + current_month + " Budget Used", font=("Arial", 20, "bold"))
     percent_budget.grid(row=5, column=0, columnspan=2, pady=25, ipady=10, padx=10, sticky="ew")
-
+    '''
     # status frame
     status_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", corner_radius=20, width=238, height=850)
     status_frame.place_configure(relx=0.785, rely=0.1)
