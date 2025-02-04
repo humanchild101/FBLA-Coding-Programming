@@ -312,9 +312,21 @@ def show():
 
     note4 = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 16),
                          justify="left",
-                         text="- Built your credit score by making responsible financial decisions such as paying your bills and ",
+                         text="- Built your credit score by making responsible financial\n decisions such as paying your bills and credit card dues\n in full and on time",
                          corner_radius=100, width=200, height=30)
     note4.grid(row=5, column=0, padx=10, pady=4, sticky="w")
+
+    note5 = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 16),
+                         justify="left",
+                         text="- Consider looking into scholarship opportunities and\n student discounts for products and services",
+                         corner_radius=100, width=200, height=30)
+    note5.grid(row=6, column=0, padx=10, pady=4, sticky="w")
+
+    note6 = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 16),
+                         justify="left",
+                         text="- Manage any debts and track your spending by avoiding\n spending too much on ordering\n food, entertainment, and shopping",
+                         corner_radius=100, width=200, height=30)
+    note6.grid(row=7 , column=0, padx=10, pady=4, sticky="w")
 
     #line_graph.get_tk_widget().grid(row=2, column=0, sticky="w")
     '''
@@ -408,7 +420,8 @@ def show():
                              height=10, corner_radius=5, command=on_v_sad)
     very_sad.place(relx=0.5, rely=0.90, anchor="center")
 
-
+show()
+root.mainloop()
 
 
 if __name__ == "__main__":
