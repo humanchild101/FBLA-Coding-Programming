@@ -69,6 +69,7 @@ amountd_var = tk.DoubleVar(value=0.00)
 sourced_var = tk.StringVar(value="None")
 date_options = [(datetime.date.today() - datetime.timedelta(days=i)).strftime("%m-%d-%Y") for i in range(500)]
 dated_var = ctk.StringVar(value=date_options[0])
+
 # double vars to hold balance and budget amounts
 b_var = tk.DoubleVar()
 ba_var = tk.DoubleVar()
@@ -81,9 +82,9 @@ purpose_options = ["Bills/Rent", "Necessities", "Transportation", "Healthcare", 
 source_options = ["Job", "Scholarship"]
 
 # SHARVIKAA: Tree view for data table, but you will replace this with the db table i suppose?
-transactions_table = ttk.Treeview(transactions, columns=("No.", "Transaction", "N/W", "Amount", "Date", "Del"),
+transactions_table = ttk.Treeview(transactions, columns=("No.", "Transaction", "N/W", "Amount", "Date", "Notes" "Del"),
                                   show="headings", height=200)
-deposits_table = ttk.Treeview(deposits, columns=("No.", "Deposit", "Amount", "Date", "Del"), show="headings",
+deposits_table = ttk.Treeview(deposits, columns=("No.", "Deposit", "Amount", "Date", "Notes", "Del"), show="headings",
                               height=200)
 
 source_dropdown = ctk.CTkOptionMenu(deposits, variable=sourced_var, values=source_options, font=("Arial", 15),
@@ -358,6 +359,7 @@ def show():
     transactions_table.heading("N/W", text="N/W")
     transactions_table.heading("Amount", text="Amount")
     transactions_table.heading("Date", text="Date")
+    transactions_table.heading("Notes", text= "Notes")
     transactions_table.heading("Del", text="Del")
 
     transactions_table.column("No.", width=50)
@@ -365,6 +367,7 @@ def show():
     transactions_table.column("N/W", width=80)
     transactions_table.column("Amount", width=100)
     transactions_table.column("Date", width=100)
+    transactions_table.column("Notes", width = 70)
     transactions_table.column("Del", width=80)
 
     transactions_table.place(relx=0.2, rely=0.4)
@@ -403,12 +406,14 @@ def show():
     deposits_table.heading("Deposit", text="Deposit")
     deposits_table.heading("Amount", text="Amount")
     deposits_table.heading("Date", text="Date")
+    deposits_table.heading("Notes", text= "Notes")
     deposits_table.heading("Del", text="Del")
 
     deposits_table.column("No.", width=50)
     deposits_table.column("Deposit", width=200)
     deposits_table.column("Amount", width=100)
     deposits_table.column("Date", width=100)
+    deposits_table.column("Notes",width =70)
     deposits_table.column("Del", width=80)
 
     deposits_table.place(relx=0.2, rely=0.4)

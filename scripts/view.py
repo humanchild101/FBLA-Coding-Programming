@@ -49,11 +49,13 @@ def show():
     import create_account
     import home_page
     import inputs
+    import help_p
 
     login.hide()
     create_account.hide()
     home_page.hide()
     inputs.hide()
+    help_p.hide()
 
     def filter_button_clicked():
         income_expense = income_expense_dropdown.get()
@@ -150,7 +152,6 @@ def show():
     # welcome and user sign
     welcome_label.grid(row=0, column=0)
     user_label.grid(row=0, column=0, sticky="w", padx=2)
-
     status_area.grid(row=0, column=1, sticky="w", padx=2)
 
     # view tab name

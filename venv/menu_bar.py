@@ -85,3 +85,4 @@ def animate_backward():
     else:
          in_start_pos = True
     menu_bar.forget()
+

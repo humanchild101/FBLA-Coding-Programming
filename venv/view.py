@@ -54,9 +54,7 @@ def show():
 
     # welcome and user sign
     welcome_label.grid(row = 0, column = 0)
-    #SHARVIKAAAAA USER NAME HEREEEE (ignore my uppercase im just hoping you see the comments among the rest)
     user_label.grid(row = 0, column = 0, sticky ="w", padx = 2)
-
     status_area.grid(row = 0, column = 1, sticky = "w", padx = 2)
 
 
