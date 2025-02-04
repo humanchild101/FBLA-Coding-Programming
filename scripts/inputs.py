@@ -165,7 +165,13 @@ def on_d_input():
 # updates monthly budget
 def update_month_budget():
     if b_var.get() <= ba_var.get():
+        current_budget = b_var.get()
         budget.configure(text="$" + str(b_var.get()))
+        budget_query = """UPDATE transactions
+                        SET budget = {}
+                        WHERE user_id = {}""".format(float(current_budget), user_id)
+        db.insert_values(budget_query)
+
     else:
         messagebox.showinfo("Invalid input", "Budget cannot be greater than current balance")
 

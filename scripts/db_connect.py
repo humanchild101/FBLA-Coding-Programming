@@ -140,3 +140,11 @@ def execute_upsert(note, mood, user_id):
     insert_values(query)
 
 
+'''def execute_upsert_budget(budget, user_id):
+    query = """ INSERT INTO transactions (budget, user_id) 
+                VALUES ('{}','{})
+                ON CONFLICT (user_id) DO UPDATE 
+                SET budget = '{}';""".format(budget, user_id)
+
+    insert_values(query)'''
+

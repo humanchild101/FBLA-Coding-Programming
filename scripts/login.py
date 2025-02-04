@@ -7,6 +7,7 @@ import db_connect as db
 from session_manager import SessionManager
 import time
 
+
 root = root_window.root_init()
 
 # bg = #1B4965

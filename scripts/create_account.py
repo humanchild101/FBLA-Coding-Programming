@@ -78,6 +78,8 @@ def on_account_creation(button):
         smtp.sendmail(from_addr="nikhilamadhavi@gmail.com", to_addrs=to, msg = msg.as_string())
         smtp.quit()
         messagebox.showinfo("Success", "Account created successfully!")
+        for i in entry_fields:
+            i.set("")
         create_flag=True
     button.configure(state="normal")
 
@@ -116,23 +118,30 @@ def show():
     import home_page
     import inputs
     import view
+    import help_p
 
     login.hide()
     home_page.hide()
     inputs.hide()
     view.hide()
+    help_p.hide()
 
-    account_create.pack(fill="both", expand=True)  # #62B6CB
-    center_border = ctk.CTkFrame(account_create, fg_color = "#BEE9E8", corner_radius=20, width = 620, height= 640)
-    center_border.place(relx= 0.5, rely = 0.5, anchor = "center")
-    center_frame = ctk.CTkFrame(center_border, fg_color = '#62B6CB', corner_radius=15, width= center_border.winfo_screenmmwidth() + 15, height = center_border.winfo_screenmmheight()+17)  #62B6CB
-    center_frame.place(relx = 0.5, rely = 0.5, anchor="center")
+    account_create.pack(fill="both", expand=True)
 
-    loginL = ctk.CTkLabel(center_frame, text="Create Your Account", text_color="white", font=("Arial", 20), fg_color="#1B4965", padx=10, pady=10, corner_radius=15, width=600)
+    # center frame with border
+    center_border = ctk.CTkFrame(account_create, fg_color="#BEE9E8", corner_radius=20, width=620, height=640)
+    center_border.place(relx=0.5, rely=0.5, anchor="center")
+    center_frame = ctk.CTkFrame(center_border, fg_color='#62B6CB', corner_radius=15,
+                                width=center_border.winfo_screenmmwidth() + 15,
+                                height=center_border.winfo_screenmmheight() + 17)  # 62B6CB
+    center_frame.place(relx=0.5, rely=0.5, anchor="center")
+
+    # Create account label
+    loginL = ctk.CTkLabel(center_frame, text="Create Your Account", text_color="white", font=("Arial", 20),
+                          fg_color="#1B4965", padx=10, pady=10, corner_radius=15, width=600)
     loginL.grid(row=0, column=0, columnspan=2, padx=5, pady=5)
 
-
-    #first name entry frame + label + text field
+    # first name entry frame + label + text field
     fname_frame = ctk.CTkFrame(center_frame, fg_color="#3095AE", corner_radius=15, width=600, height=30)
     fname_frame.grid(row=1, column=0, columnspan=2, padx=5, pady=10, sticky = "w")
 
@@ -141,7 +150,7 @@ def show():
     fname_label.grid(row=1, column=0, sticky="e", padx=5, pady=10, ipady=4)
     fname_input.grid(row=1, column=1, sticky="w", padx=15, pady=10, ipady=5)
 
-    #last name entry frame + label + text field
+    #last name entry frame + label + text fieldAzAAZZAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     lname_frame = ctk.CTkFrame(center_frame, fg_color="#3095AE", corner_radius=15, width=600, height=30)
     lname_frame.grid(row=1, column=1, columnspan=2, padx=5, pady=10, sticky="e")
 
@@ -172,7 +181,7 @@ def show():
     password_input.grid(row=1, column=1, sticky="w", padx=15, pady=10, ipady=5)
     pas_reqs.grid(row =2, column = 0,columnspan = 2)
 
-    # password verification
+    # password verification (ensures the same password is retyped
     pass_frame = ctk.CTkFrame(center_frame, fg_color="#3095AE", corner_radius=15, width=600, height=50)
     pass_frame.grid(row=4, column=0, columnspan=2, padx=5, pady=10, sticky = "w")
 
@@ -205,6 +214,7 @@ def show():
     # button that takes user back to login page for if they already have an account
     signup_button = ctk.CTkButton(center_frame, text="Login to existing account", font=("Arial", 20), fg_color="#1B4965", hover_color="#246690", text_color="white", width=600, corner_radius=15, command=login.show)
     signup_button.grid(row=8, column=0, columnspan=2, pady=5, padx=5, ipady=6)
+
 
 if __name__ == "__main__":
     show()
