@@ -23,6 +23,9 @@ first_name = session.get("first_name")
 last_name = session.get("last_name")
 user_id = session.get("user_id")
 
+if user_id == None:
+    user_id = 8
+
 income_list = db.get_transaction_details(user_id,"income")
 expense_list = db.get_transaction_details(user_id,"expense")
 
