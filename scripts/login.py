@@ -10,6 +10,7 @@ import root_window
 from root_window import *
 import db_connect as db
 from session_manager import SessionManager
+import cryptocode
 
 # initializing the root window and login page frame
 root = root_window.root_init()
@@ -46,7 +47,7 @@ def on_login():
         res = db.execute_query(query)
 
         if res:
-            if res[1] == password_in:
+            if cryptocode.decrypt(res[1],"fbla") == password_in:
                 session.set("username", res[0])
                 session.set("user_id", res[2])
                 session.set("first_name", res[3])

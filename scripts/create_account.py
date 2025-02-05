@@ -13,6 +13,7 @@ import re
 import db_connect as db
 from email.mime.text import MIMEText
 import smtplib
+import cryptocode
 
 # initializing root window
 root = root_window.root_init()
@@ -84,9 +85,10 @@ def on_account_creation(button):
     
     if create_flag == True:
         #SQL statement to insert a new row to the table
+        cryptocode.encrypt("1","fbla")
         insertQuery = """
         INSERT into users (username, user_password, email, first_name, last_name) 
-        VALUES ('{}', '{}', '{}', '{}', '{}');""".format(new_user_var.get(), new_pass_var.get(), email_var.get(), new_fname.get(), new_lname.get())
+        VALUES ('{}', '{}', '{}', '{}', '{}');""".format(new_user_var.get(), cryptocode.encrypt(new_pass_var.get(),"fbla"), email_var.get(), new_fname.get(), new_lname.get())
            
 
         try:
