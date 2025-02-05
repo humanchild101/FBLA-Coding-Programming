@@ -94,19 +94,13 @@ def get_transaction_details(user_id, in_out):
         from transactions where user_id = {} and upper(income_or_expense)=upper('{}') 
         order by date_of_transaction desc limit 3""".format(user_id, in_out)
     res = fetch_all_query(query)
-    print(query)
-    print(res)
+    
     options = list()
 
     if res:
         for row in res:
             options.append(row)
-    else:
-        options.append(f"{in_out}  :: 0")
-        options.append(f"{in_out}  :: 0")
-        options.append(f"{in_out}  :: 0")
-       
-    return options
+
     print(options)
     return options
 
@@ -122,19 +116,16 @@ def get_highest_details(user_id, in_out):
     if res:
         for row in res:
             options.append(row)
-    else:
-        options.append(f"{in_out}  :: 0")
-        options.append(f"{in_out}  :: 0")
-        options.append(f"{in_out}  :: 0")
-    return options
     print(options)
     return options
 
 
 def get_total_balance(user_id):
-    query = """select (select sum(amount) from transactions 
+    query = """select (select (case when sum(amount) is null 
+        then 0 else sum(amount) end) from transactions 
         where income_or_expense = 'income' and user_id = {} )
-        -(select sum(amount) from transactions 
+        -(select (case when sum(amount) is null 
+        then 0 else sum(amount) end) from transactions 
         where income_or_expense = 'expense' and user_id ={})
         as total""".format(user_id, user_id)
 

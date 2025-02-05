@@ -29,7 +29,10 @@ expense_list = db.get_transaction_details(user_id,"expense")
 highest_income = db.get_highest_details(user_id,"income")
 highest_expense = db.get_highest_details(user_id,"expense")
 
+print(highest_income)
+
 total = db.get_total_balance(user_id)
+print(total)
 
 query_for_notes = f"select notes from miscellaneous where user_id={user_id}"
 note_res = db.execute_query(query_for_notes)
@@ -174,35 +177,65 @@ def show():
                             text="Your Three Most Recent Expenses", corner_radius=100, width=200, height=40)
     rec_spen.place_configure(relx=0.04, rely=0.01)
 
-    p1 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
-                      text="Purpose1   -   $$   -   XX/XX/XXXX", corner_radius=100, width=200)
-    p1.place_configure(relx=0.15, rely=0.15)
-
-    p2 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
-                      text="Purpose2   -   $$   -   XX/XX/XXXX", corner_radius=100, width=200)
-    p2.place_configure(relx=0.15, rely=0.23)
-
-    p3 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
-                      text="Purpose3   -   $$   -   XX/XX/XXXX", corner_radius=100, width=200)
-    p3.place_configure(relx=0.15, rely=0.31)
-
+    if len(expense_list) == 1 and expense_list[0] != None:
+        p1 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text=expense_list[0], corner_radius=100, width=200)
+        p1.place_configure(relx=0.15, rely=0.15)
+    else:
+        p1 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text="Purpose1   -   $0", corner_radius=100, width=200)
+        p1.place_configure(relx=0.15, rely=0.15)
+    
+    if len(expense_list) == 2 and expense_list[1] != None:
+        p2 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text=expense_list[1], corner_radius=100, width=200)
+        p2.place_configure(relx=0.15, rely=0.23)
+    else:
+        p2 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text="Purpose2   -   $0 ", corner_radius=100, width=200)
+        p2.place_configure(relx=0.15, rely=0.23)
+    
+    if len(expense_list) == 3 and expense_list[2] != None:
+        p3 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text=expense_list[2], corner_radius=100, width=200)
+        p3.place_configure(relx=0.15, rely=0.31)
+    else:
+        p3 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text="Purpose3   -   $0 ", corner_radius=100, width=200)
+        p3.place_configure(relx=0.15, rely=0.31)
+    
     # recent deposits
     rec_dep = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 20, "bold"),
                            text="Your Three Most Recent Deposits", corner_radius=100, width=200, height=40)
     rec_dep.place_configure(relx=0.04, rely=0.45)
 
-    d1 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
-                      text="Source1   -   $$   -   XX/XX/XXXX", corner_radius=100, width=200)
-    d1.place_configure(relx=0.15, rely=0.59)
+    if len(income_list) == 1 and income_list[0] != None:
+        d1 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text=income_list[0], corner_radius=100, width=200)
+        d1.place_configure(relx=0.15, rely=0.59)
+    else:
+        d1 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                      text="Source1   -   $0 ", corner_radius=100, width=200)
+        d1.place_configure(relx=0.15, rely=0.59)
 
-    d2 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
-                      text="Source2   -   $$   -   XX/XX/XXXX", corner_radius=100, width=200)
-    d2.place_configure(relx=0.15, rely=0.67)
+    if len(income_list) == 2 and income_list[1] != None:
 
-    d3 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
-                      text="Source3   -   $$   -   XX/XX/XXXX", corner_radius=100, width=200)
-    d3.place_configure(relx=0.15, rely=0.75)
+        d2 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text=income_list[1], corner_radius=100, width=200)
+        d2.place_configure(relx=0.15, rely=0.67)
+    else:
+        d2 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text="Source2   -   $0 ", corner_radius=100, width=200)
+        d2.place_configure(relx=0.15, rely=0.67)
 
+    if len(income_list) == 3 and income_list[2] != None:
+        d3 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text=income_list[2], corner_radius=100, width=200)
+        d3.place_configure(relx=0.15, rely=0.75)
+    else:
+        d3 = ctk.CTkLabel(rec_spen_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text="Source3   -   $0 ", corner_radius=100, width=200)
+        d3.place_configure(relx=0.15, rely=0.75)
     # Recent transactions + deposit for x purpose and from x source
     trandeps_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", corner_radius=20, width=400, height=220)
     trandeps_frame.grid(row=2, column=0, padx=20, sticky="nw")
@@ -211,28 +244,47 @@ def show():
     most_trans = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 18, "bold"),
                               text="Most Transactions For These Purpose:", corner_radius=100, width=170, height=40)
     most_trans.place_configure(relx=0.04, rely=0.05)
+    
+    if len(highest_expense) == 1 and highest_expense[0] != None:
+        hp1 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text=highest_expense[0], corner_radius=100, width=200)
+        hp1.place_configure(relx=0.07, rely=0.20)
+    else:
+        hp1 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                       text="Highest Transactions #1   -  Total $0", corner_radius=100, width=200)
+        hp1.place_configure(relx=0.07, rely=0.20)
 
-    hp1 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
-                       text="Highest Transactions #1   -  Total $$", corner_radius=100, width=200)
-    hp1.place_configure(relx=0.07, rely=0.20)
+    if len(highest_expense) == 2 and highest_expense[1] != None:
+        hp2 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text=highest_expense[1], corner_radius=100, width=200)
+        hp2.place_configure(relx=0.07, rely=0.32)
+    else:
+        hp2 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text="Highest Transactions #2   -  Total $0", corner_radius=100, width=200)
+        hp2.place_configure(relx=0.07, rely=0.32)
 
-    hp2 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
-                       text="Highest Transactions #2   -  Total $$", corner_radius=100, width=200)
-    hp2.place_configure(relx=0.07, rely=0.32)
 
     # most sought out source for deposits SHARVIKAAAAAA
     most_deps = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 18, "bold"),
                              text="Most Deposits From These Sources:", corner_radius=100, width=170, height=40)
     most_deps.place_configure(relx=0.04, rely=0.45)
+    if len(highest_income) == 1 and highest_income[0] != None:
+        hp1 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text=highest_income[0], corner_radius=100, width=200)
+        hp1.place_configure(relx=0.07, rely=0.6)
+    else:
+        hp1 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text="Highest Deposits #1   -   Total $0", corner_radius=100, width=200)
+        hp1.place_configure(relx=0.07, rely=0.6)
 
-    hp1 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
-                       text="Highest Deposits #1   -   Total $$", corner_radius=100, width=200)
-    hp1.place_configure(relx=0.07, rely=0.6)
-
-    hp2 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
-                       text="Highest Deposits #2   -   Total $$", corner_radius=100, width=200)
-    hp2.place_configure(relx=0.07, rely=0.72)
-
+    if len(highest_income) == 2 and highest_income[1] != None:
+        hp2 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text=highest_income[1], corner_radius=100, width=200)
+        hp2.place_configure(relx=0.07, rely=0.72)
+    else:
+        hp2 = ctk.CTkLabel(trandeps_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 15),
+                        text="Highest Deposits #2   -   Total $0", corner_radius=100, width=200)
+        hp2.place_configure(relx=0.07, rely=0.72)
     # total balance frame
     total_balance_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", corner_radius=20, width=400, height=320)
     total_balance_frame.grid(row=3, column=0, padx=20, pady=20, sticky="nw")
@@ -241,9 +293,14 @@ def show():
                                 text="Total Balance ~ ", font=("Arial", 45, "bold"))
     balance_text.place(relx=0.02, rely=0.1)
 
-    balance = ctk.CTkLabel(total_balance_frame, fg_color="#62B6CB", corner_radius=20, text_color="black", text="$0.00",
-                           font=("Arial", 70, "bold"))
-    balance.place(relx=0.02, rely=0.45)
+    if total[0] != None:
+        balance = ctk.CTkLabel(total_balance_frame, fg_color="#62B6CB", corner_radius=20, text_color="black", text=f"${total[0]}",
+                            font=("Arial", 70, "bold"))
+        balance.place(relx=0.02, rely=0.45)
+    else:
+        balance = ctk.CTkLabel(total_balance_frame, fg_color="#62B6CB", corner_radius=20, text_color="black", text="$0.00",
+                            font=("Arial", 70, "bold"))
+        balance.place(relx=0.02, rely=0.45)
 
     # notes frame
     notes_frame.place(relx=0.37, rely=0.63)

@@ -15,6 +15,7 @@ session = SessionManager()
 first_name = session.get("first_name")
 last_name = session.get("last_name")
 user_id = session.get("user_id")
+print(f"session user_id in view page:: {user_id}")
 
 root = root_window.root_init()
 view_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
@@ -57,7 +58,10 @@ def show():
     inputs.hide()
     help_p.hide()
 
+    print(f"user_id in show method view ::  {user_id}")
+
     def filter_button_clicked():
+        print(f"user_id in shoinside button clicked method view ::  {user_id}")
         income_expense = income_expense_dropdown.get()
         need_want = need_want_dropdown.get()
         date_range = date_range_dropdown.get()
@@ -252,7 +256,7 @@ def show():
     table_frame.pack(fill="both", expand=True, padx=10, pady=5)  # Expands dynamically
 
     # Fetch Data
-    data = db.fetch_all_query("SELECT income_or_expense, source, need_or_Want, amount, date_of_transaction, note FROM transactions")
+    data = db.fetch_all_query(f"SELECT income_or_expense, source, need_or_Want, amount, date_of_transaction, note FROM transactions where user_id ={user_id}")
     columns = ["Income/Expense", "Source", "Need/Want", "Amount", "Date", "Note"]
 
     # Add Column Headers
