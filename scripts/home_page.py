@@ -23,9 +23,6 @@ first_name = session.get("first_name")
 last_name = session.get("last_name")
 user_id = session.get("user_id")
 
-if user_id == None:
-    user_id = 8
-
 income_list = db.get_transaction_details(user_id,"income")
 expense_list = db.get_transaction_details(user_id,"expense")
 
@@ -36,7 +33,10 @@ total = db.get_total_balance(user_id)
 
 query_for_notes = f"select notes from miscellaneous where user_id={user_id}"
 note_res = db.execute_query(query_for_notes)
-print(note_res[0])
+notes=""
+if note_res != None:
+    notes =note_res[0]
+print(notes)
 
 
 #top navigation bar frame
@@ -50,7 +50,7 @@ user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1
 
 # String var for the notes
 notes_var = tk.StringVar()
-notes_var.set(note_res[0])
+notes_var.set(notes)
 notes_frame = ctk.CTkFrame(home_page, fg_color="#62B6CB", width=470, height=250, corner_radius=20)
 notes_box = ctk.CTkTextbox(notes_frame, width=430, height=140, state="disabled", corner_radius=5,
                            fg_color="#1B4965")
@@ -86,7 +86,7 @@ def update_notes_var():
 # edit notes
 def edit_notes():
     print("step 2")
-    notes_box.insert("0.0", note_res[0])  # Insert sample text
+    notes_box.insert("0.0", notes)  # Insert sample text
     notes_box.configure(state="normal")
     notes_box.delete("0.0", "end-1c")
     notes_box.insert("0.0", notes_var.get())

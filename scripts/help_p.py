@@ -17,11 +17,11 @@ welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, wi
 user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1B4965", font=("Arial", 20, "bold"), text_color="#BEE9E8", padx=20, height=70)
 
 # I WILL CHANGE THE FILE PATHS LATER ONCE WE GET RID OF VENV
-face1 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_happy.png"), size=(70,70))
-face2 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/happy.png"), size=(70,70))
-face3 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/neutral.png"), size=(70,70))
-face4 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/sad.png"), size=(70,70))
-face5 = ctk.CTkImage(light_image=Image.open("/Users/nikhila/FBLA-Coding-Programming/faces/very_sad.png"), size=(70,70))
+face1 = ctk.CTkImage(light_image=Image.open("faces/very_happy.png"), size=(70,70))
+face2 = ctk.CTkImage(light_image=Image.open("faces/happy.png"), size=(70,70))
+face3 = ctk.CTkImage(light_image=Image.open("faces/neutral.png"), size=(70,70))
+face4 = ctk.CTkImage(light_image=Image.open("faces/sad.png"), size=(70,70))
+face5 = ctk.CTkImage(light_image=Image.open("faces/very_sad.png"), size=(70,70))
 
 status_area = ctk.CTkLabel(user_label, text="", image=face1, fg_color="#1B4965", font=("Arial", 20, "bold"), text_color="#BEE9E8", padx=20, height=70, width = 80)
 

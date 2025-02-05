@@ -20,3 +20,25 @@ PostreSQL access:
     password: password123
     port: 5432
 
+
+
+
+# importing base64 modules for
+# encoding & decoding string
+import base64
+
+string = "Sharvika"
+
+# Encoding the string
+encode = base64.b64encode(string.encode("utf-8"))
+
+str = encode
+print("str-byte : ",str )
+
+# Decoding the string
+decode = base64.b64decode(encode).decode("utf-8")
+print("byte-str : ", decode)
+
+
+#str-byte :  b'R3JlZWtzZm9yR3JlZWtz'
+#byte-str :  GreeksforGreeks

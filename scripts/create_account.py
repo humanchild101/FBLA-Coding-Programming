@@ -78,10 +78,6 @@ def on_account_creation(button):
         smtp.sendmail(from_addr="nikhilamadhavi@gmail.com", to_addrs=to, msg = msg.as_string())
         smtp.quit()
         messagebox.showinfo("Success", "Account created successfully!")
-        for i in entry_fields:
-            i.set("")
-        for i in entry_fields:
-            i.set("")
         create_flag=True
     button.configure(state="normal")
 
@@ -95,8 +91,8 @@ def on_account_creation(button):
 
         try:
             db.insert_values(insertQuery)
-            import home_page
-            home_page.show()
+            import login
+            login.show()
 
         except(Exception) as error:
             if "violates unique constraint" in str(error): 

@@ -97,8 +97,15 @@ def get_transaction_details(user_id, in_out):
     print(query)
     print(res)
     options = list()
-    for row in res:
-        options.append(row)
+
+    if res:
+        for row in res:
+            options.append(row)
+    else:
+        options.append(f"{in_out}  :: 0")
+        options.append(f"{in_out}  :: 0")
+        options.append(f"{in_out}  :: 0")
+       
     return options
     print(options)
     return options
@@ -112,8 +119,13 @@ def get_highest_details(user_id, in_out):
     print(query)
     print(res)
     options = list()
-    for row in res:
-        options.append(row)
+    if res:
+        for row in res:
+            options.append(row)
+    else:
+        options.append(f"{in_out}  :: 0")
+        options.append(f"{in_out}  :: 0")
+        options.append(f"{in_out}  :: 0")
     return options
     print(options)
     return options

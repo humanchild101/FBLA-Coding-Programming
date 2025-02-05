@@ -26,7 +26,6 @@ password_var = tk.StringVar(value="Password Here")
 
 # this function is called when login button is pressed. It ensures that login credentials are correct.
 def on_login():
-    import home_page
     username_in = user_var.get()
     password_in = password_var.get()
     if not username_in and not password_in:
@@ -80,18 +79,7 @@ def show():
     root.configure(fg_color="#1B4965")
 
     # imports within function to avoid circular import error
-    import create_account
-    import home_page
-    import inputs
-    import view
-    import help_p
-
-    # all other pages hidden when current page is displayed to avoid overlapping issues
-    create_account.hide()
-    home_page.hide()
-    inputs.hide()
-    view.hide()
-    help_p.hide()
+    
 
     login_page.pack(fill="both", expand=True)  # #62B6CB
 
