@@ -132,27 +132,28 @@ def on_t_input():
 
     # if all info is valid
     if transaction and nw and amount and date and transaction != "Choose":
+
         transactions_table.insert("", "end", values=(no, transaction, nw, amount, date))
         # updates balance values
         # Convert to datetime object
         date_obj = datetime.datetime.strptime(date, "%d-%m-%Y")
 
+        insert_query = f"""insert into transactions (income_or_expense,source,date_of_transaction,need_or_want,amount,user_id) 
+                        values ('expense','{transaction}',TO_DATE('{new_date_str}', 'YYYY-MM-dd'),'{nw}',{amount},{user_id})"""
+
+        # updates the text shown
+        total_balance.configure(text=f"${new_balance:.2f}")
+        budget.configure(text=f"${new_budget:.2f}")
+
         # Convert to new format
         new_date_str = date_obj.strftime("%Y-%m-%d")
         print(new_date_str)
 
-        insert_query = f"""insert into transactions (income_or_expense,source,date_of_transaction,need_or_want,amount,user_id) 
-                        values ('expense','{transaction}',TO_DATE('{new_date_str}', 'YYYY-MM-dd'),'{nw}',{amount},{user_id})"""
-        # updates balance values
-        db.insert_values(insert_query)
-        
-        new_balance = ba_var.get() - amount
-        new_budget = b_var.get() - amount
-        ba_var.set(new_balance)
-        b_var.set(new_budget)
-        # updates the text shown
-        total_balance.configure(text=f"${new_balance:.2f}")
-        budget.configure(text=f"${new_budget:.2f}")
+        budget_query = """select budget from transactions where user_id = {}""".format(user_id)
+        budget_res = db.execute_query(budget_query)
+        print(budget_res)
+
+
     else:
         messagebox.showwarning("Transaction not created", "Please enter all correct fields.")
 

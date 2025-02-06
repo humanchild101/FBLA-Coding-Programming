@@ -1,6 +1,13 @@
 {
+<<<<<<< HEAD
     "username": "ha",
     "user_id": 67,
     "first_name": "ha",
     "last_name": "ha"
+=======
+    "username": "1",
+    "user_id": 8,
+    "first_name": "Sharvika",
+    "last_name": "Kumaresan"
+>>>>>>> 1e1495a81ee1726cffdc5db050ea3327c9755ca7
 }

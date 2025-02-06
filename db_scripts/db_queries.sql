@@ -45,3 +45,9 @@ CREATE TABLE IF NOT EXISTS miscellaneous
 
 
 ALTER TABLE miscellaneous ADD CONSTRAINT user_id_unique UNIQUE (user_id);
+
+ALTER TABLE users ALTER COLUMN user_password TYPE VARCHAR(500);
+
+delete from miscellaneous where user_id=57;
+delete from transactions where user_id=57;
+delete from users where user_id=57;

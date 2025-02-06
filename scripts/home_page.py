@@ -366,17 +366,26 @@ def show():
 
     note7 = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 16),
                          justify="left",
-                         text="- If possible, search for used items that are still in good condition. They are more likely to be cheaper.",
+                         text="- If possible, search for used items that are still in good\n condition. They are more likely to be cheaper.",
                          corner_radius=100, width=200, height=30)
 
     note7.grid(row=8, column=0, padx=10, pady=4, sticky="w")
 
     note8 = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 16),
                          justify="left",
-                         text="- Consider getting a job or paid internship. Another option is to try to make passive income through your hobbies.",
+                         text="- Consider getting a job or paid internship. Another option\n is to try to make passive income through your hobbies.",
                          corner_radius=100, width=200, height=30)
 
     note8.grid(row=9, column=0, padx=10, pady=4, sticky="w")
+
+    note9 = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 16),
+                         justify="left",
+                         text="- Use a budgeting app to track your spending and\n set financial goals",
+                         corner_radius=100, width=200, height=30)
+
+    note9.grid(row=10, column=0, padx=10, pady=4, sticky="w")
+
+
     
     #line_graph.get_tk_widget().grid(row=2, column=0, sticky="w")
     '''
