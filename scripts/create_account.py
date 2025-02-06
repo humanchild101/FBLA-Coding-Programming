@@ -91,8 +91,6 @@ def on_account_creation(button):
 
         try:
             db.insert_values(insertQuery)
-            import login
-            login.show()
 
         except(Exception) as error:
             if "violates unique constraint" in str(error): 
@@ -118,13 +116,11 @@ def show():
     import inputs
     import view
     import help_p
-    import help_p
 
     login.hide()
     home_page.hide()
     inputs.hide()
     view.hide()
-    help_p.hide()
     help_p.hide()
 
     account_create.pack(fill="both", expand=True)

@@ -53,6 +53,17 @@ def on_login():
                 session.set("last_name", res[4])
                 import home_page
                 home_page.show()
+                
+                # imports within function to avoid circular import error
+                import create_account
+                import view
+                import inputs
+                import help_p
+
+                create_account.hide()
+                view.hide()
+                inputs.hide()
+                help_p.hide()
             else:
                 messagebox.showwarning("Error", "Incorrect password")
 
@@ -77,9 +88,6 @@ def hide():
 def show():
     # root is configured again as a solution to prevent a color glitching issue
     root.configure(fg_color="#1B4965")
-
-    # imports within function to avoid circular import error
-    
 
     login_page.pack(fill="both", expand=True)  # #62B6CB
 

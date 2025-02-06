@@ -10,9 +10,7 @@ from PIL import Image
 import menu_bar
 from session_manager import SessionManager
 import db_connect as db
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import pandas as pd
+
 
 # initializing root window + home page frame
 root = root_window.root_init()
@@ -20,6 +18,7 @@ home_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
 session = SessionManager()
 
 first_name = session.get("first_name")
+
 last_name = session.get("last_name")
 user_id = session.get("user_id")
 
@@ -48,8 +47,8 @@ top_nav.configure(fg_color="#33739A")
 
 # welcome-label wih the user's username
 welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=500, text="")
-user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1B4965", font=("Arial", 20, "bold"),
-                          text_color="#BEE9E8", padx=20, height=70)
+user_label = ctk.CTkLabel(welcome_label, text=f"Welcome, {first_name} {last_name}!", fg_color="#1B4965", font=("Arial", 20, "bold"), text_color="#BEE9E8", padx=20, height=70)
+
 
 # String var for the notes
 notes_var = tk.StringVar()
@@ -293,14 +292,14 @@ def show():
                                 text="Total Balance ~ ", font=("Arial", 45, "bold"))
     balance_text.place(relx=0.02, rely=0.1)
 
-    if total[0] != None:
+    '''if total[0] != None:
         balance = ctk.CTkLabel(total_balance_frame, fg_color="#62B6CB", corner_radius=20, text_color="black", text=f"${total[0]}",
                             font=("Arial", 70, "bold"))
         balance.place(relx=0.02, rely=0.45)
     else:
         balance = ctk.CTkLabel(total_balance_frame, fg_color="#62B6CB", corner_radius=20, text_color="black", text="$0.00",
                             font=("Arial", 70, "bold"))
-        balance.place(relx=0.02, rely=0.45)
+        balance.place(relx=0.02, rely=0.45)'''
 
     # notes frame
     notes_frame.place(relx=0.37, rely=0.63)
@@ -365,6 +364,20 @@ def show():
                          corner_radius=100, width=200, height=30)
     note6.grid(row=7 , column=0, padx=10, pady=4, sticky="w")
 
+    note7 = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 16),
+                         justify="left",
+                         text="- If possible, search for used items that are still in good condition. They are more likely to be cheaper.",
+                         corner_radius=100, width=200, height=30)
+
+    note7.grid(row=8, column=0, padx=10, pady=4, sticky="w")
+
+    note8 = ctk.CTkLabel(monthly_budget_frame, fg_color="#62B6CB", text_color="black", font=("Arial", 16),
+                         justify="left",
+                         text="- Consider getting a job or paid internship. Another option is to try to make passive income through your hobbies.",
+                         corner_radius=100, width=200, height=30)
+
+    note8.grid(row=9, column=0, padx=10, pady=4, sticky="w")
+    
     #line_graph.get_tk_widget().grid(row=2, column=0, sticky="w")
     '''
     # frame for wants progress bar

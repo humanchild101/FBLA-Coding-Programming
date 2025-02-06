@@ -38,7 +38,7 @@ inputs_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
 top_nav = ctk.CTkFrame(inputs_page, fg_color="#33739A", height=70, corner_radius=0)
 top_nav.configure(fg_color="#33739A")
 welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=500, text="")
-user_label = ctk.CTkLabel(welcome_label, text=f"Welcome, {first_name} {last_name}!", fg_color="#1B4965", font=("Arial", 30, "bold"), text_color="#BEE9E8", padx=20, height=70)
+user_label = ctk.CTkLabel(welcome_label, text=f"Welcome, {first_name} {last_name}!", fg_color="#1B4965", font=("Arial", 20, "bold"), text_color="#BEE9E8", padx=20, height=70)
 
 # string var to hold notes
 notes_var = tk.StringVar()
@@ -88,9 +88,9 @@ purpose_options = ["Bills/Rent", "Necessities", "Transportation", "Healthcare", 
 source_options = ["Job", "Scholarship"]
 
 # SHARVIKAA: Tree view for data table, but you will replace this with the db table i suppose?
-transactions_table = ttk.Treeview(transactions, columns=("No.", "Transaction", "N/W", "Amount", "Date", "Notes" "Del"),
+transactions_table = ttk.Treeview(transactions, columns=("No.", "Transaction", "N/W", "Amount", "Date", "Del"),
                                   show="headings", height=200)
-deposits_table = ttk.Treeview(deposits, columns=("No.", "Deposit", "Amount", "Date", "Notes", "Del"), show="headings",
+deposits_table = ttk.Treeview(deposits, columns=("No.", "Deposit", "Amount", "Date", "Del"), show="headings",
                               height=200)
 
 source_dropdown = ctk.CTkOptionMenu(deposits, variable=sourced_var, values=source_options, font=("Arial", 15),
@@ -141,8 +141,8 @@ def on_t_input():
         new_date_str = date_obj.strftime("%Y-%m-%d")
         print(new_date_str)
 
-        insert_query = f"""insert into transactions (income_or_expense,source,date_of_transaction,need_or_want,note,amount,user_id) 
-                        values ('expense','{transaction}',TO_DATE('{new_date_str}', 'YYYY-MM-dd'),'{nw}','{transaction}',{amount},{user_id})"""
+        insert_query = f"""insert into transactions (income_or_expense,source,date_of_transaction,need_or_want,amount,user_id) 
+                        values ('expense','{transaction}',TO_DATE('{new_date_str}', 'YYYY-MM-dd'),'{nw}',{amount},{user_id})"""
         # updates balance values
         db.insert_values(insert_query)
         
@@ -177,8 +177,8 @@ def on_d_input():
         new_date_str = date_obj.strftime("%Y-%m-%d")
         print(new_date_str)
 
-        insert_query = f"""insert into transactions (income_or_expense,source,date_of_transaction,need_or_want,note,amount,user_id) 
-                        values ('income','{deposit}',TO_DATE('{new_date_str}', 'YYYY-MM-dd'),'n/a','{deposit}',{amount},{user_id})"""
+        insert_query = f"""insert into transactions (income_or_expense,source,date_of_transaction,need_or_want,amount,user_id) 
+                        values ('income','{deposit}',TO_DATE('{new_date_str}', 'YYYY-MM-dd'),'n/a',{amount},{user_id})"""
         # updates balance values
         db.insert_values(insert_query)
         
@@ -393,7 +393,7 @@ def show():
     transactions_table.heading("N/W", text="N/W")
     transactions_table.heading("Amount", text="Amount")
     transactions_table.heading("Date", text="Date")
-    transactions_table.heading("Notes", text= "Notes")
+    #transactions_table.heading("Notes", text= "Notes")
     transactions_table.heading("Del", text="Del")
 
     transactions_table.column("No.", width=50)
@@ -401,7 +401,7 @@ def show():
     transactions_table.column("N/W", width=80)
     transactions_table.column("Amount", width=100)
     transactions_table.column("Date", width=100)
-    transactions_table.column("Notes", width = 70)
+    #transactions_table.column("Notes", width = 70)
     transactions_table.column("Del", width=80)
 
     transactions_table.place(relx=0.2, rely=0.4)
@@ -440,14 +440,19 @@ def show():
     deposits_table.heading("Deposit", text="Deposit")
     deposits_table.heading("Amount", text="Amount")
     deposits_table.heading("Date", text="Date")
-    deposits_table.heading("Notes", text= "Notes")
+    #deposits_table.heading("Notes", text= "Notes")
     deposits_table.heading("Del", text="Del")
 
     deposits_table.column("No.", width=50)
     deposits_table.column("Deposit", width=200)
     deposits_table.column("Amount", width=100)
     deposits_table.column("Date", width=100)
-    deposits_table.column("Notes",width =70)
+    #deposits_table.column("Notes",width =70)
     deposits_table.column("Del", width=80)
 
     deposits_table.place(relx=0.2, rely=0.4)
+
+
+if __name__ == "__main__":
+    show()
+    hide()

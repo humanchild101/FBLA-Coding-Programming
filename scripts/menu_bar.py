@@ -34,8 +34,8 @@ def menu_init(parent, start_pos=1.05, end_pos=0.8):
     home = ctk.CTkButton(menu_bar, text="Home", font=("Arial", 24, "bold"), fg_color="#BEE9E8", hover_color="#9ACCD9", text_color="black", width=240, height=50, corner_radius=0, border_color="#1B4965", border_width=2, command = home_page.show)
     home.place(relx=0.01, rely=0.08)
 
-    input = ctk.CTkButton(menu_bar, text="Update Finances", font=("Arial", 24, "bold"), fg_color="#BEE9E8", hover_color="#9ACCD9", text_color="black", width=240, height=50, corner_radius=0, border_color="#1B4965", border_width=2, command = inputs.show)
-    input.place(relx=0.01, rely=0.125)
+    inputs = ctk.CTkButton(menu_bar, text="Update Finances", font=("Arial", 24, "bold"), fg_color="#BEE9E8", hover_color="#9ACCD9", text_color="black", width=240, height=50, corner_radius=0, border_color="#1B4965", border_width=2, command = inputs.show)
+    inputs.place(relx=0.01, rely=0.125)
 
     view = ctk.CTkButton(menu_bar, text="View Finances", font=("Arial", 24, "bold"), fg_color="#BEE9E8", hover_color="#9ACCD9", text_color="black", width=240, height=50, corner_radius=0, border_color="#1B4965", border_width=2, command = view.show)
     view.place(relx=0.01, rely=0.17)

@@ -7,14 +7,21 @@ import datetime
 import PIL
 from PIL import Image
 import menu_bar
+from session_manager import SessionManager
+
+session = SessionManager()
 
 root = root_window.root_init()
 help_page = ctk.CTkFrame(root, fg_color="#BEE9E8")
 
+first_name = session.get("first_name")
+last_name = session.get("last_name")
+user_id = session.get("user_id")
+
 top_nav = ctk.CTkFrame(help_page, fg_color="#33739A", height=70, corner_radius=0)
 top_nav.configure(fg_color="#33739A")
 welcome_label = ctk.CTkLabel(top_nav, fg_color="#1B4965", padx=20, height=80, width=500, text="")
-user_label = ctk.CTkLabel(welcome_label, text="Welcome, usr123!  ", fg_color="#1B4965", font=("Arial", 20, "bold"), text_color="#BEE9E8", padx=20, height=70)
+user_label = ctk.CTkLabel(welcome_label, text=f"Welcome, {first_name} {last_name}!", fg_color="#1B4965", font=("Arial", 20, "bold"), text_color="#BEE9E8", padx=20, height=70)
 
 # I WILL CHANGE THE FILE PATHS LATER ONCE WE GET RID OF VENV
 face1 = ctk.CTkImage(light_image=Image.open("faces/very_happy.png"), size=(70,70))
